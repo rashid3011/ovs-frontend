@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Caveat:wght@400;700&family=Lobster&family=Monoton&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,700&family=Work+Sans:ital,wght@0,400;0,700;1,700&display=swap');
+
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin:0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.bg{
+    padding:20px;
+    background-color: #e7f1ea;
+    height:100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-image-container{
+    height:90%;
+    display: none;
+}
+
+#login-image{
+    background-color: #ffffff;
+    height:100%;
+    width:500px;
+    padding: 10px;
+}
+
+.content{
+    background-color : #ffffff;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding:50px;
+    border-radius:10px;
+    box-shadow: 0px 0px 5px #888888;
+}
+
+.content h1{
+    font-size:30px;
+    font-weight:600;
+    color:var(--main-color);
+}
+
+.vote{
+    font-family: 'Bree Serif';
+    font-weight: 600;
+    font-size: 20px;
+    color:var(--main-color);
+    transition: all ease-in-out 0.5s;
+}
+
+.vote:hover{
+    font-size: 23px;
+}
+
+
+.motto{
+    font-size:17px;
+    font-weight: 500;
+    font-family:Roboto;
+}
+
+.input-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.input-container input{
+    order:2;
+    display: inline;
+    font-family:sans-serif;
+    font-size:15px;
+    outline:none;
+    height:40px;
+    border:none;
+    padding-left:12px;
+}
+
+.icon{
+    order:1;
+    display: inline;
+    transition: all ease-in-out 0.5s;
+}
+
+.input-border{
+    order:3;
+    display: block;
+    position:relative;
+    background-color:hsl(0, 4%, 89%);
+    height:2px;
+    width:100%;
+    bottom: 5px;
+    transition: all ease-in-out 0.5s;
+}
+
+#user-input:hover ~ #user-border,
+#user-input:active ~ #user-border,
+#user-input:focus ~ #user-border{
+   background-color: var(--main-color);
+}
+
+#user-input:hover + #user-icon,
+#user-input:active + #user-icon,
+#user-input:focus + #user-icon{
+   color: var(--main-color);
+}
+ .password-container:hover ~ .password-border{
+    background-color: var(--main-color);
+ }
+
+.password-container:hover .icon{
+    color: var(--main-color);
+ }
+
+ .button{
+    position:relative;
+    align-self: center;
+    width:125px;
+    min-height:35px;
+    max-height: 35px;
+    border: 1px solid var(--main-color);;
+    font-size:16px;
+    color:var(--main-color);
+    z-index: 1;
+    overflow: hidden;
+    transition:all 0.5s;
+ }
+
+ .button::before{
+    content: '';
+    position: absolute;
+    background-color: var(--main-color);
+    left: 0;
+    bottom: 0;
+    top:0;
+    right: 0;
+    z-index: -1;
+    transform: translateY(100%);
+    transition: all ease-in-out 0.15s;
+}
+
+.button:hover::before{
+    transform: translateY(0);
+}
+
+.button:hover{
+    color:#ffffff;
+}
+
+.no-account{
+    margin-bottom:0;
+    position: relative;
+    top:5%;
+}
+
+.nav-link{
+    color : var(--main-color);
+    margin-top:0px;
+    text-decoration: none;
+    transition:all 0.5s;
+}
+
+.nav-link:hover{
+    color:#2848ff;
+}
+
+.error-message{
+    text-align:left;
+    color:rgb(255, 38, 0);
+    font-size:13px;
+}
+
+@media (min-width: 768px){
+    .login-image-container{
+        display: block;
+    }
+    .content{
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+}
