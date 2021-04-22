@@ -1,0 +1,143 @@
+.input-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+input,
+.react-datepicker-wrapper,
+textarea {
+  order: 2;
+  display: inline;
+  font-family: sans-serif;
+  font-size: 15px;
+  outline: none;
+  height: 40px;
+  border: none;
+  padding-left: 12px;
+}
+
+textarea {
+  margin-top: 10px;
+  height: 100px;
+  resize: none;
+}
+
+.radio-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.radio-container p {
+  margin-bottom: 0;
+}
+
+.radio-container input {
+  cursor: pointer;
+}
+
+.radio-buttons-container {
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+}
+
+.radio-buttons-container label {
+  order: 2;
+  margin-bottom: 0;
+  align-self: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.radio-buttons-container label:hover {
+  color: var(--main-color);
+}
+
+.radio-container p {
+  font-size: 15px;
+  font-size: 16px;
+  color: #888888;
+  cursor: default;
+}
+
+.icon {
+  order: 1;
+  display: inline;
+  transition: all ease-in-out 0.5s;
+}
+
+.input-border,
+.radio-border {
+  order: 3;
+  display: block;
+  position: relative;
+  background-color: hsl(0, 4%, 89%);
+  height: 2px;
+  width: 100%;
+  bottom: 5px;
+  transition: all ease-in-out 0.5s;
+}
+
+.error-message {
+  order: 10;
+  align-self: flex-end;
+  color: rgb(255, 38, 0);
+  font-size: 13px;
+  margin: 0;
+}
+
+input:hover ~ .input-border,
+input:active ~ .input-border,
+input:focus ~ .input-border {
+  background-color: var(--main-color);
+}
+
+input:hover + .icon,
+input:active + .icon,
+input:focus + .icon {
+  color: var(--main-color);
+}
+
+.react-datepicker-wrapper:hover ~ .input-border {
+  background-color: var(--main-color);
+}
+
+.react-datepicker-wrapper:hover ~ .icon {
+  color: var(--main-color);
+}
+
+textarea:hover ~ .input-border,
+textarea:active ~ .input-border,
+textarea:focus ~ .input-border {
+  background-color: var(--main-color);
+}
+
+textarea:hover + .icon,
+textarea:active + .icon,
+textarea:focus + .icon {
+  color: var(--main-color);
+}
+
+.radio-container:hover > .radio-border {
+  background-color: var(--main-color);
+}
+
+.radio-container:hover > p {
+  color: var(--main-color);
+}
+
+.radio-container:hover > .radio-icon {
+  color: var(--main-color);
+}
+
+.error-icon {
+  color: red;
+}
+
+.error-border {
+  background-color: red;
+}
