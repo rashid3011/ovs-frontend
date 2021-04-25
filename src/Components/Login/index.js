@@ -2,6 +2,7 @@ import { React } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormikControl from "../FormikControl";
+import { Link } from "react-router-dom";
 import "./index.css";
 
 const initialValues = {
@@ -24,7 +25,7 @@ function LoginPage() {
   const loginColor = "#132dbe";
 
   return (
-    <div className="bg">
+    <div className="voter-login-bg">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -32,10 +33,10 @@ function LoginPage() {
       >
         {(formik) => {
           return (
-            <Form className="content">
+            <Form className="voter-login-content">
               <h1>Online Voting</h1>
-              <p className="motto">
-                Your <span className="vote">Vote</span> Counts
+              <p className="voter-login-motto">
+                Your <span className="voter-login-vote">Vote</span> Counts
               </p>
               <FormikControl
                 control="input"
@@ -43,6 +44,7 @@ function LoginPage() {
                 name="id"
                 placeholder="Voter ID"
                 icon="user"
+                formik={formik}
               />
 
               <FormikControl
@@ -51,24 +53,27 @@ function LoginPage() {
                 name="password"
                 placeholder="Password"
                 icon="lock"
+                formik={formik}
               />
 
               <button
-                className="button"
+                className="voter-login-button"
                 type="submit"
                 disabled={!formik.isValid || formik.isSubmitting}
               >
                 Login
               </button>
-              <p className="no-account">Don't you have an account?</p>
-              <a href="/home" className="nav-link">
-                Create account
-              </a>
+              <p className="voter-login-no-account">
+                Don't you have an account?
+              </p>
+              <Link to="/voter-register">
+                <p className="voter-login-nav-link">Create account</p>
+              </Link>
             </Form>
           );
         }}
       </Formik>
-      <div className="login-image-container">
+      <div className="voter-login-login-image-container">
         <svg
           id="login-image"
           data-name="Layer 1"

@@ -3,6 +3,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
+  width: 250px;
 }
 
 input,
@@ -10,7 +11,7 @@ input,
 textarea {
   order: 2;
   display: inline;
-  font-family: sans-serif;
+  font-family: "Roboto";
   font-size: 15px;
   outline: none;
   height: 40px;
@@ -25,6 +26,7 @@ textarea {
 }
 
 .radio-container {
+  font-family: "Roboto";
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -37,20 +39,32 @@ textarea {
 
 .radio-container input {
   cursor: pointer;
+  display: none;
 }
 
 .radio-buttons-container {
   display: flex;
   width: 50%;
   justify-content: space-around;
+  border: 1px solid var(--main-color);
 }
 
 .radio-buttons-container label {
-  order: 2;
+  width: 100%;
   margin-bottom: 0;
   align-self: center;
   font-size: 16px;
   cursor: pointer;
+  transition: all 0.1s ease-in;
+}
+
+.radio-buttons-container label:not(:last-of-type) {
+  border-right: 1px solid var(--main-color);
+}
+
+.radio-buttons-container input:checked + label {
+  background-color: var(--main-color);
+  color: #fff;
 }
 
 .radio-buttons-container label:hover {
@@ -75,7 +89,7 @@ textarea {
   order: 3;
   display: block;
   position: relative;
-  background-color: hsl(0, 4%, 89%);
+  background-color: rgb(173, 169, 169);
   height: 2px;
   width: 100%;
   bottom: 5px;

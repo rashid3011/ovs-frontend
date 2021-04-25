@@ -1,0 +1,151 @@
+.home-outer-bg {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2aebc1;
+}
+
+.home-main-heading {
+  align-self: flex-start;
+  text-align: left;
+  margin-left: 20px;
+  transform: translate(30%, -200%);
+  font-family: "Righteous", cursive;
+  color: black;
+  font-size: 30px;
+  height: 50px;
+  color: #2ce9c0;
+}
+
+.home-main-heading span {
+  font-family: "Lobster", cursive;
+  font-weight: 600;
+  font-size: 50px;
+  color: #00ffc8;
+}
+
+.home-bg {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+
+  clip-path: circle(121.1% at 96% 8%);
+  animation: turn 1.3s linear;
+}
+
+@keyframes turn {
+  from {
+    clip-path: circle(15.1% at 96% 8%);
+  }
+  to {
+    clip-path: circle(121.1% at 96% 8%);
+  }
+}
+
+i {
+  margin-right: 10px;
+}
+
+.home-content {
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 350px;
+  width: 700px;
+  box-shadow: 0 0 10px #888888;
+}
+
+#waves {
+  color: #fff;
+  display: inline;
+  position: relative;
+  transform: translateY(30%);
+  margin-bottom: 0;
+}
+
+.home-section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.home-voter-section {
+  width: 100%;
+  background: var(--voter-color);
+}
+
+.home-ec-section {
+  width: 100%;
+  background: var(--ec-color);
+}
+
+.home-section h1 {
+  color: #fff;
+  font-size: 30px;
+  font-family: "Righteous", cursive;
+}
+
+.home-section p {
+  color: #fff;
+  font-family: "Mukta", sans-serif;
+  font-size: 16px;
+}
+
+.home-section button {
+  font-family: "Mukta", sans-serif;
+  width: 60%;
+  align-self: center;
+  height: 35px;
+  background: none;
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  border: 1px solid #fff;
+  overflow: hidden;
+}
+
+.home-section button::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  border-radius: 50%;
+  background: #fff;
+  transform: translate(-100%);
+  transition: all 0.5s;
+}
+
+.home-voter-button:hover::before {
+  transform: translate(0);
+  border-radius: 0;
+}
+
+.home-voter-button:hover {
+  color: var(--voter-color);
+}
+
+.home-ec-button:hover::before {
+  transform: translate(0);
+  border-radius: 0;
+}
+
+.home-ec-button:hover {
+  color: var(--ec-color);
+}
+
+.home-ec-section {
+  border: 1px solid var(--ec-color);
+  width: 100%;
+  border-left: none;
+}

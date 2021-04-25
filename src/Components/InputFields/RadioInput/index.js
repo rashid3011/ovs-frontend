@@ -29,7 +29,6 @@ function RadioInput(props) {
             }}
           </Field>
         </div>
-        <span className="radio-border" />
       </div>
     </>
   );

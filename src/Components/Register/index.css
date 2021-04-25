@@ -2,17 +2,22 @@
   --inactive-color: #727272;
 }
 
-.bg {
-  background-color: #e7f1ea;
-  height: 100vh;
-  padding: 10px 20px 10px 20px;
-  font-family: "Roboto";
+.voter-register-bg {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #005aa7;
+  height: 100vh;
+  font-family: "Roboto";
+  padding: 10px 20px 10px 20px;
+  overflow: hidden;
 }
 
-.line {
+.voter-register-image-container {
+  display: none;
+}
+
+.voter-register-line {
   position: relative;
   height: 2px;
   width: 100%;
@@ -21,37 +26,36 @@
   margin-bottom: 25px;
 }
 
-.content {
+.voter-register-content {
+  align-self: flex-end;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0px 0px 8px #888888;
+
+  box-shadow: 0px 0px 10px #888888;
   padding: 15px;
   height: 100%;
-  overflow-y: auto;
+  overflow: auto;
   max-width: 500px;
-  direction: rtl;
+  scrollbar-width: none;
 }
 
-#voting-image {
-  height: 20%;
-  width: 400px;
-  margin-top: auto;
-  align-self: center;
+.voter-register-content::-webkit-scrollbar {
   display: none;
 }
 
-.main-heading {
+.voter-register-main-heading {
+  text-align: center;
   color: var(--main-color);
   font-size: 25px;
-  font-family: "Sans Serif";
+  font-family: "Varela Round", sans-serif;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 600;
+  letter-spacing: 3px;
+  font-weight: 700;
 }
 
-.form {
+.voter-register-form {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -59,6 +63,7 @@
   flex-wrap: wrap;
   direction: ltr;
   height: 500px;
+  width: 100%;
 }
 
 .input-container {
@@ -73,7 +78,7 @@
   margin-top: 5px;
 }
 
-.form-footer {
+.voter-register-form-footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -82,22 +87,23 @@
   margin-top: 20px;
 }
 
-.button {
+.voter-register-button {
   margin-bottom: 20px;
   position: relative;
   align-self: center;
-  width: 125px;
+  width: 90%;
   min-height: 35px;
   max-height: 35px;
   border: 1px solid var(--main-color);
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 550;
   color: var(--main-color);
   z-index: 1;
   overflow: hidden;
   transition: all 0.5s;
 }
 
-.button::before {
+.voter-register-button::before {
   content: "";
   position: absolute;
   background-color: var(--main-color);
@@ -110,42 +116,131 @@
   transition: all ease-in-out 0.15s;
 }
 
-.button:hover::before {
+.voter-register-button:hover::before {
   transform: translateX(0);
 }
 
-.button:hover {
+.voter-register-button:hover {
   color: #ffffff;
 }
 
-.form-footer p {
+.voter-register-form-footer p {
   margin-bottom: 0;
 }
 
-.nav-link {
+.voter-register-nav-link {
   color: var(--main-color);
   padding-top: 0px;
   text-decoration: none;
   transition: all 0.5s;
 }
 
-.nav-link:hover {
+.voter-register-nav-link:hover {
   color: #2848ff;
 }
 
-#content::-webkit-scrollbar {
-  width: 12px;
-}
-#content::-webkit-scrollbar-thumb {
-  background: linear-gradient(transparent, #30ff00);
-}
-
 @media (min-height: 1000px) {
-  .form {
+  .voter-register-form {
     height: 800px;
   }
-  #voting-image {
-    display: block;
-    height: 30%;
+}
+
+@media (min-width: 850px) {
+  .voter-register-image-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .voter-register-image-container svg {
+    height: 70%;
+  }
+
+  .voter-register-bg {
+    background-image: linear-gradient(to right, #005aa7, #fffde4);
+    justify-content: space-between;
+    align-items: stretch;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .voter-register-content {
+    border-radius: 0px;
+  }
+
+  .voter-register-main-heading {
+    text-align: left;
+  }
+}
+
+#e1g32wh3j9sq3_to {
+  animation: e1g32wh3j9sq3_to__to 3000ms linear infinite normal forwards;
+}
+@keyframes e1g32wh3j9sq3_to__to {
+  0% {
+    transform: translate(-18.752046px, 112.501095px);
+  }
+  13.333333% {
+    transform: translate(-18.752046px, 112.501095px);
+  }
+  36.666667% {
+    transform: translate(309.927954px, 112.501095px);
+  }
+  100% {
+    transform: translate(309.927954px, 112.501095px);
+  }
+}
+#e1g32wh3j9sq4_to {
+  animation: e1g32wh3j9sq4_to__to 3000ms linear infinite normal forwards;
+}
+@keyframes e1g32wh3j9sq4_to__to {
+  0% {
+    transform: translate(-28.079686px, 127.425468px);
+  }
+  13.333333% {
+    transform: translate(252.100314px, 127.425468px);
+  }
+  100% {
+    transform: translate(252.100314px, 127.425468px);
+  }
+}
+#e1g32wh3j9sq42_ts {
+  animation: e1g32wh3j9sq42_ts__ts 3000ms linear infinite normal forwards;
+}
+@keyframes e1g32wh3j9sq42_ts__ts {
+  0% {
+    transform: translate(508.328003px, 76.085001px) scale(0, 0);
+  }
+  20% {
+    transform: translate(508.328003px, 76.085001px) scale(0, 0);
+  }
+  33.333333% {
+    transform: translate(508.328003px, 76.085001px) scale(1, 1);
+  }
+  100% {
+    transform: translate(508.328003px, 76.085001px) scale(1, 1);
+  }
+}
+#e1g32wh3j9sq43_ts {
+  animation: e1g32wh3j9sq43_ts__ts 3000ms linear infinite normal forwards;
+}
+@keyframes e1g32wh3j9sq43_ts__ts {
+  0% {
+    transform: translate(537.708008px, 137.307003px) scale(0, 0);
+  }
+  33.333333% {
+    transform: translate(537.708008px, 137.307003px) scale(0, 0);
+  }
+  46.666667% {
+    transform: translate(537.708008px, 137.307003px) scale(0, 0);
+  }
+  63.333333% {
+    transform: translate(537.708008px, 137.307003px) scale(1, 1);
+  }
+  100% {
+    transform: translate(537.708008px, 137.307003px) scale(1, 1);
   }
 }
