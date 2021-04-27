@@ -16,13 +16,11 @@ const validationSchema = Yup.object({
 });
 
 const onSubmit = (data, onSubmitProps) => {
-  console.log(data);
-  console.log(onSubmitProps);
   onSubmitProps.setSubmitting(false);
 };
 
 function LoginPage() {
-  const loginColor = "#132dbe";
+  const loginColor = "#4287f5";
 
   return (
     <div className="voter-login-bg">

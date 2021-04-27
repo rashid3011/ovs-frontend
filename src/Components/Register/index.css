@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #005aa7;
+  background-image: linear-gradient(to right, #56ccf2, #2f80ed);
   height: 100vh;
   font-family: "Roboto";
   padding: 10px 20px 10px 20px;
@@ -32,8 +32,7 @@
   flex-direction: column;
   background-color: #ffffff;
   border-radius: 8px;
-
-  box-shadow: 0px 0px 10px #888888;
+  box-shadow: 0px 0px 15px #888888;
   padding: 15px;
   height: 100%;
   overflow: auto;
@@ -53,6 +52,7 @@
   text-transform: uppercase;
   letter-spacing: 3px;
   font-weight: 700;
+  margin-top: 15px;
 }
 
 .voter-register-form {
@@ -84,7 +84,7 @@
   justify-content: center;
   width: 100%;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 100px;
 }
 
 .voter-register-button {
@@ -113,7 +113,7 @@
   right: 0;
   z-index: -1;
   transform: translateX(-100%);
-  transition: all ease-in-out 0.15s;
+  transition: all ease-in-out 0.5s;
 }
 
 .voter-register-button:hover::before {
@@ -139,6 +139,15 @@
   color: #2848ff;
 }
 
+@media (max-width: 400px) {
+  .radio-placeholder {
+    display: none;
+  }
+  .radio-container label {
+    font-size: 10px;
+  }
+}
+
 @media (min-height: 1000px) {
   .voter-register-form {
     height: 800px;
@@ -160,7 +169,6 @@
   }
 
   .voter-register-bg {
-    background-image: linear-gradient(to right, #005aa7, #fffde4);
     justify-content: space-between;
     align-items: stretch;
     overflow: hidden;

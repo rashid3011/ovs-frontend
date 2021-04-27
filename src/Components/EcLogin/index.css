@@ -4,21 +4,16 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
-
-.voter-login-bg {
+.ec-login-bg {
   padding: 20px;
+  /*background-image: linear-gradient(to right, #61f04e, #2fed38);*/
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.voter-login-login-image-container {
+.ec-login-login-image-container {
   height: 90%;
   display: none;
   box-shadow: 0px 0px 5px #888888;
@@ -28,30 +23,31 @@ body {
   overflow: hidden;
 }
 
-.voter-login-login-image-container::after {
+.ec-login-login-image-container::after {
   position: absolute;
-  background-color: var(--voter-color);
+  background-color: var(--ec-color);
   content: "";
   height: 100%;
   width: 100%;
   top: 0;
   right: 0;
   border-radius: 50%;
-  transform: translate(60%, -60%);
-  animation: voter-come 1s linear;
+  transform: translate(65%, -65%);
+  animation: ec-come 1s linear;
 }
 
-@keyframes voter-come {
+@keyframes ec-come {
   from {
     transform: translate(80%, -100%);
   }
   to {
-    transform: translate(60%, -60%);
+    transform: translate(65%, -65%);
   }
 }
 
-#login-image {
+#ec-login-image {
   background-color: #ffffff;
+  margin-top: 60px;
   height: 100%;
   width: 500px;
   padding: 10px;
@@ -59,7 +55,7 @@ body {
   border-bottom-right-radius: 10px;
 }
 
-.voter-login-content {
+.ec-login-content {
   background-color: #ffffff;
   height: 90%;
   display: flex;
@@ -71,46 +67,29 @@ body {
   z-index: 1;
 }
 
-.voter-login-content h1 {
+.ec-login-content h1 {
   font-size: 30px;
   font-weight: 600;
   color: var(--main-color);
 }
 
-.voter-login-vote {
-  font-family: "Bree Serif";
-  font-weight: 600;
-  font-size: 20px;
-  color: var(--main-color);
-  transition: all ease-in-out 0.5s;
-}
-
-.voter-login-vote:hover {
-  font-size: 23px;
-}
-
-.voter-login-motto {
-  font-size: 17px;
-  font-weight: 500;
-  font-family: Roboto;
-}
-
-.voter-login-button {
+.ec-login-button {
   position: relative;
   align-self: center;
   width: 80%;
   min-height: 35px;
   max-height: 35px;
   border: 1px solid var(--main-color);
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 600;
   color: var(--main-color);
+  cursor: pointer;
   z-index: 1;
   overflow: hidden;
   transition: all 0.5s;
-  cursor: pointer;
 }
 
-.voter-login-button::before {
+.ec-login-button::before {
   content: "";
   position: absolute;
   background-color: var(--main-color);
@@ -120,39 +99,39 @@ body {
   right: 0;
   z-index: -1;
   transform: translateX(-100%);
-  transition: all ease-in-out 0.5s;
+  transition: all ease-in-out 0.3s;
 }
 
-.voter-login-button:hover::before {
+.ec-login-button:hover::before {
   transform: translateX(0);
 }
 
-.voter-login-button:hover {
+.ec-login-button:hover {
   color: #ffffff;
 }
 
-.voter-login-no-account {
+.ec-login-no-account {
   margin-bottom: 0;
   position: relative;
   top: 5%;
 }
 
-.voter-login-nav-link {
+.ec-login-nav-link {
   color: var(--main-color);
   margin-top: 25px;
   text-decoration: none;
   transition: all 0.5s;
 }
 
-.voter-login-nav-link:hover {
+.ec-login-nav-link:hover {
   color: #2c7a2a;
 }
 
 @media (min-width: 881px) {
-  .voter-login-login-image-container {
+  .ec-login-login-image-container {
     display: block;
   }
-  .voter-login-content {
+  .ec-login-content {
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     height: 90%;

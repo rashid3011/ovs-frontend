@@ -4,6 +4,7 @@ import LoginPage from "./Components/Login";
 import Register from "./Components/Register";
 import Home from "./Components/Home";
 import NotFound from "./Components/NotFound";
+import ECLoginPage from "./Components/EcLogin";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/voter-login" component={LoginPage} />
 
-        {/*<Route exact path="/ec-login" component={LoginPage} />*/}
+        <Route exact path="/ec-login" component={ECLoginPage} />
 
         <Route exact path="/voter-register" component={Register} />
         <Route component={NotFound} />

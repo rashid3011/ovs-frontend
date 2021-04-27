@@ -547,6 +547,7 @@ function Register() {
                   control="textarea"
                   name="address"
                   icon="map-marker-alt"
+                  id="address"
                   formik={formik}
                 />
                 <div className="voter-register-form-footer">

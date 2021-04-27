@@ -7,7 +7,7 @@ function RadioInput(props) {
     <>
       <div className="radio-container">
         <i className={`fas fa-${icon} radio-icon`}></i>
-        <p>{`Pick your ${name} : `}</p>
+        <p className="radio-placeholder">{`Pick your ${name} : `}</p>
         <div className="radio-buttons-container">
           <Field name={name}>
             {({ field }) => {

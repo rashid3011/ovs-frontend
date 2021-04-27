@@ -4,6 +4,7 @@
   flex-wrap: wrap;
   align-items: center;
   width: 250px;
+  max-height: 60px;
 }
 
 input,
@@ -33,6 +34,10 @@ textarea {
   flex-wrap: wrap;
 }
 
+.radio-placeholder {
+  font-size: 14px;
+}
+
 .radio-container p {
   margin-bottom: 0;
 }
@@ -51,11 +56,15 @@ textarea {
 
 .radio-buttons-container label {
   width: 100%;
+  min-height: 26px;
   margin-bottom: 0;
   align-self: center;
-  font-size: 16px;
+  font-size: 13px;
   cursor: pointer;
   transition: all 0.1s ease-in;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .radio-buttons-container label:not(:last-of-type) {

@@ -2,7 +2,7 @@ import React from "react";
 import { Field, ErrorMessage } from "formik";
 
 function TextArea(props) {
-  const { name, icon, formik } = props;
+  const { name, id, icon, formik } = props;
   const isError = formik.errors[name] && formik.touched[name];
   const errorIcon = isError ? "error-icon" : "";
   const errorBorder = isError ? "error-border" : "";
@@ -16,6 +16,7 @@ function TextArea(props) {
               {...field}
               rows="10"
               placeholder={`Enter your ${name}`}
+              id={id}
             ></textarea>
           );
         }}
