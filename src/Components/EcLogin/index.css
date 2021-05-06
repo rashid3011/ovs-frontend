@@ -6,7 +6,6 @@
 
 .ec-login-bg {
   padding: 20px;
-  /*background-image: linear-gradient(to right, #61f04e, #2fed38);*/
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -14,7 +13,7 @@
 }
 
 .ec-login-login-image-container {
-  height: 90%;
+  height: 80%;
   display: none;
   box-shadow: 0px 0px 5px #888888;
   border-top-right-radius: 10px;
@@ -32,7 +31,7 @@
   top: 0;
   right: 0;
   border-radius: 50%;
-  transform: translate(65%, -65%);
+  transform: translate(70%, -70%);
   animation: ec-come 1s linear;
 }
 
@@ -41,7 +40,7 @@
     transform: translate(80%, -100%);
   }
   to {
-    transform: translate(65%, -65%);
+    transform: translate(70%, -70%);
   }
 }
 
@@ -49,7 +48,7 @@
   background-color: #ffffff;
   margin-top: 60px;
   height: 100%;
-  width: 500px;
+  width: 400px;
   padding: 10px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -57,11 +56,11 @@
 
 .ec-login-content {
   background-color: #ffffff;
-  height: 90%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding: 50px;
+  padding: 80px 50px 80px 50px;
   border-radius: 10px;
   box-shadow: 0px 0px 5px #888888;
   z-index: 1;
@@ -76,12 +75,11 @@
 .ec-login-button {
   position: relative;
   align-self: center;
-  width: 80%;
+  width: 135px;
   min-height: 35px;
   max-height: 35px;
   border: 1px solid var(--main-color);
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
   color: var(--main-color);
   cursor: pointer;
   z-index: 1;
@@ -127,6 +125,11 @@
   color: #2c7a2a;
 }
 
+.ec-login-failed-message {
+  color: red;
+  font-size: 15px;
+}
+
 @media (min-width: 881px) {
   .ec-login-login-image-container {
     display: block;
@@ -134,6 +137,12 @@
   .ec-login-content {
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
-    height: 90%;
+    height: 80%;
+  }
+}
+
+@media (min-height: 800px) {
+  .ec-login-content {
+    padding: 200px 50px 200px 50px;
   }
 }

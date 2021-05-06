@@ -1,51 +1,26 @@
-.home-outer-bg {
+@import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
+
+.home-bg {
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #2aebc1;
+  padding: 20px;
+  overflow: hidden;
 }
 
 .home-main-heading {
-  align-self: flex-start;
   text-align: left;
   margin-left: 20px;
-  transform: translate(30%, -200%);
   font-family: "Righteous", cursive;
   color: black;
   font-size: 30px;
   height: 50px;
-  color: #2aebc1;
+  color: #000000;
 }
 
 .home-main-heading span {
-  font-family: "Lobster", cursive;
+  font-family: "Secular One", sans-serif;
   font-weight: 600;
   font-size: 50px;
-  color: #2aebc1;
-}
-
-.home-bg {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #fff;
-
-  clip-path: circle(121.1% at 96% 8%);
-  animation: turn 1.3s linear;
-}
-
-@keyframes turn {
-  from {
-    clip-path: circle(15.1% at 96% 8%);
-  }
-  to {
-    clip-path: circle(121.1% at 96% 8%);
-  }
+  color: rgb(11, 113, 230);
 }
 
 i {
@@ -53,21 +28,14 @@ i {
 }
 
 .home-content {
-  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  height: 350px;
-  width: 700px;
-  box-shadow: 0 0 10px #888888;
-}
-
-#waves {
-  color: #fff;
-  display: inline;
-  position: relative;
-  transform: translateY(30%);
-  margin-bottom: 0;
+  height: 450px;
+  width: 70%;
+  margin-top: 100px;
+  box-shadow: 0 0 10px #888888, 0 0 10px #888888;
 }
 
 .home-section {
@@ -89,24 +57,27 @@ i {
 
 .home-section h1 {
   color: #fff;
-  font-size: 30px;
+  font-size: 35px;
   font-family: "Righteous", cursive;
 }
 
 .home-section p {
   color: #fff;
   font-family: "Mukta", sans-serif;
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: 550;
 }
 
 .home-section button {
   font-family: "Mukta", sans-serif;
-  width: 60%;
+  width: 200px;
   align-self: center;
-  height: 35px;
+  height: 50px;
   background: none;
   position: relative;
   z-index: 1;
+  font-weight: 600;
+  font-size: 17px;
   color: #fff;
   border: 1px solid #fff;
   overflow: hidden;
@@ -148,4 +119,36 @@ i {
   border: 1px solid var(--ec-color);
   width: 100%;
   border-left: none;
+}
+
+@media (max-width: 576px) {
+  .home-main-heading {
+    font-size: 25px;
+  }
+  .home-main-heading span {
+    font-size: 40px;
+  }
+  .home-content {
+    flex-direction: column;
+  }
+  .home-section {
+    padding: 20px;
+  }
+  .home-section h1 {
+    font-size: 25px;
+  }
+  .home-section p {
+    margin-top: 10px;
+    font-size: 15px;
+  }
+  .home-section button {
+    height: 35px;
+    width: 125px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 1000px) {
+  .home-content {
+    width: 90%;
+  }
 }

@@ -15,17 +15,18 @@ function DateInput(props) {
 
   return (
     <>
-      <div className="input-container">
+      <div className="input-container" id={name}>
         <Field>
           {({ field, form }) => {
-            const { DOB } = field.value;
+            const { value } = field;
+            const selectedValue = value[name];
             const { setFieldValue } = form;
             return (
               <DatePicker
                 {...field}
-                id={name}
                 name={name}
-                selected={DOB}
+                className="date"
+                selected={selectedValue}
                 onChange={(val) => setFieldValue(name, val)}
                 placeholderText={`Pick your ${name}`}
                 maxDate={maxDate}

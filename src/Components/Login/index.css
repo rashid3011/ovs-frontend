@@ -18,6 +18,16 @@ body {
   align-items: center;
 }
 
+.loading-bg {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.loader {
+  background: none;
+  border: 0;
+}
+
 .voter-login-login-image-container {
   height: 90%;
   display: none;
@@ -98,7 +108,7 @@ body {
 .voter-login-button {
   position: relative;
   align-self: center;
-  width: 80%;
+  width: 135px;
   min-height: 35px;
   max-height: 35px;
   border: 1px solid var(--main-color);
@@ -107,7 +117,6 @@ body {
   z-index: 1;
   overflow: hidden;
   transition: all 0.5s;
-  cursor: pointer;
 }
 
 .voter-login-button::before {
@@ -146,6 +155,11 @@ body {
 
 .voter-login-nav-link:hover {
   color: #2c7a2a;
+}
+
+.wrong-details-error-message {
+  color: red;
+  font-size: 14px;
 }
 
 @media (min-width: 881px) {

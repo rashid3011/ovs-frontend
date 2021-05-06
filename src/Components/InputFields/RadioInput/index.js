@@ -5,7 +5,7 @@ function RadioInput(props) {
   const { name, options, icon } = props;
   return (
     <>
-      <div className="radio-container">
+      <div className="radio-container" id={name}>
         <i className={`fas fa-${icon} radio-icon`}></i>
         <p className="radio-placeholder">{`Pick your ${name} : `}</p>
         <div className="radio-buttons-container">

@@ -7,7 +7,7 @@ function TextArea(props) {
   const errorIcon = isError ? "error-icon" : "";
   const errorBorder = isError ? "error-border" : "";
   return (
-    <div className="input-container">
+    <div className="input-container" id={name}>
       <Field name={name}>
         {({ field }) => {
           console.log(field);

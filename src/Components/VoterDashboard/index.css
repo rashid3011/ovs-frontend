@@ -1,0 +1,347 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap");
+
+.dash-bg {
+  background: #ffffff;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+.nav-menu {
+  color: black;
+  font-size: 25px;
+  cursor: pointer;
+  transition: 0.2s all;
+  margin-bottom: auto;
+}
+
+.nav-menu:active,
+.nav-menu:hover {
+  color: #228adf;
+}
+
+.nav-menubars-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.dash-header-right {
+  margin-left: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.close-icon {
+  text-align: right;
+}
+
+.voter-sidebar-container {
+  position: fixed;
+  background: #0b7dda;
+  height: 100%;
+  top: 0;
+  min-width: 250px;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s;
+}
+
+.voter-sidebar {
+  margin-top: 20px;
+  height: 30%;
+}
+
+.voter-nav-list {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding-left: 0px;
+  margin: 0;
+  list-style: none;
+}
+
+.voter-navlink {
+  color: #fff;
+  font-size: 18px;
+  font-family: "Fira Sans", sans-serif;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  border-bottom: 2px solid rgb(6, 113, 155);
+}
+
+.voter-navlink::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 120%;
+  background-color: #0051ff;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+  transition: 0.5s all;
+  z-index: -1;
+}
+
+.voter-navlink:hover::after {
+  transform: translateX(-10%);
+}
+.voter-navlink:hover {
+  color: #fff;
+}
+
+.close-icon {
+  margin-top: 15px;
+  color: #fff;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.voter-logout {
+  background: #0051ff;
+  border: 0;
+  font-family: "Roboto";
+  color: #fff;
+  height: 35px;
+  width: 110px;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.2s all;
+}
+.voter-logout:hover {
+  background: #0346d6;
+}
+
+.hide-navbar {
+  transform: translate(-100%, 0);
+}
+
+.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.welcome {
+  text-align: right;
+  padding: 15px 10px 0px 0px;
+  font-size: 16px;
+  font-family: "Roboto";
+}
+
+.user-icon {
+  color: #228adf;
+}
+
+.cast-vote-outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.cast-vote-container {
+  width: 80%;
+  border: 2px solid black;
+  border-radius: 15px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.cast-vote-header-container {
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cast-vote-header {
+  height: 100%;
+  margin: 0 0 0 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+.cast-vote-header li {
+  height: 100%;
+  flex-grow: 1;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: monospace;
+  border-bottom: 1px solid black;
+  background: black;
+  color: #fff;
+}
+
+.cast-vote-header li:not(:last-of-type) {
+  border-right: 1px solid black;
+}
+
+.party-list {
+  height: 100%;
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.party-list-li {
+  padding-top: 15px;
+  height: 80px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.party-list-li:not(:last-of-type) {
+  width: 100%;
+  margin-left: 0;
+  border-bottom: 1px solid rgb(182, 179, 179);
+}
+
+.party-logo {
+  max-height: 50px;
+  max-width: 50px;
+}
+
+.cast-vote-button {
+  height: 35px;
+  width: 120px;
+  border: none;
+  border-radius: 8px;
+  background: rgb(35, 235, 9);
+  transition: all 0.3s;
+  color: #fff;
+}
+
+.cast-vote-button:hover {
+  background: rgb(35, 201, 13);
+}
+
+.active-election-type {
+  background: #fff !important;
+  color: black !important;
+  border-bottom: 0px !important;
+}
+
+.user-profile-icon {
+  display: inline-block;
+  font-size: 30px;
+  cursor: pointer;
+}
+.user-profile-arrow {
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+}
+.toggle-user-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  cursor: pointer;
+}
+.dash-header-right-outer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.party-name {
+  width: 100px;
+  text-align: left;
+  font-weight: 600;
+}
+.candidate-name {
+  width: 130px;
+  text-align: left;
+}
+
+@media (max-width: 400px) {
+  .cast-vote-header li {
+    font-size: 14px;
+  }
+  .party-name {
+    font-size: 13px;
+    color: rgb(0, 81, 255);
+    width: 30px;
+  }
+  .candidate-name {
+    font-size: 13px;
+    color: rgb(0, 81, 255);
+    width: 60px;
+    margin-left: 15px;
+  }
+  .party-logo {
+    max-height: 40px;
+    max-width: 40px;
+  }
+  .cast-vote-button {
+    width: 80px;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 576px) {
+  .party-name {
+    font-size: 14px;
+    width: 70px;
+    margin-left: 10px;
+  }
+  .candidate-name {
+    font-size: 14px;
+    width: 100px;
+  }
+  .party-logo {
+    height: 40px;
+    width: 40px;
+  }
+  .cast-vote-button {
+    width: 90px;
+  }
+}
+
+@media (max-width: 576px) {
+  .dash-header-right {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .hide-user-profile {
+    display: none;
+  }
+  .welcome {
+    font-size: 16px;
+  }
+  .voter-logout {
+    width: 90px;
+  }
+}
+
+@media (min-width: 577px) {
+  .user-profile-icon {
+    display: none;
+  }
+  .user-profile-arrow {
+    display: none;
+  }
+  .dash-header-right {
+    display: flex;
+    flex-direction: row;
+  }
+}

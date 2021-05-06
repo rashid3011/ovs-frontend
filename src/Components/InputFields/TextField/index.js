@@ -7,9 +7,10 @@ function TextField(props) {
   const isError = formik.errors[name] && formik.touched[name];
   const errorIcon = isError ? "error-icon" : "";
   const errorBorder = isError ? "error-border" : "";
+
   return (
     <>
-      <div className="input-container">
+      <div className="input-container" id={name}>
         <Field
           type={type}
           name={name}

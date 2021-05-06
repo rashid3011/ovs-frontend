@@ -1,0 +1,11 @@
+GET https://ovs-backend.herokuapp.com/EC/ecs HTTP/1.1
+
+###
+POST https://ovs-backend.herokuapp.com/login/ HTTP/1.1
+
+Content-Type: application/json
+
+{
+  "voterId" : "V11111",
+  "password" : "Rgukt123",
+}

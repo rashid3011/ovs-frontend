@@ -29,7 +29,7 @@ textarea {
 .radio-container {
   font-family: "Roboto";
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -49,7 +49,6 @@ textarea {
 
 .radio-buttons-container {
   display: flex;
-  width: 50%;
   justify-content: space-around;
   border: 1px solid var(--main-color);
 }
@@ -92,10 +91,9 @@ textarea {
   display: inline;
   transition: all ease-in-out 0.5s;
 }
-
 .input-border,
 .radio-border {
-  order: 3;
+  order: 4;
   display: block;
   position: relative;
   background-color: rgb(173, 169, 169);
@@ -163,4 +161,61 @@ textarea:focus + .icon {
 
 .error-border {
   background-color: red;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+select {
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  border: none;
+  position: relative;
+  outline: none;
+}
+
+.selectdiv {
+  border: 1px solid #888;
+  padding: 0px 10px 0 5px;
+  height: 40px;
+  width: 150px;
+  font-size: 14px;
+  position: relative;
+  transition: all 0.5s;
+}
+
+.selectdiv label {
+  margin-bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.selectdiv select {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  float: right;
+  display: block;
+}
+
+.selectdiv::after {
+  position: absolute;
+  content: "\f078";
+  font: normal normal normal 17px/1 FontAwesome;
+  color: #888;
+  top: 10px;
+  right: 10px;
+  pointer-events: none;
+  transition: all 0.5s;
+}
+
+.selectdiv:hover {
+  border-color: var(--main-color);
+  box-shadow: 0 0 6px var(--main-color);
+}
+
+.selectdiv:hover::after {
+  color: var(--main-color);
 }

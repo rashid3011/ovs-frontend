@@ -4,20 +4,82 @@ import { Formik, Form } from "formik";
 import FormikControl from "../FormikControl";
 import { Link } from "react-router-dom";
 import "./index.css";
-import Loader from "react-loader-spinner";
+
+/*
+state
+district
+constituency
+mandal
+village
+*/
+
+const initialValues = {
+  voterId: "",
+  email: "",
+  firstname: "",
+  lastname: "",
+  password: "",
+  confirmPassword: "",
+  DOB: null,
+  address: "",
+  gender: "male",
+  phoneNumber: "",
+  state: "",
+  district: "",
+  constituency: "",
+  mandal: "",
+  village: "",
+};
+
+const validationSchema = Yup.object({
+  voterId: Yup.string().required("*Required"),
+  email: Yup.string().email("*Invalid email Id").required("*Required"),
+  firstname: Yup.string().required("*Required"),
+  lastname: Yup.string().required("*Required"),
+  password: Yup.string()
+    .required("*Required")
+    .min(8, "password is too short")
+    .matches(
+      /^(?=.*[!@#$%^&*])/,
+      "password must contain atleast one speacial character"
+    )
+    .matches(/^(?=.*[a-z])/, "password must contain one lowercase letter")
+    .matches(
+      /^(?=.*[A-Z])/,
+      "password must contain atleast one UpperCase letter"
+    )
+    .matches(/^(?=.*[0-9])/, "password must contain atleast one digit"),
+  confirmPassword: Yup.string()
+    .required("*Requried")
+    .oneOf([Yup.ref("password"), null], "password must match"),
+  DOB: Yup.date().required("*Required").nullable(),
+  address: Yup.string().required("*Required"),
+  phoneNumber: Yup.string()
+    .required("*Required")
+    .matches(/^(\+\d{2})?(\d{10})/, "enter valid number"),
+  state: Yup.string().required("*Required"),
+  district: Yup.string().required("*Required"),
+  constituency: Yup.string().required("*Required"),
+  mandal: Yup.string().required("*Required"),
+  village: Yup.string().required("*Required"),
+});
+
+const onSubmit = (values, onSubmitProps) => {
+  onSubmitProps.setSubmitting(false);
+};
 
 const genderOptions = [
   {
     key: "Male",
-    value: "M",
+    value: "male",
   },
   {
     key: "Female",
-    value: "F",
+    value: "female",
   },
   {
     key: "Others",
-    value: "O",
+    value: "others",
   },
 ];
 
@@ -67,79 +129,6 @@ class Register extends Component {
     activeConstituency: [],
     activeMandal: [],
     activeVillage: [],
-    isSubmittingForm: false,
-    isRegisterFailed: false,
-  };
-
-  initialValues = {
-    voterId: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-    password: "",
-    confirmPassword: "",
-    dob: null,
-    gender: "M",
-    mobile: "",
-    state: "",
-    district: "",
-    constituency: "",
-    mandal: "",
-    village: "",
-  };
-
-  validationSchema = Yup.object({
-    voterId: Yup.string()
-      .matches(/^V[0-9]{5}$/, "enter valid voter Id")
-      .required("*Required"),
-    email: Yup.string().email("*Invalid email Id").required("*Required"),
-    firstName: Yup.string().required("*Required"),
-    lastName: Yup.string().required("*Required"),
-    password: Yup.string()
-      .required("*Required")
-      .min(8, "password is too short"),
-    confirmPassword: Yup.string()
-      .required("*Requried")
-      .oneOf([Yup.ref("password"), null], "password must match"),
-    dob: Yup.date().required("*Required").nullable(),
-    mobile: Yup.string()
-      .required("*Required")
-      .matches(/^(\+\d{2})?(\d){10}$/, "enter valid number"),
-    state: Yup.string().required("*Required"),
-    district: Yup.string().required("*Required"),
-    constituency: Yup.string().required("*Required"),
-    mandal: Yup.string().required("*Required"),
-    village: Yup.string().required("*Required"),
-  });
-
-  registerSuccess = () => {
-    const { history } = this.props;
-    history.replace("/voter-login");
-  };
-
-  registerFailed = () => {
-    this.setState({ isRegisterFailed: true });
-  };
-
-  onSubmit = async (data, onSubmitProps) => {
-    this.setState((prevState) => ({
-      isSubmittingForm: !prevState.isSubmittingForm,
-      isRegisterFailed: false,
-    }));
-    const url = "https://ovs-backend.herokuapp.com/register";
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(url, options);
-    if (response.status === 201) {
-      this.registerSuccess();
-    } else {
-      this.registerFailed();
-    }
   };
 
   setAddress = (event) => {
@@ -171,29 +160,6 @@ class Register extends Component {
     });
   };
 
-  renderButton = (formik) => {
-    const { isSubmittingForm } = this.state;
-    return isSubmittingForm ? (
-      <button className="voter-register-button">
-        <Loader
-          className="loader"
-          type="TailSpin"
-          color="#4287f5"
-          height={30}
-          width={120}
-        />
-      </button>
-    ) : (
-      <button
-        type="submit"
-        className="voter-register-button"
-        disabled={!formik.isValid || formik.isSubmitting}
-      >
-        Register
-      </button>
-    );
-  };
-
   render() {
     const {
       activeState,
@@ -201,27 +167,21 @@ class Register extends Component {
       activeConstituency,
       activeMandal,
       activeVillage,
-      isSubmittingForm,
-      isRegisterFailed,
     } = this.state;
-
-    const bgClass = isSubmittingForm ? "submit-bg" : "";
     return (
-      <div className="voter-register-outer-bg">
-        <div className={`voter-register-bg ${bgClass}`}>
-          <div className="voter-register-content">
-            <h1 className="voter-register-main-heading">Register Here</h1>
-            <hr />
-            <span className="voter-register-line"></span>
-          </div>
-          <Formik
-            initialValues={this.initialValues}
-            validationSchema={this.validationSchema}
-            onSubmit={this.onSubmit}
-          >
-            {(formik) => {
-              return (
-                <Form className="voter-register-form">
+      <div className="voter-register-bg">
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+        >
+          {(formik) => {
+            return (
+              <div className="voter-register-content">
+                <h1 className="voter-register-main-heading">Register Here</h1>
+                <hr />
+                <span className="voter-register-line"></span>
+                <Form className="voter-register-form" id="registerForm">
                   <FormikControl
                     control="input"
                     type="text"
@@ -243,7 +203,7 @@ class Register extends Component {
                   <FormikControl
                     control="input"
                     type="text"
-                    name="firstName"
+                    name="firstname"
                     placeholder="First Name"
                     icon="user"
                     formik={formik}
@@ -252,7 +212,7 @@ class Register extends Component {
                   <FormikControl
                     control="input"
                     type="text"
-                    name="lastName"
+                    name="lastname"
                     placeholder="Last Name"
                     icon="user"
                     formik={formik}
@@ -278,7 +238,7 @@ class Register extends Component {
 
                   <FormikControl
                     control="date"
-                    name="dob"
+                    name="DOB"
                     icon="calendar-alt"
                     formik={formik}
                   />
@@ -291,14 +251,14 @@ class Register extends Component {
                   />
                   <FormikControl
                     control="input"
-                    name="mobile"
+                    name="phoneNumber"
                     type="text"
                     placeholder="Phone Number"
                     icon="mobile-alt"
                     formik={formik}
                   />
                   <div className="address-input-container">
-                    <p className="address-input-container-placeholder">
+                    <p>
                       <span>
                         <i className={`fas fa-map-marker-alt icon`}></i>
                       </span>
@@ -352,12 +312,7 @@ class Register extends Component {
                     className="voter-register-form-footer"
                     id="voter-register-footer"
                   >
-                    {this.renderButton(formik)}
-                    {isRegisterFailed && (
-                      <p className="register-failed-message">
-                        *Enter your details correctly
-                      </p>
-                    )}
+                    <button className="voter-register-button">Register</button>
                     <p className="voter-register-already-account">
                       Already have an account?
                     </p>
@@ -366,10 +321,10 @@ class Register extends Component {
                     </Link>
                   </div>
                 </Form>
-              );
-            }}
-          </Formik>
-        </div>
+              </div>
+            );
+          }}
+        </Formik>
       </div>
     );
   }
