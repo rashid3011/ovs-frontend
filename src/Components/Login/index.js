@@ -27,7 +27,12 @@ class LoginPage extends Component {
   loginSuccess = (data) => {
     const { history } = this.props;
     const { token, voter } = data;
-    Cookies.set("token", token, {
+    const { role } = voter;
+    const tokenCookie = {
+      token,
+      role,
+    };
+    Cookies.set("token", tokenCookie, {
       path: "/",
     });
     localStorage.setItem("voterDetails", JSON.stringify(voter));

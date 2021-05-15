@@ -2,30 +2,14 @@ import { Component } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FormikControl from "../FormikControl";
-import "./index.css";
 import Loader from "react-loader-spinner";
+import "./index.css";
 
 const validationSchema = Yup.object({
   voterId: Yup.string().required("*Required"),
   email: Yup.string().email("*Invalid email Id").required("*Required"),
   firstName: Yup.string().required("*Required"),
   lastName: Yup.string().required("*Required"),
-  password: Yup.string()
-    .required("*Required")
-    .min(8, "password is too short")
-    .matches(
-      /^(?=.*[!@#$%^&*])/,
-      "password must contain atleast one speacial character"
-    )
-    .matches(/^(?=.*[a-z])/, "password must contain one lowercase letter")
-    .matches(
-      /^(?=.*[A-Z])/,
-      "password must contain atleast one UpperCase letter"
-    )
-    .matches(/^(?=.*[0-9])/, "password must contain atleast one digit"),
-  confirmPassword: Yup.string()
-    .required("*Requried")
-    .oneOf([Yup.ref("password"), null], "password must match"),
   dob: Yup.date().required("*Required").nullable(),
   mobile: Yup.string()
     .required("*Required")
@@ -91,7 +75,7 @@ const villageOptions = {
   Kusumanchi: ["Kusumanchi"],
 };
 
-class ViewProfile extends Component {
+class ViewVoterProfile extends Component {
   state = {
     activeState: stateOptions,
     activeDistrict: [],
@@ -111,7 +95,7 @@ class ViewProfile extends Component {
   };
 
   returnInitialValues = () => {
-    const { details } = this.props;
+    const details = JSON.parse(localStorage.getItem("voterDetails"));
     const modifiedInitialValues = {
       ...details,
       confirmPassword: details.password,
@@ -171,8 +155,9 @@ class ViewProfile extends Component {
   };
 
   updateDetails = async (values) => {
+    const { history } = this.props;
+    console.log(values);
     this.setState({ isUpdatingDetails: true });
-    const { close, rerenderVoters } = this.props;
     const url = "https://ovs-backend.herokuapp.com/voters";
     const options = {
       method: "PATCH",
@@ -185,9 +170,9 @@ class ViewProfile extends Component {
     };
 
     const response = await fetch(url, options);
+
     if (response.status === 200) {
-      close();
-      rerenderVoters();
+      history.push("/voter-dashboard");
     } else {
       this.setState({ errorMessage: "*Please Enter Valid Details" });
     }
@@ -196,7 +181,7 @@ class ViewProfile extends Component {
   onSubmit = (values) => {
     if (values === this.initialValues) {
       this.setState({
-        errorMessage: "*Please Make Changes Details to Update",
+        errorMessage: "*Please Make Changes in Details to Update",
       });
       return;
     }
@@ -215,7 +200,7 @@ class ViewProfile extends Component {
     } = this.state;
 
     const formEditClass = isFormEditable ? "" : "no-edit-form";
-    const { close } = this.props;
+
     return (
       <div className="voter-view-bg">
         <Formik
@@ -230,14 +215,10 @@ class ViewProfile extends Component {
                   <h1 className="voter-register-main-heading">
                     {`${this.initialValues.voterId}'s Details`}
                   </h1>
-                  <i
-                    className="fas fa-times hide-popup-icon"
-                    onClick={close}
-                  ></i>
                 </div>
                 <hr />
                 <span className="voter-register-line"></span>
-                <Form autoComplete="off">
+                <Form>
                   <div
                     className={`voter-register-form ${formEditClass}`}
                     id="updateForm"
@@ -296,7 +277,7 @@ class ViewProfile extends Component {
                       formik={formik}
                     />
                     <div className="address-input-container">
-                      <p>
+                      <p className="address-placeholder">
                         <span>
                           <i className={`fas fa-map-marker-alt icon`}></i>
                         </span>
@@ -372,13 +353,6 @@ class ViewProfile extends Component {
                     >
                       Reset
                     </button>
-                    <button
-                      className="voter-close-button"
-                      type="button"
-                      onClick={close}
-                    >
-                      Close
-                    </button>
                   </div>
                   <p className="voter-view-error-message">{errorMessage}</p>
                 </Form>
@@ -408,4 +382,4 @@ class ViewProfile extends Component {
   }
 }
 
-export default ViewProfile;
+export default ViewVoterProfile;

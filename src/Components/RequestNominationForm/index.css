@@ -1,0 +1,145 @@
+.voter-nomination-bg {
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.voter-nomination-content {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 350px;
+  height: 500px;
+  border-radius: 8px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 25px 0px;
+  z-index: 1;
+  box-shadow: 0 0 5px #888;
+}
+
+.voter-nomination-form {
+  width: 100%;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#type .selectdiv {
+  width: 100px;
+  height: 30px;
+}
+#type .selectdiv::after {
+  font: normal normal normal 12px/1 FontAwesome;
+}
+
+.voter-nomination-main-heading {
+  font-size: 25px;
+  font-weight: 600;
+  font-family: "Roboto";
+  color: var(--main-color);
+  margin-bottom: 20px;
+}
+
+.nomination-address-input-container {
+  height: 40px;
+  width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nomination-address-input-container p {
+  font-size: 15px;
+}
+
+.voter-nomination-button {
+  margin-top: 25px;
+  width: 135px;
+  height: 35px;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+  background: #fff;
+  font-size: 15px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.voter-nomination-button::before {
+  content: "";
+  position: absolute;
+  background-color: var(--main-color);
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  transform: translateX(-100%);
+  transition: all ease-in-out 0.5s;
+}
+
+.voter-nomination-button:hover::before {
+  transform: translateX(0);
+}
+
+.voter-nomination-button:hover {
+  transition-delay: 0.25s;
+  color: #fff;
+}
+
+.voter-nomination-form .input-container {
+  width: 250px !important;
+}
+
+.nomination-image-div {
+  height: 500px;
+  padding: 10px;
+  width: 450px;
+  box-shadow: 0 0 5px #888888;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  position: relative;
+}
+
+#nomination-svg {
+  height: 100%;
+  width: 100%;
+}
+
+.nomination-error-message {
+  color: red;
+  font-size: 15px;
+  text-align: center;
+}
+
+.nomination-image-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nomination-success {
+  height: 100px;
+  width: 100px;
+}
+
+.nomination-image-container h1 {
+  font-size: 25px;
+  color: var(--main-color);
+  font-family: "Roboto";
+  font-weight: 600;
+}
+
+.nomination-image-container p {
+  font-size: 18px;
+  color: limegreen;
+}

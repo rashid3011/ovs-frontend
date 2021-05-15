@@ -32,7 +32,7 @@ class ECLoginPage extends Component {
   };
 
   loginFailed = () => {
-    this.setState({ isLoginFailed: true });
+    this.setState({ isSubmittingForm: false, isLoginFailed: true });
   };
 
   onSubmit = async (values, onSubmitProps) => {

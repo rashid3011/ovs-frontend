@@ -1,16 +1,15 @@
 import { React, Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
+import Loader from "react-loader-spinner";
+import VoterSidebar from "../VoterSidebar";
+import Dashboardheader from "../Dashboardheader";
 import "./index.css";
 
 const navLinks = [
   {
     key: "view-profile",
     value: "Profile",
-  },
-  {
-    key: "update-profile",
-    value: "Update Profile",
   },
   {
     key: "view-results",
@@ -23,6 +22,10 @@ const navLinks = [
   {
     key: "request-nomination",
     value: "Request Nomination",
+  },
+  {
+    key: "delete-account",
+    value: "Delete Account",
   },
 ];
 
@@ -45,120 +48,34 @@ const voteDivision = [
   },
 ];
 
-const mlaPartyDetails = [
-  {
-    logoUrl: "https://i.ibb.co/HCfGQtp/bjp-logo-1-1-removebg-preview.png",
-    name: "BJP",
-    candidateName: "Narendra Modi",
-  },
-  {
-    logoUrl: "https://i.ibb.co/zHrLkfF/congress.png",
-    name: "Congress",
-    candidateName: "Rajiv Gandhi",
-  },
-  {
-    logoUrl: "https://i.ibb.co/FVww8C7/aap.jpg",
-    name: "AAP",
-    candidateName: "Kejriwal jaadu wala",
-  },
-  {
-    logoUrl: "https://i.ibb.co/FVww8C7/aap.jpg",
-    name: "TUM",
-    candidateName: "Kejriwal towel wala",
-  },
-];
-
-const mpPartyDetails = [
-  {
-    logoUrl: "https://i.ibb.co/zHrLkfF/congress.png",
-    name: "Congress",
-    candidateName: "Rajiv Gandhi",
-  },
-  {
-    logoUrl: "https://i.ibb.co/HCfGQtp/bjp-logo-1-1-removebg-preview.png",
-    name: "BJP",
-    candidateName: "Narendra Modi",
-  },
-  {
-    logoUrl: "https://i.ibb.co/FVww8C7/aap.jpg",
-    name: "TUM",
-    candidateName: "Kejriwal towel wala",
-  },
-  {
-    logoUrl: "https://i.ibb.co/FVww8C7/aap.jpg",
-    name: "AAP",
-    candidateName: "Kejriwal jaadu wala",
-  },
-];
-
-const sarpanchPartyDetails = [
-  {
-    logoUrl: "https://i.ibb.co/FVww8C7/aap.jpg",
-    name: "AAP1",
-    candidateName: "Kejriwal jaadu wala",
-  },
-  {
-    logoUrl: "https://i.ibb.co/zHrLkfF/congress.png",
-    name: "Congress1",
-    candidateName: "Rajiv Gandhi",
-  },
-  {
-    logoUrl: "https://i.ibb.co/FVww8C7/aap.jpg",
-    name: "TUM1",
-    candidateName: "Kejriwal towel wala",
-  },
-  {
-    logoUrl: "https://i.ibb.co/HCfGQtp/bjp-logo-1-1-removebg-preview.png",
-    name: "BJP1",
-    candidateName: "Narendra Modi",
-  },
-  {
-    logoUrl: "https://i.ibb.co/FVww8C7/aap.jpg",
-    name: "AAP",
-    candidateName: "Kejriwal jaadu wala",
-  },
-  {
-    logoUrl: "https://i.ibb.co/zHrLkfF/congress.png",
-    name: "Congress",
-    candidateName: "Rajiv Gandhi",
-  },
-  {
-    logoUrl: "https://i.ibb.co/FVww8C7/aap.jpg",
-    name: "TUM",
-    candidateName: "Kejriwal towel wala",
-  },
-  {
-    logoUrl: "https://i.ibb.co/HCfGQtp/bjp-logo-1-1-removebg-preview.png",
-    name: "BJP",
-    candidateName: "Narendra Modi",
-  },
-];
-
-const zptcPartyDetails = [
-  {
-    logoUrl: "https://i.ibb.co/zHrLkfF/congress.png",
-    name: "Congress",
-    candidateName: "Rajiv Gandhi",
-  },
-  {
-    logoUrl: "https://i.ibb.co/FVww8C7/aap.jpg",
-    name: "TUM",
-    candidateName: "Kejriwal towel wala",
-  },
-  {
-    logoUrl: "https://i.ibb.co/HCfGQtp/bjp-logo-1-1-removebg-preview.png",
-    name: "BJP",
-    candidateName: "Narendra Modi",
-  },
-];
-
 class VoterDashboard extends Component {
   state = {
     isNavbarVisible: false,
     isUserProfileVisible: false,
     activeElectionType: "mla",
-    partyDetails: mlaPartyDetails,
+    mlaDetails: [],
+    mpDetails: [],
+    zptcDetails: [],
+    sarpanchDetails: [],
+    partyDetails: [],
+    voterDetails: [],
+    isFetching: true,
+    isDeletingVoter: false,
   };
+
+  fetchVoterDetails = async () => {
+    const { voterId } = JSON.parse(localStorage.getItem("voterDetails"));
+    const url = `https://ovs-backend.herokuapp.com/voters/${voterId}`;
+    const response = await fetch(url);
+    const { voter } = await response.json();
+    localStorage.setItem("voterDetails", JSON.stringify(voter));
+    this.setState({ voterDetails: voter });
+    this.getDetails();
+  };
+
+  componentDidMount() {
+    this.fetchVoterDetails();
+  }
 
   toggleNavbar = () => {
     this.setState((prevState) => ({
@@ -172,86 +89,170 @@ class VoterDashboard extends Component {
     }));
   };
 
-  changeElectionType = (event) => {
+  renderLoader = () => {
+    return (
+      <Loader
+        className="pending-loader"
+        type="TailSpin"
+        width={35}
+        height={35}
+        color="blue"
+      />
+    );
+  };
+
+  deleteUser = async (item) => {
+    const { history } = this.props;
+    const { voterId } = item;
+    const url = " https://ovs-backend.herokuapp.com/voters";
+    const options = {
+      method: "DELETE",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({ voterId: voterId }),
+    };
+
+    this.setState({ isDeletingVoter: true });
+    await fetch(url, options);
+    Cookies.remove("token");
+    history.push("/");
+  };
+
+  renderDeleteConfirmation = (item, close) => {
+    const { voterId, firstName, lastName } = item;
+    return (
+      <div className="delete-confirmation-container">
+        <h1>Your Details</h1>
+        <ul>
+          <p>Voter ID : {voterId}</p>
+          <p>First Name : {firstName}</p>
+          <p>Last Name : {lastName}</p>
+        </ul>
+        <p className="message">
+          *Are you sure you want to delete your account <br /> Once deleted
+          cannot be restored
+        </p>
+        <div className="confirm-buttons-container">
+          <button
+            className="delete"
+            onClick={() => {
+              this.deleteUser(item);
+            }}
+          >
+            Delete User
+          </button>
+          <button className="cancel" onClick={close}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  renderDeleteConfirmed = () => {
+    return (
+      <div className="confirmed-image-container">
+        <img
+          src="confirmed.gif"
+          alt="confirmed"
+          className="confirmed-image"
+        ></img>
+      </div>
+    );
+  };
+
+  getDetails = () => {
+    this.getMlaDetails();
+    this.getMpDetails();
+    this.getSarpanchDetails();
+    this.getZptcDetails();
+    this.setState({ isFetching: false });
+  };
+
+  getMpDetails = async () => {
+    const { voterDetails } = this.state;
+    const { district } = voterDetails;
+    const url = `https://ovs-backend.herokuapp.com/candidates/mp/${district}`;
+    const options = {
+      method: "GET",
+    };
+    const response = await fetch(url, options);
+    if (response.status !== 404) {
+      const data = await response.json();
+      const { candidates } = data;
+      this.setState({ mpDetails: candidates });
+    }
+  };
+
+  getMlaDetails = async () => {
+    const { voterDetails } = this.state;
+    const { constituency } = voterDetails;
+    const url = `https://ovs-backend.herokuapp.com/candidates/mla/${constituency}`;
+    const options = {
+      method: "GET",
+    };
+    const response = await fetch(url, options);
+    if (response.status !== 404) {
+      const data = await response.json();
+      const { candidates } = data;
+      this.setState({ mlaDetails: candidates });
+    }
+  };
+
+  getZptcDetails = async () => {
+    const { voterDetails } = this.state;
+    const { mandal } = voterDetails;
+    const url = `https://ovs-backend.herokuapp.com/candidates/mp/${mandal}`;
+    const options = {
+      method: "GET",
+    };
+    const response = await fetch(url, options);
+    if (response.status !== 404) {
+      const data = await response.json();
+      const { candidates } = data;
+      this.setState({ zptcDetails: candidates });
+    }
+  };
+
+  getSarpanchDetails = async () => {
+    const { voterDetails } = this.state;
+    const { village } = voterDetails;
+    const url = `https://ovs-backend.herokuapp.com/candidates/mp/${village}`;
+    const options = {
+      method: "GET",
+    };
+    const response = await fetch(url, options);
+    if (response.status !== 404) {
+      const data = await response.json();
+      const { candidates } = data;
+      this.setState({ sarpanchDetails: candidates });
+    }
+  };
+
+  changeElectionType = async (event) => {
     const electionType = event.target.id;
+    const { mlaDetails, mpDetails, zptcDetails, sarpanchDetails } = this.state;
     let details;
     if (electionType === "mla") {
-      details = mlaPartyDetails;
+      details = mlaDetails;
     } else if (electionType === "mp") {
-      details = mpPartyDetails;
+      details = mpDetails;
     } else if (electionType === "sarpanch") {
-      details = sarpanchPartyDetails;
+      details = zptcDetails;
     } else {
-      details = zptcPartyDetails;
+      details = sarpanchDetails;
     }
 
     this.setState({ activeElectionType: electionType, partyDetails: details });
-  };
-
-  renderNavbar = () => {
-    const { isNavbarVisible } = this.state;
-    const classNavbar = isNavbarVisible ? "show-navbar" : "hide-navbar";
-    return (
-      <div className={`voter-sidebar-container ${classNavbar}`}>
-        <i
-          className="fas fa-chevron-circle-left close-icon"
-          onClick={this.toggleNavbar}
-        ></i>
-        <nav className="voter-sidebar">
-          <ul className="voter-nav-list">
-            {navLinks.map((link) => {
-              const { key, value } = link;
-              return (
-                <Link
-                  to={`/${key}`}
-                  className="voter-navlink"
-                  key={key}
-                  style={{ textDecoration: "none" }}
-                >
-                  <li>{value}</li>
-                </Link>
-              );
-            })}
-          </ul>
-        </nav>
-      </div>
-    );
   };
 
   logout = () => {
     Cookies.remove("token");
     const { history } = this.props;
     history.replace("/voter-login");
-  };
-
-  renderMenu = () => {
-    const { isNavbarVisible, isUserProfileVisible } = this.state;
-    const classMenu = isNavbarVisible ? "hide" : "";
-    const voterDetails = JSON.parse(localStorage.getItem("voterDetails"));
-    const { firstName } = voterDetails;
-    const classUserProfile = isUserProfileVisible ? "" : "hide-user-profile";
-    return (
-      <div className={`nav-menubars-container`}>
-        <i
-          className={`fas fa-bars nav-menu ${classMenu}`}
-          onClick={this.toggleNavbar}
-        ></i>
-        <div className={`dash-header-right-outer ${classMenu}`}>
-          <div className="toggle-user-profile" onClick={this.toggleUserProfile}>
-            <i className="far fa-user-circle user-profile-icon"></i>
-            <i className="fas fa-sort-down user-profile-arrow"></i>
-          </div>
-          <div className={`dash-header-right ${classUserProfile}`}>
-            <p className="welcome">
-              Welcome {firstName.slice(0, 1).toUpperCase() + firstName.slice(1)}
-            </p>
-            <button className="voter-logout" onClick={this.logout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-    );
   };
 
   renderCastVoteHeader = () => {
@@ -279,25 +280,63 @@ class VoterDashboard extends Component {
     );
   };
 
+  renderNoResults = (election) => {
+    return (
+      <div className="no-results">
+        <i className="fas fa-exclamation-triangle"></i>
+        <h1>
+          No{" "}
+          <span style={{ fontWeight: "600", fontSize: "18px" }}>
+            {election}
+          </span>{" "}
+          is found in your location
+        </h1>
+      </div>
+    );
+  };
+
+  getPartyImage = (partyName) => {
+    switch (partyName.toLowerCase()) {
+      case "bjp":
+        return "https://i.ibb.co/HCfGQtp/bjp-logo-1-1-removebg-preview.png";
+      case "congress":
+        return "https://i.ibb.co/zHrLkfF/congress.png";
+      case "aap":
+        return "https://i.ibb.co/FVww8C7/aap.jpg";
+      default:
+        return "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.pngall.com%2Fprofile-png%2Fdownload%2F51607&psig=AOvVaw3iN0t-L4oAu8PP9pRBuoQe&ust=1621169776988000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPj4kZzey_ACFQAAAAAdAAAAABAD";
+    }
+  };
+
   renderCandidateList = () => {
-    const { partyDetails, activeElectionType } = this.state;
+    const { partyDetails, activeElectionType, isFetching } = this.state;
     return (
       <div className="party-list-container">
         <ul className="party-list">
-          {partyDetails.map((item) => {
-            const { logoUrl, name, candidateName } = item;
-            return (
-              <li
-                className="party-list-li"
-                key={`${name}-${activeElectionType}`}
-              >
-                <img src={logoUrl} alt={name} className="party-logo" />
-                <p className="party-name">{name}</p>
-                <p className="candidate-name">{candidateName}</p>
-                <button className="cast-vote-button">Vote</button>
-              </li>
-            );
-          })}
+          {isFetching
+            ? this.renderLoader()
+            : partyDetails.length === 0
+            ? this.renderNoResults(activeElectionType)
+            : partyDetails.map((item) => {
+                const { candidateId, partyName, voterInfo } = item;
+                const { firstName, lastName } = voterInfo;
+                const imageUrl = this.getPartyImage(partyName);
+                return (
+                  <li
+                    className="party-list-li"
+                    key={`${candidateId}-${activeElectionType}`}
+                  >
+                    <img
+                      src={imageUrl}
+                      alt={partyName}
+                      className="party-logo"
+                    />
+                    <p className="candidate-name">{`${firstName} ${lastName}`}</p>
+                    <p className="party-name">{partyName}</p>
+                    <button className="cast-vote-button">Vote</button>
+                  </li>
+                );
+              })}
         </ul>
       </div>
     );
@@ -307,10 +346,37 @@ class VoterDashboard extends Component {
     if (Cookies.get("token") === undefined) {
       return <Redirect to="/voter-login" />;
     }
+    const {
+      isNavbarVisible,
+      isUserProfileVisible,
+      voterDetails,
+      isDeletingVoter,
+    } = this.state;
+    const { firstName } = voterDetails;
     return (
       <div className="dash-bg">
-        {this.renderMenu()}
-        {this.renderNavbar()}
+        <Dashboardheader
+          isNavbarVisible={isNavbarVisible}
+          isProfileVisible={isUserProfileVisible}
+          name={firstName === undefined ? "" : firstName}
+          logout={this.logout}
+          toggleProfile={this.toggleUserProfile}
+          toggleNavbar={this.toggleNavbar}
+        />
+        <VoterSidebar
+          navLinks={navLinks}
+          isNavbarVisible={isNavbarVisible}
+          toggleNavbar={this.toggleNavbar}
+          isDeletingVoter={isDeletingVoter}
+          renderDeleteConfirmed={this.renderDeleteConfirmed}
+          renderDeleteConfirmation={this.renderDeleteConfirmation}
+          details={voterDetails}
+        />
+        <h1 className="quote">
+          The Ballot
+          <br /> is stronger than
+          <br /> The Bullet.
+        </h1>
         <div className="cast-vote-outer-container">
           <div className="cast-vote-container">
             {this.renderCastVoteHeader()}

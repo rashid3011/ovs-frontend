@@ -1,0 +1,88 @@
+.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+.nav-menubars-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+.dash-header-right-outer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.toggle-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  cursor: pointer;
+}
+
+.profile-icon {
+  display: inline-block;
+  font-size: 30px;
+  cursor: pointer;
+}
+.profile-arrow {
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+}
+.dash-header-right {
+  margin-left: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.welcome {
+  text-align: right;
+  padding: 15px 10px 0px 0px;
+  font-size: 16px;
+  font-family: "Roboto";
+}
+.logout {
+  background: #0051ff;
+  border: 0;
+  font-family: "Roboto";
+  color: #fff;
+  height: 35px;
+  width: 110px;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.2s all;
+}
+.logout:hover {
+  background: #0346d6;
+}
+
+@media (max-width: 576px) {
+  .dash-header-right {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .hide-profile {
+    display: none;
+  }
+  .welcome {
+    font-size: 16px;
+  }
+  .logout {
+    width: 90px;
+  }
+}
+
+@media (min-width: 577px) {
+  .profile-icon {
+    display: none;
+  }
+  .profile-arrow {
+    display: none;
+  }
+  .dash-header-right {
+    display: flex;
+    flex-direction: row;
+  }
+}

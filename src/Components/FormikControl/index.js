@@ -3,6 +3,7 @@ import DateInput from "../InputFields/DateInput";
 import TextArea from "../InputFields/TextArea";
 import RadioInput from "../InputFields/RadioInput";
 import Dropdown from "../InputFields/DropDown";
+import SimpleDropdown from "../InputFields/SimpleDropdown";
 
 function FromikControl(props) {
   const { control, ...rest } = props;
@@ -17,6 +18,8 @@ function FromikControl(props) {
       return <RadioInput {...rest} />;
     case "dropdown":
       return <Dropdown {...rest} />;
+    case "simpleDropdown":
+      return <SimpleDropdown {...rest} />;
     default:
       return null;
   }

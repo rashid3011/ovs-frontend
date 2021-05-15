@@ -1,6 +1,7 @@
-.voter-register-bg {
-  padding: 20px;
-  overflow-x: hidden;
+.voter-view-bg {
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
 }
 
 .voter-register-main-heading {
@@ -25,10 +26,19 @@ hr {
   align-items: stretch;
 }
 
-.input-container {
+.voter-register-form .input-container {
   margin-bottom: auto;
   margin-top: 2%;
   padding-right: 15px;
+}
+
+.voter-register-form .radio-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.voter-register-form .radio-buttons-container {
+  margin-left: 20px;
 }
 
 .input-container input {
@@ -51,8 +61,8 @@ hr {
   left: -6%;
 }
 
-#firstname,
-#lastname {
+#firstName,
+#lastName {
   width: 50%;
 }
 
@@ -61,9 +71,9 @@ hr {
   width: 50%;
 }
 
-#DOB,
+#dob,
 #gender,
-#phoneNumber {
+#mobile {
   width: 50%;
 }
 
@@ -78,6 +88,17 @@ hr {
   width: 100%;
 }
 
+.address-input-container-placeholder {
+  text-align: left;
+  font-size: 15px;
+  font-family: "Roboto";
+  transition: 0.5s all;
+}
+
+.address-input-container:hover .address-input-container-placeholder {
+  color: var(--main-color);
+}
+
 .nested-dropdown-container {
   display: flex;
   flex-wrap: wrap;
@@ -86,12 +107,6 @@ hr {
 
 .selectdiv {
   margin: 0 10px 10px 0;
-}
-
-.address-input-container p {
-  text-align: left;
-  font-size: 16px;
-  font-family: "Roboto";
 }
 
 .voter-register-form-footer {
@@ -153,6 +168,91 @@ hr {
 
 .voter-register-nav-link:hover {
   color: #2c7a2a;
+}
+
+.submit-bg {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.register-failed-message {
+  color: red;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.no-edit-form {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.voter-view-form-footer {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  pointer-events: all;
+}
+
+.voter-view-form-footer button {
+  width: 125px;
+  height: 35px;
+  border: none;
+  border-radius: 8px;
+}
+
+.voter-edit-button {
+  background: rgb(0, 68, 255);
+  color: #fff;
+}
+
+.voter-save-button {
+  background: limegreen;
+  color: #fff;
+}
+
+.voter-close-button {
+  background: #ff0040;
+  color: #fff;
+}
+
+.voter-reset-button {
+  background: rgb(255, 166, 0);
+  color: #fff;
+}
+
+.dummy-input {
+  display: none;
+}
+
+.voter-view-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hide-popup-icon {
+  font-size: 25px;
+  color: #888;
+  cursor: pointer;
+}
+
+.voter-view-error-message {
+  color: red;
+  font-size: 15px;
+  text-align: center;
+}
+
+.voter-view-loader {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#updateForm #voterId {
+  pointer-events: none;
 }
 
 @media (max-width: 576px) {
@@ -219,5 +319,6 @@ hr {
   }
   .radio-container label {
     width: 70px;
+    font-size: 14px;
   }
 }

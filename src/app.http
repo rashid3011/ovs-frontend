@@ -6,6 +6,38 @@ POST https://ovs-backend.herokuapp.com/login/ HTTP/1.1
 Content-Type: application/json
 
 {
-  "voterId" : "V11111",
-  "password" : "Rgukt123",
+  "voterId" : "V22222",
+  "password" : "Rgukt@123",
 }
+
+###
+GET https://ovs-backend.herokuapp.com/voters/V34566 HTTP/1.1
+
+
+###
+PATCH https://ovs-backend.herokuapp.com/voters HTTP/1.1
+
+Content-Type: application/json
+
+{
+  "voterId" : "V22222",
+  "mobile" : "1234567890",
+}
+
+
+###
+
+GET https://ovs-backend.herokuapp.com/EC/Candidates/C22200 HTTP/1.1
+
+
+###
+GET https://ovs-backend.herokuapp.com/EC/requests/ HTTP/1.1
+
+###
+GET https://ovs-backend.herokuapp.com/EC/candidates HTTP/1.1
+
+###
+GET https://ovs-backend.herokuapp.com/candidates/mp/khammm HTTP/1.1
+
+###
+GET https://ovs-backend.herokuapp.com/candidates/mp/khammam HTTP/1.1

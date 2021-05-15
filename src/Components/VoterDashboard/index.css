@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap");
 
 .dash-bg {
   background: #ffffff;
@@ -6,143 +7,11 @@
   overflow-x: hidden;
 }
 
-.nav-menu {
-  color: black;
-  font-size: 25px;
-  cursor: pointer;
-  transition: 0.2s all;
-  margin-bottom: auto;
-}
-
-.nav-menu:active,
-.nav-menu:hover {
-  color: #228adf;
-}
-
-.nav-menubars-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-}
-
-.dash-header-right {
-  margin-left: auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.close-icon {
-  text-align: right;
-}
-
-.voter-sidebar-container {
-  position: fixed;
-  background: #0b7dda;
-  height: 100%;
-  top: 0;
-  min-width: 250px;
-  max-width: 250px;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.5s;
-}
-
-.voter-sidebar {
-  margin-top: 20px;
-  height: 30%;
-}
-
-.voter-nav-list {
-  height: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-start;
-  padding-left: 0px;
-  margin: 0;
-  list-style: none;
-}
-
-.voter-navlink {
-  color: #fff;
-  font-size: 18px;
-  font-family: "Fira Sans", sans-serif;
-  cursor: pointer;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  text-align: left;
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
-  border-bottom: 2px solid rgb(6, 113, 155);
-}
-
-.voter-navlink::after {
-  content: "";
-  position: absolute;
-  height: 100%;
-  width: 120%;
-  background-color: #0051ff;
-  top: 0;
-  left: 0;
-  transform: translateX(-100%);
-  transition: 0.5s all;
-  z-index: -1;
-}
-
-.voter-navlink:hover::after {
-  transform: translateX(-10%);
-}
-.voter-navlink:hover {
-  color: #fff;
-}
-
-.close-icon {
-  margin-top: 15px;
-  color: #fff;
-  font-size: 25px;
-  cursor: pointer;
-}
-
-.voter-logout {
-  background: #0051ff;
-  border: 0;
-  font-family: "Roboto";
-  color: #fff;
-  height: 35px;
-  width: 110px;
-  border-radius: 8px;
-  outline: none;
-  transition: 0.2s all;
-}
-.voter-logout:hover {
-  background: #0346d6;
-}
-
-.hide-navbar {
-  transform: translate(-100%, 0);
-}
-
-.hide {
-  opacity: 0;
-  pointer-events: none;
-}
-
 .welcome {
   text-align: right;
   padding: 15px 10px 0px 0px;
   font-size: 16px;
   font-family: "Roboto";
-}
-
-.user-icon {
-  color: #228adf;
 }
 
 .cast-vote-outer-container {
@@ -242,28 +111,6 @@
   border-bottom: 0px !important;
 }
 
-.user-profile-icon {
-  display: inline-block;
-  font-size: 30px;
-  cursor: pointer;
-}
-.user-profile-arrow {
-  display: inline-block;
-  font-size: 20px;
-  cursor: pointer;
-}
-.toggle-user-profile {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  cursor: pointer;
-}
-.dash-header-right-outer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
 .party-name {
   width: 100px;
   text-align: left;
@@ -274,6 +121,30 @@
   text-align: left;
 }
 
+.quote {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  animation: typing 2s steps(22), blink 0.5s step-end infinite alternate;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid;
+  font-size: 2em;
+  font-family: "IM Fell English SC", serif;
+  color: rgb(146, 0, 151);
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
 @media (max-width: 400px) {
   .cast-vote-header li {
     font-size: 14px;
@@ -296,6 +167,9 @@
   .cast-vote-button {
     width: 80px;
   }
+  .quote {
+    font-size: 20px;
+  }
 }
 
 @media (min-width: 400px) and (max-width: 576px) {
@@ -315,33 +189,22 @@
   .cast-vote-button {
     width: 90px;
   }
-}
-
-@media (max-width: 576px) {
-  .dash-header-right {
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  .hide-user-profile {
-    display: none;
-  }
-  .welcome {
-    font-size: 16px;
-  }
-  .voter-logout {
-    width: 90px;
+  .quote {
+    font-size: 30px;
   }
 }
 
-@media (min-width: 577px) {
-  .user-profile-icon {
+@media (min-width: 768px) {
+  .quote br {
     display: none;
   }
-  .user-profile-arrow {
-    display: none;
+  .quote {
+    font-size: 25px;
   }
-  .dash-header-right {
-    display: flex;
-    flex-direction: row;
+}
+
+@media (min-width: 1000px) {
+  .quote {
+    font-size: 30px;
   }
 }
