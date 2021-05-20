@@ -1,0 +1,55 @@
+.voter-view-results-bg {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.voter-view-results-container {
+  display: flex;
+  height: 300px;
+}
+
+.voter-view-results-container .view-results-bg {
+  justify-content: space-around;
+  margin-top: 0px;
+  background: #fff;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  width: 500px;
+  padding: 0px;
+}
+
+.results-image-container {
+  box-shadow: 0 0 8px #888;
+  padding: 20px;
+  z-index: -1;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.results-image {
+  width: 300px;
+}
+
+@media (max-width: 950px) {
+  .results-image-container {
+    display: none;
+  }
+  .view-results-bg {
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .view-results-bg {
+    width: 330px !important;
+  }
+  .view-results-type-input-container p {
+    font-size: 14px;
+  }
+}

@@ -25,12 +25,24 @@
   display: inline-block;
   font-size: 30px;
   cursor: pointer;
+  transition: all 0.3s;
 }
 .profile-arrow {
+  align-self: center;
   display: inline-block;
   font-size: 20px;
   cursor: pointer;
+  transition: all 0.3s;
 }
+
+.toggle-profile:hover .profile-icon {
+  color: var(--main-color);
+}
+
+.toggle-profile:hover .profile-arrow {
+  color: var(--main-color);
+}
+
 .dash-header-right {
   margin-left: auto;
   display: flex;
@@ -47,10 +59,11 @@
   background: #0051ff;
   border: 0;
   font-family: "Roboto";
+  font-weight: 600;
   color: #fff;
   height: 35px;
-  width: 110px;
-  border-radius: 8px;
+  width: 90px;
+  border-radius: 3px;
   outline: none;
   transition: 0.2s all;
 }

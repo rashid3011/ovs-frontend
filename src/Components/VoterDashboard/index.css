@@ -9,16 +9,23 @@
 
 .welcome {
   text-align: right;
-  padding: 15px 10px 0px 0px;
-  font-size: 16px;
+  padding: 15px 30px 0px 0px;
+  font-size: 18px;
   font-family: "Roboto";
+  font-weight: 600;
 }
 
 .cast-vote-outer-container {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.cast-vote-error {
+  color: red;
+  font-size: 15px;
   margin-top: 100px;
+  margin-bottom: 0px;
 }
 
 .cast-vote-container {
@@ -80,6 +87,10 @@
   align-items: center;
 }
 
+.party-list-li p {
+  margin-bottom: 0px;
+}
+
 .party-list-li:not(:last-of-type) {
   width: 100%;
   margin-left: 0;
@@ -93,16 +104,55 @@
 
 .cast-vote-button {
   height: 35px;
-  width: 120px;
+  width: 90px;
   border: none;
-  border-radius: 8px;
-  background: rgb(35, 235, 9);
+  border-radius: 3px;
+  background: rgb(163, 9, 235);
   transition: all 0.3s;
   color: #fff;
+  font-weight: 600;
 }
 
 .cast-vote-button:hover {
-  background: rgb(35, 201, 13);
+  background: rgb(185, 13, 201);
+}
+
+.cast-vote-confirmation-content {
+  padding: 15px !important;
+  width: 400px !important;
+  border-radius: 8px;
+  height: fit-content !important;
+}
+
+.cast-vote-confirmation-content h1 {
+  font-family: "Bree Serif";
+  color: rgb(0, 216, 72);
+}
+
+.cast-vote-confirmation-content p {
+  margin-left: 15px;
+  font-size: 15px;
+  font-family: "Roboto";
+}
+
+.cast-vote-confirmation-content .buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.cast-vote-confirmation-content button {
+  border: none;
+  border-radius: 8px;
+  height: 35px;
+  width: 100px;
+  font-size: 14px;
+}
+
+.loading-header {
+  opacity: 0.5;
+  z-index: -1;
 }
 
 .active-election-type {
@@ -150,25 +200,30 @@
     font-size: 14px;
   }
   .party-name {
-    font-size: 13px;
+    font-size: 12px;
     color: rgb(0, 81, 255);
     width: 30px;
+    margin-right: 14px;
   }
   .candidate-name {
     font-size: 13px;
     color: rgb(0, 81, 255);
     width: 60px;
-    margin-left: 15px;
+    margin-left: 0px;
   }
   .party-logo {
     max-height: 40px;
     max-width: 40px;
   }
   .cast-vote-button {
-    width: 80px;
+    width: 60px;
+    font-size: 12px;
   }
   .quote {
     font-size: 20px;
+  }
+  .voter-no-results {
+    font-size: 10px;
   }
 }
 
@@ -194,12 +249,20 @@
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .quote br {
     display: none;
   }
   .quote {
     font-size: 25px;
+  }
+  .candidate-name {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .party-name {
+    font-size: 18px;
+    font-weight: 600;
   }
 }
 

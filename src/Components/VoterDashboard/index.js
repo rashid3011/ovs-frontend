@@ -1,31 +1,31 @@
 import { React, Component } from "react";
-import { Redirect } from "react-router-dom";
-import Cookies from "js-cookie";
 import Loader from "react-loader-spinner";
 import VoterSidebar from "../VoterSidebar";
 import Dashboardheader from "../Dashboardheader";
 import "./index.css";
+import CastVotePopup from "../CastVotePopup";
+import AuthencticateVoter from "../AuthencticateVoter";
 
 const navLinks = [
   {
     key: "view-profile",
     value: "Profile",
+    icon: "user",
   },
   {
     key: "view-results",
     value: "View Results",
-  },
-  {
-    key: "view-candidates",
-    value: "View Candidates",
+    icon: "poll",
   },
   {
     key: "request-nomination",
     value: "Request Nomination",
+    icon: "edit",
   },
   {
     key: "delete-account",
     value: "Delete Account",
+    icon: "trash",
   },
 ];
 
@@ -61,20 +61,39 @@ class VoterDashboard extends Component {
     voterDetails: [],
     isFetching: true,
     isDeletingVoter: false,
+    castVoteErrorMessage: "",
   };
 
   fetchVoterDetails = async () => {
-    const { voterId } = JSON.parse(localStorage.getItem("voterDetails"));
+    const voterDetails = localStorage.getItem("voterDetails");
+    const voterId =
+      voterDetails !== "undefined" ? JSON.parse(voterDetails).voterId : "";
     const url = `https://ovs-backend.herokuapp.com/voters/${voterId}`;
-    const response = await fetch(url);
-    const { voter } = await response.json();
-    localStorage.setItem("voterDetails", JSON.stringify(voter));
-    this.setState({ voterDetails: voter });
-    this.getDetails();
+    const token = AuthencticateVoter.getToken();
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    };
+    const response = await fetch(url, options);
+    if (response.status === 200) {
+      const { voter } = await response.json();
+      localStorage.setItem("voterDetails", JSON.stringify(voter));
+      this._mount && this.setState({ voterDetails: voter });
+    } else {
+      this._mount && this.setState({ voterDetails: [] });
+    }
+    this._mount && this.getDetails();
   };
 
   componentDidMount() {
-    this.fetchVoterDetails();
+    this._mount = true;
+    this._mount && this.fetchVoterDetails();
+  }
+
+  componentWillUnmount() {
+    this._mount = false;
   }
 
   toggleNavbar = () => {
@@ -101,48 +120,66 @@ class VoterDashboard extends Component {
     );
   };
 
-  deleteUser = async (item) => {
-    const { history } = this.props;
-    const { voterId } = item;
+  deleteVoter = async (item) => {
+    const { voterDetails } = this.state;
+    const { voterId } = voterDetails;
     const url = " https://ovs-backend.herokuapp.com/voters";
+    const token = AuthencticateVoter.getToken();
     const options = {
       method: "DELETE",
 
       headers: {
         "Content-Type": "application/json",
+        Authorization: `bearer ${token}`,
       },
 
       body: JSON.stringify({ voterId: voterId }),
     };
-
     this.setState({ isDeletingVoter: true });
     await fetch(url, options);
-    Cookies.remove("token");
-    history.push("/");
+    AuthencticateVoter.logout(this.props.history);
   };
+
+  capitalize = (x) => x.slice(0, 1).toUpperCase() + x.slice(1);
 
   renderDeleteConfirmation = (item, close) => {
     const { voterId, firstName, lastName } = item;
     return (
       <div className="delete-confirmation-container">
-        <h1>Your Details</h1>
-        <ul>
-          <p>Voter ID : {voterId}</p>
-          <p>First Name : {firstName}</p>
-          <p>Last Name : {lastName}</p>
+        <h1>Voter Details</h1>
+        <ul className="popup-details">
+          <div className="popup-details-left">
+            <p>Voter ID</p>
+            <p>First Name</p>
+            <p>Last Name</p>
+          </div>
+          <div className="popup-details-center">
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+          </div>
+          <div className="popup-details-right">
+            <p>{voterId !== undefined ? this.capitalize(voterId) : voterId}</p>
+            <p>
+              {firstName !== undefined ? this.capitalize(firstName) : firstName}
+            </p>
+            <p>
+              {lastName !== undefined ? this.capitalize(lastName) : lastName}
+            </p>
+          </div>
         </ul>
         <p className="message">
-          *Are you sure you want to delete your account <br /> Once deleted
+          *Are you sure you want to delete voter-{voterId} <br /> Once deleted
           cannot be restored
         </p>
         <div className="confirm-buttons-container">
           <button
             className="delete"
             onClick={() => {
-              this.deleteUser(item);
+              this.deleteVoter(item);
             }}
           >
-            Delete User
+            Delete Voter
           </button>
           <button className="cancel" onClick={close}>
             Cancel
@@ -164,20 +201,26 @@ class VoterDashboard extends Component {
     );
   };
 
-  getDetails = () => {
-    this.getMlaDetails();
-    this.getMpDetails();
-    this.getSarpanchDetails();
-    this.getZptcDetails();
-    this.setState({ isFetching: false });
+  getDetails = async () => {
+    await this.getMlaDetails();
+    await this.getMpDetails();
+    await this.getSarpanchDetails();
+    await this.getZptcDetails();
+    const { mlaDetails } = this.state;
+    this.setState({ partyDetails: mlaDetails, isFetching: false });
   };
 
   getMpDetails = async () => {
-    const { voterDetails } = this.state;
+    const voterDetails = localStorage.getItem("voterDetails");
     const { district } = voterDetails;
     const url = `https://ovs-backend.herokuapp.com/candidates/mp/${district}`;
+    const token = AuthencticateVoter.getToken();
     const options = {
       method: "GET",
+
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
     };
     const response = await fetch(url, options);
     if (response.status !== 404) {
@@ -188,11 +231,16 @@ class VoterDashboard extends Component {
   };
 
   getMlaDetails = async () => {
-    const { voterDetails } = this.state;
+    const voterDetails = localStorage.getItem("voterDetails");
     const { constituency } = voterDetails;
     const url = `https://ovs-backend.herokuapp.com/candidates/mla/${constituency}`;
+    const token = AuthencticateVoter.getToken();
     const options = {
       method: "GET",
+
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
     };
     const response = await fetch(url, options);
     if (response.status !== 404) {
@@ -203,11 +251,16 @@ class VoterDashboard extends Component {
   };
 
   getZptcDetails = async () => {
-    const { voterDetails } = this.state;
+    const voterDetails = localStorage.getItem("voterDetails");
     const { mandal } = voterDetails;
     const url = `https://ovs-backend.herokuapp.com/candidates/mp/${mandal}`;
+    const token = AuthencticateVoter.getToken();
     const options = {
       method: "GET",
+
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
     };
     const response = await fetch(url, options);
     if (response.status !== 404) {
@@ -218,11 +271,16 @@ class VoterDashboard extends Component {
   };
 
   getSarpanchDetails = async () => {
-    const { voterDetails } = this.state;
+    const voterDetails = localStorage.getItem("voterDetails");
     const { village } = voterDetails;
     const url = `https://ovs-backend.herokuapp.com/candidates/mp/${village}`;
+    const token = AuthencticateVoter.getToken();
     const options = {
       method: "GET",
+
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
     };
     const response = await fetch(url, options);
     if (response.status !== 404) {
@@ -250,15 +308,14 @@ class VoterDashboard extends Component {
   };
 
   logout = () => {
-    Cookies.remove("token");
-    const { history } = this.props;
-    history.replace("/voter-login");
+    AuthencticateVoter.logout(this.props.history);
   };
 
   renderCastVoteHeader = () => {
-    const { activeElectionType } = this.state;
+    const { activeElectionType, isFetching, isCastingVote } = this.state;
+    const headerClass = isFetching || isCastingVote ? "loading-header" : "";
     return (
-      <div className="cast-vote-header-container">
+      <div className={`cast-vote-header-container ${headerClass}`}>
         <ul className="cast-vote-header">
           {voteDivision.map((item) => {
             const { key, value } = item;
@@ -282,7 +339,7 @@ class VoterDashboard extends Component {
 
   renderNoResults = (election) => {
     return (
-      <div className="no-results">
+      <div className="voter-no-results no-results">
         <i className="fas fa-exclamation-triangle"></i>
         <h1>
           No{" "}
@@ -308,6 +365,10 @@ class VoterDashboard extends Component {
     }
   };
 
+  setCastVoteError = (message) => {
+    this.setState({ castVoteErrorMessage: message });
+  };
+
   renderCandidateList = () => {
     const { partyDetails, activeElectionType, isFetching } = this.state;
     return (
@@ -331,9 +392,14 @@ class VoterDashboard extends Component {
                       alt={partyName}
                       className="party-logo"
                     />
-                    <p className="candidate-name">{`${firstName} ${lastName}`}</p>
-                    <p className="party-name">{partyName}</p>
-                    <button className="cast-vote-button">Vote</button>
+                    <p className="candidate-name">{`${this.capitalize(
+                      firstName
+                    )} ${this.capitalize(lastName)}`}</p>
+                    <p className="party-name">{this.capitalize(partyName)}</p>
+                    <CastVotePopup
+                      details={item}
+                      setErrorMessage={this.setCastVoteError}
+                    />
                   </li>
                 );
               })}
@@ -343,17 +409,19 @@ class VoterDashboard extends Component {
   };
 
   render() {
-    if (Cookies.get("token") === undefined) {
-      return <Redirect to="/voter-login" />;
-    }
     const {
       isNavbarVisible,
       isUserProfileVisible,
       voterDetails,
       isDeletingVoter,
+      castVoteErrorMessage,
     } = this.state;
-    const { firstName } = voterDetails;
-    return (
+    const { firstName } = JSON.parse(localStorage.getItem("voterDetails"));
+    console.log(firstName);
+    const isLoggedIn = AuthencticateVoter.authencticate();
+    return isLoggedIn !== true ? (
+      isLoggedIn
+    ) : (
       <div className="dash-bg">
         <Dashboardheader
           isNavbarVisible={isNavbarVisible}
@@ -377,6 +445,7 @@ class VoterDashboard extends Component {
           <br /> is stronger than
           <br /> The Bullet.
         </h1>
+        <p className="cast-vote-error">{castVoteErrorMessage}</p>
         <div className="cast-vote-outer-container">
           <div className="cast-vote-container">
             {this.renderCastVoteHeader()}

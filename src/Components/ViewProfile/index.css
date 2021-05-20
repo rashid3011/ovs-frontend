@@ -242,6 +242,7 @@ hr {
   color: red;
   font-size: 15px;
   text-align: center;
+  margin-top: 20px;
 }
 
 .voter-view-loader {
@@ -291,6 +292,14 @@ hr {
   }
 
   .date {
+    font-size: 14px;
+  }
+  .voter-view-form-footer {
+    justify-content: space-between;
+    width: 90%;
+  }
+  .voter-view-form-footer button {
+    width: 80px;
     font-size: 14px;
   }
 }

@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+.voter-id {
+  cursor: pointer;
+}
+
 .pending-requests-container {
   width: 80%;
   margin-top: 30px;
@@ -30,18 +34,24 @@
   border-radius: 3px;
   font-size: 15px;
   height: 30px;
+  outline: none;
 }
 
 .pending-request-header button i {
   padding: 0px;
   margin: 0px;
+  transition: all 0.5s;
+}
+
+.pending-request-header button:hover i {
+  transform: rotate(180deg);
 }
 
 .pending-heading {
-  font-size: 18px;
+  text-align: center;
+  font-size: 30px;
   color: blue;
   font-weight: 600;
-  text-align: left;
 }
 
 .pending-list {
@@ -55,6 +65,11 @@
   justify-content: space-between;
   width: 100%;
   padding: 5px;
+  transition: all 0.2s;
+}
+
+.pending-list-item:hover {
+  background: rgb(238, 238, 238);
 }
 
 .pending-list-item:not(:last-child) {
@@ -79,22 +94,25 @@
 }
 
 .pending-list-item .voter-id {
-  color: rgb(0, 162, 255);
   font-size: 14px;
   font-weight: 600;
   padding-left: 10px;
+  font-family: "Bree Serif";
 }
 
 .approval-popup-content {
   padding: 15px !important;
   width: 400px !important;
+  border-radius: 8px;
 }
 
-.approval-popup-content h1 {
+.approval-container-header h1 {
   font-size: 20px;
   font-weight: 600;
   color: blue;
   margin-bottom: 20px;
+  margin-left: auto;
+  padding-left: 20px;
 }
 
 .approval-popup-content p {
@@ -104,12 +122,12 @@
 
 .approval-container-header {
   display: flex;
-  justify-content: space-between;
 }
 
 .approval-container-header i {
   font-size: 20px;
   cursor: pointer;
+  margin-left: auto;
 }
 
 .approval-buttons-container {
@@ -151,4 +169,10 @@
 .pending-request-header .search-input-container {
   margin-left: auto;
   margin-right: 10px;
+}
+
+@media (max-width: 576px) {
+  .approval-popup-content {
+    width: 300px !important;
+  }
 }

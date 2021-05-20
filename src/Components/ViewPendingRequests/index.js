@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import ViewProfile from "../ViewProfile";
 import Loader from "react-loader-spinner";
 import Popup from "reactjs-popup";
 import SearchInput from "../InputFields/SearchInput";
+import AuthencticateEc from "../AuthenticateEc";
+import RefreshButton from "../RefreshButton";
 import "./index.css";
 
 class ViewPendingRequests extends Component {
@@ -17,22 +20,40 @@ class ViewPendingRequests extends Component {
   getPendingRequests = async () => {
     this.setState({ isFetching: true });
     const url = "https://ovs-backend.herokuapp.com/EC/requests/";
+    const token = AuthencticateEc.getToken();
     const options = {
       method: "GET",
+
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
     };
     const response = await fetch(url, options);
-    const data = await response.json();
-    const { requests } = data;
-    this.setState({
-      isFetching: false,
-      pendingData: requests,
-      searchPendingData: requests,
-    });
+    if (response.status === 200) {
+      const data = await response.json();
+      const { requests } = data;
+      console.log(requests);
+      this.setState({
+        isFetching: false,
+        pendingData: requests,
+        searchPendingData: requests,
+      });
+    } else {
+      this.setState({
+        isFetching: false,
+        pendingData: [],
+        searchPendingData: [],
+      });
+    }
   };
 
   componentDidMount() {
     this.getPendingRequests();
   }
+
+  capitalize = (x) => {
+    return x.slice(0, 1).toUpperCase() + x.slice(1);
+  };
 
   renderLoader = () => {
     return (
@@ -47,27 +68,51 @@ class ViewPendingRequests extends Component {
   };
 
   renderPendingRequests = () => {
-    const { searchPendingData } = this.state;
+    const { isFetching, searchPendingData } = this.state;
+    console.log(searchPendingData);
     return (
       <ul className="pending-list">
-        {searchPendingData.length === 0
+        {isFetching
+          ? this.renderLoader()
+          : searchPendingData.length === 0
           ? this.renderNoResults()
           : searchPendingData.map((item) => {
               const { voterId, partyName, type } = item;
+              let { voterInfo } = item;
+              voterInfo = {
+                ...voterInfo,
+                voterId,
+              };
               return (
                 <li key={voterId} className="pending-list-item">
-                  <p className="voter-id">{voterId}</p>
+                  <Popup
+                    trigger={<p className="voter-id">{voterId}</p>}
+                    modal
+                    className="voter-details-popup"
+                  >
+                    {(close) => {
+                      return (
+                        <div>
+                          <ViewProfile
+                            details={voterInfo}
+                            close={close}
+                            rerenderVoters={this.getPendingRequests}
+                          />
+                        </div>
+                      );
+                    }}
+                  </Popup>
                   <p>{partyName}</p>
                   <p>{type}</p>
                   <Popup
-                    trigger={<i className="fas fa-check"></i>}
+                    trigger={<i className="fas fa-user-check"></i>}
                     modal
                     className="approval-popup"
                   >
                     {(close) => this.renderApprovalConfirmation(item, close)}
                   </Popup>
                   <Popup
-                    trigger={<i className="fas fa-times delete-icon"></i>}
+                    trigger={<i className="fas fa-user-times delete-icon"></i>}
                     className="approval-popup"
                     position="right center"
                     modal
@@ -106,9 +151,23 @@ class ViewPendingRequests extends Component {
           <h1>Nomination Details</h1>
           <i className="fas fa-times" onClick={close}></i>
         </div>
-        <p>{`Voter ID : ${voterId}`}</p>
-        <p>{`Party Name : ${partyName}`}</p>
-        <p>{`Type of Election : ${type}`}</p>
+        <ul className="popup-details">
+          <div className="popup-details-left">
+            <p>Voter ID</p>
+            <p>Party Name</p>
+            <p>Type</p>
+          </div>
+          <div className="popup-details-center">
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+          </div>
+          <div className="popup-details-right">
+            <p>{this.capitalize(voterId)}</p>
+            <p>{this.capitalize(partyName)}</p>
+            <p>{this.capitalize(type)}</p>
+          </div>
+        </ul>
         <div className="approval-buttons-container">
           <button
             className="approve"
@@ -127,11 +186,13 @@ class ViewPendingRequests extends Component {
   acceptNomination = async (candidateId) => {
     this.setState({ isSendingData: true });
     const url = "https://ovs-backend.herokuapp.com/ec/accept-nomination";
+    const token = AuthencticateEc.getToken();
     const options = {
       method: "POST",
 
       headers: {
         "Content-Type": "application/json",
+        Authorization: `bearer ${token}`,
       },
 
       body: JSON.stringify({ candidateId }),
@@ -143,7 +204,7 @@ class ViewPendingRequests extends Component {
       setTimeout(() => {
         this.setState({ isAccepted: false });
         this.getPendingRequests();
-      }, 3000);
+      }, 1000);
     }
   };
 
@@ -160,9 +221,23 @@ class ViewPendingRequests extends Component {
           <h1>Nomination Details</h1>
           <i className="fas fa-times" onClick={close}></i>
         </div>
-        <p>{`Voter ID : ${voterId}`}</p>
-        <p>{`Party Name : ${partyName}`}</p>
-        <p>{`Type of Election : ${type}`}</p>
+        <ul className="popup-details">
+          <div className="popup-details-left">
+            <p>Voter ID</p>
+            <p>Party Name</p>
+            <p>Type</p>
+          </div>
+          <div className="popup-details-center">
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+          </div>
+          <div className="popup-details-right">
+            <p>{this.capitalize(voterId)}</p>
+            <p>{this.capitalize(partyName)}</p>
+            <p>{this.capitalize(type)}</p>
+          </div>
+        </ul>
         <div className="approval-buttons-container">
           <button
             className="reject"
@@ -224,21 +299,19 @@ class ViewPendingRequests extends Component {
   };
 
   render() {
-    const { isFetching, searchValue } = this.state;
+    const { searchValue } = this.state;
     return (
       <div className="pending-requests-container">
+        <h1 className="pending-heading">Pending Requests</h1>
         <div className="pending-request-header">
-          <h1 className="pending-heading">Pending Requests</h1>
           <SearchInput
             placeholder="search by IDs"
             value={searchValue}
             onChange={this.search}
           />
-          <button type="button" onClick={this.getPendingRequests}>
-            <i className="fas fa-sync-alt"></i>
-          </button>
+          <RefreshButton onClick={this.getPendingRequests} />
         </div>
-        {isFetching ? this.renderLoader() : this.renderPendingRequests()}
+        {this.renderPendingRequests()}
       </div>
     );
   }

@@ -1,0 +1,104 @@
+.view-results-bg {
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 500px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px #888;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.view-results-bg .main-heading {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--main-color);
+  margin-bottom: 20px;
+}
+
+.view-results-form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.view-results-type-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.view-results-type-input-container p {
+  margin-right: 20px;
+}
+
+.view-results-button {
+  margin-top: 15px;
+  position: relative;
+  align-self: center;
+  width: 135px;
+  min-height: 35px;
+  max-height: 35px;
+  border: 1px solid var(--main-color);
+  font-size: 16px;
+  color: var(--main-color);
+  z-index: 1;
+  overflow: hidden;
+  transition: all 0.5s;
+}
+
+.view-results-button::before {
+  content: "";
+  position: absolute;
+  background-color: var(--main-color);
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  transform: translateX(-100%);
+  transition: all ease-in-out 0.5s;
+}
+
+.view-results-button:hover::before {
+  transform: translateX(0);
+}
+
+.view-results-button:hover {
+  color: #ffffff;
+}
+
+.winner-popup-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  border-radius: 8px;
+  width: 450px;
+  height: 200px;
+}
+
+.winner-popup-content h1 {
+  font-size: 25px;
+  font-weight: 600;
+  font-family: "Bree Serif";
+}
+
+.winner-popup-content p {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(145, 0, 202);
+}
+
+.winner-popup-content button {
+  background: blue;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  height: 30px;
+  width: 90px;
+}

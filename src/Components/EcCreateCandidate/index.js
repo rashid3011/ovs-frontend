@@ -2,24 +2,29 @@ import { Component } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FormikControl from "../FormikControl";
-import "./index.css";
 import Loader from "react-loader-spinner";
-import AuthencticateVoter from "../AuthencticateVoter";
+import AuthencticateEc from "../AuthenticateEc";
+import ErrorMessagePopup from "../ErrorMessagePopup";
 
-class RequestNominationForm extends Component {
+class EcCreateCandidate extends Component {
   state = {
     errorMessage: "",
     isSubmitting: false,
     isSubmitSuccess: false,
+    isPopupOpen: false,
   };
 
   typeOptions = ["mla", "mp", "sarpanch", "zptc"];
   initialValues = {
+    voterId: "",
     partyName: "",
     type: "mla",
   };
 
   validationSchema = Yup.object({
+    voterId: Yup.string()
+      .matches(/^V[0-9]{5}$/, "Voter ID should be like V#####")
+      .required("*required"),
     partyName: Yup.string().required("*Required"),
     type: Yup.string().required("*Required"),
   });
@@ -27,15 +32,14 @@ class RequestNominationForm extends Component {
   onSubmit = async (values, onSubmitProps) => {
     this.setState({ isSubmitting: true, errorMessage: "" });
     const { history } = this.props;
-    const { voterId } = JSON.parse(localStorage.getItem("voterDetails"));
-    const { partyName, type } = values;
+    const { voterId, partyName, type } = values;
     const details = {
       voterId,
       partyName,
       type,
     };
-    const url = "https://ovs-backend.herokuapp.com/request-nomination";
-    const token = AuthencticateVoter.getToken();
+    const url = "https://ovs-backend.herokuapp.com/ec/request-nomination";
+    const token = AuthencticateEc.getToken();
     const options = {
       method: "POST",
 
@@ -51,7 +55,7 @@ class RequestNominationForm extends Component {
     if (response.status === 200) {
       this.setState({ isSubmitSuccess: true });
       setTimeout(() => {
-        history.push("/voter-dashboard");
+        history.push("/ec-dashboard");
       }, 3000);
     } else {
       const data = await response.json();
@@ -59,6 +63,7 @@ class RequestNominationForm extends Component {
       this.setState({
         errorMessage: message,
         isSubmitting: false,
+        isPopupOpen: true,
       });
     }
   };
@@ -71,13 +76,17 @@ class RequestNominationForm extends Component {
       </button>
     ) : (
       <button className="voter-nomination-button" type="submit">
-        Request Form
+        Request
       </button>
     );
   };
 
+  setOpen = () => {
+    this.setState({ isPopupOpen: false });
+  };
+
   renderForm = () => {
-    const { isSubmitting, errorMessage } = this.state;
+    const { isSubmitting, isPopupOpen, errorMessage } = this.state;
     const bgClass = isSubmitting ? "loading-bg" : "";
     return (
       <div className={`voter-nomination-bg ${bgClass}`}>
@@ -89,9 +98,20 @@ class RequestNominationForm extends Component {
           {(formik) => {
             return (
               <div className="voter-nomination-content">
-                <h1 className="voter-nomination-main-heading">Request Here</h1>
+                <h1 className="voter-nomination-main-heading">
+                  Add Candidate Here
+                </h1>
                 <span className="voter-nomination-line"></span>
                 <Form className="voter-nomination-form">
+                  <FormikControl
+                    control="input"
+                    type="text"
+                    name="voterId"
+                    placeholder="Voter Id"
+                    icon="user"
+                    formik={formik}
+                  />
+
                   <FormikControl
                     control="input"
                     type="text"
@@ -106,7 +126,7 @@ class RequestNominationForm extends Component {
                       <span>
                         <i className={`fas fa-map-marker-alt icon`}></i>
                       </span>
-                      Pick you Type :
+                      Pick the Type :
                     </p>
 
                     <FormikControl
@@ -116,7 +136,11 @@ class RequestNominationForm extends Component {
                     />
                   </div>
                   {this.renderButton()}
-                  <p className="nomination-error-message">{errorMessage}</p>
+                  <ErrorMessagePopup
+                    isPopupOpen={isPopupOpen}
+                    errorMessage={errorMessage}
+                    setOpen={this.setOpen}
+                  />
                 </Form>
               </div>
             );
@@ -375,15 +399,20 @@ class RequestNominationForm extends Component {
           className="nomination-success"
         ></img>
         <h1>Nomination Request is successfully Submitted</h1>
-        <p>Wait for the approval from Election Commionsioner</p>
+        <p>Now, Approve the Request from pending Requests of your account</p>
       </div>
     );
   };
 
   render() {
+    const isLoggedIn = AuthencticateEc.authencticate(this.props.history);
     const { isSubmitSuccess } = this.state;
-    return isSubmitSuccess ? this.renderSubmitSuccess() : this.renderForm();
+    return isLoggedIn !== true
+      ? isLoggedIn
+      : isSubmitSuccess
+      ? this.renderSubmitSuccess()
+      : this.renderForm();
   }
 }
 
-export default RequestNominationForm;
+export default EcCreateCandidate;

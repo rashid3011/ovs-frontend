@@ -5,6 +5,7 @@ import FormikControl from "../FormikControl";
 import { Link, Redirect } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import Cookies from "js-cookie";
+import AuthencticateVoter from "../AuthencticateVoter";
 import "./index.css";
 
 class LoginPage extends Component {
@@ -19,24 +20,13 @@ class LoginPage extends Component {
 
   validationSchema = Yup.object({
     id: Yup.string()
-      .matches(/^V[0-9]{5}$/, "enter valid voter Id")
+      .matches(/^V[0-9]{5}$/, "Voter ID should be like V#####")
       .required("*required"),
-    loginPassword: Yup.string().required("*required"),
+    loginPassword: Yup.string().required("*Required"),
   });
 
   loginSuccess = (data) => {
-    const { history } = this.props;
-    const { token, voter } = data;
-    const { role } = voter;
-    const tokenCookie = {
-      token,
-      role,
-    };
-    Cookies.set("token", tokenCookie, {
-      path: "/",
-    });
-    localStorage.setItem("voterDetails", JSON.stringify(voter));
-    history.replace("/voter-dashboard");
+    AuthencticateVoter.login(data, this.props.history);
   };
 
   loginFailed = () => {
@@ -76,7 +66,7 @@ class LoginPage extends Component {
     return isSubmittingForm ? (
       <button className="voter-login-button">
         <Loader
-          className="loader"
+          className="login-loader"
           type="TailSpin"
           color="#4287f5"
           height={30}

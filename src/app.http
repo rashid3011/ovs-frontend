@@ -41,3 +41,59 @@ GET https://ovs-backend.herokuapp.com/candidates/mp/khammm HTTP/1.1
 
 ###
 GET https://ovs-backend.herokuapp.com/candidates/mp/khammam HTTP/1.1
+
+
+###
+POST https://ovs-backend.herokuapp.com/cast-vote HTTP/1.1
+
+Content-Type: application/json
+
+{
+  "voterId" : "V22000",
+  "candidateId" : "C22000",
+}
+
+###
+GET https://ovs-backend.herokuapp.com/ec/votes HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJFQzEyMzQ1Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjIxMzIzNzM3LCJleHAiOjE2MjEzMjU1Mzd9.RhpnXsQ1-PsyiybvSqO_EV-RUopuw2BzCvKbiNZaaUI
+
+###
+GET https://ovs-backend.herokuapp.com/ec/results/mla/yemmiganur HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJFQzEyMzQ1Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjIxMzQ2MTEwLCJleHAiOjE2MjEzNDc5MTB9.sYPdRRi0DwLkDek55d9sjcl9oA7v9UYtZ8Cjresu3Xo
+###
+POST https://ovs-backend.herokuapp.com/ec/refresh-token HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJFQzEyMzQ1Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjIxMzQ4NTIyLCJleHAiOjE2MjEzNTAzMjJ9.1rC8C-C79D34spEBag8uw74NAzKAOKeosWeqwUu6us4
+
+###
+EC-changes:
+Ec dashboard tables resize 
+approve popup center
+cast votes table
+view results
+error in create voter/ec popup -- register-voter
+ec-sidebar += view voters, view candidates, accept nominations 
+
++++
+results tab details change
+tables 
+pending request heading table
+nomination popup deatils font change
+landingpage section buttons and heading fontsize increase
+register pages all change
+voter request nomination error popup
+#delete voter popup change
+
+
+*** Content Hightlight ***
+
+Voter-Changes:
+Welcome message left side
+update voter profile box
+
+Popup style:
+        name : sami
+    nameeeee : rahseed
+  
+bold candiate details
+cast vote height 
+cast voter error pop up

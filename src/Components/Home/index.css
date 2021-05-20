@@ -1,19 +1,50 @@
 @import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+.home-outer-bg {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2aebc1;
+}
 
 .home-bg {
-  height: 100vh;
-  padding: 20px;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+
+  clip-path: circle(121.1% at 96% 8%);
+  animation: turn 1.3s linear;
+}
+
+@keyframes turn {
+  from {
+    clip-path: circle(15.1% at 96% 8%);
+  }
+  to {
+    clip-path: circle(121.1% at 96% 8%);
+  }
+}
+
+.home-bg:after {
+  background-color: red;
 }
 
 .home-main-heading {
   text-align: left;
-  margin-left: 20px;
+  margin-left: 90px;
   font-family: "Righteous", cursive;
   color: black;
   font-size: 30px;
   height: 50px;
   color: #000000;
+  margin-right: auto;
 }
 
 .home-main-heading span {
@@ -35,7 +66,7 @@ i {
   height: 450px;
   width: 70%;
   margin-top: 100px;
-  box-shadow: 0 0 10px #888888, 0 0 10px #888888;
+  box-shadow: 0 0 8px #888;
 }
 
 .home-section {
@@ -43,6 +74,8 @@ i {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  position: relative;
+  overflow: hidden;
 }
 
 .home-voter-section {
@@ -63,9 +96,8 @@ i {
 
 .home-section p {
   color: #fff;
-  font-family: "Mukta", sans-serif;
-  font-size: 20px;
-  font-weight: 550;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 30px;
 }
 
 .home-section button {
@@ -77,7 +109,7 @@ i {
   position: relative;
   z-index: 1;
   font-weight: 600;
-  font-size: 17px;
+  font-size: 23px;
   color: #fff;
   border: 1px solid #fff;
   overflow: hidden;
@@ -144,11 +176,15 @@ i {
   .home-section button {
     height: 35px;
     width: 125px;
+    font-size: 15px;
   }
 }
 
 @media (min-width: 577px) and (max-width: 1000px) {
   .home-content {
     width: 90%;
+  }
+  .home-section {
+    padding: 15px;
   }
 }

@@ -194,6 +194,7 @@ class ViewProfile extends Component {
   };
 
   onSubmit = (values) => {
+    console.log("submit");
     if (values === this.initialValues) {
       this.setState({
         errorMessage: "*Please Make Changes Details to Update",
@@ -309,7 +310,7 @@ class ViewProfile extends Component {
                           options={activeState}
                           placeholder="State"
                           formik={formik}
-                          setaddress={this.setAddress}
+                          onChange={this.setAddress}
                         />
                         <FormikControl
                           control="dropdown"
@@ -317,7 +318,7 @@ class ViewProfile extends Component {
                           options={activeDistrict}
                           placeholder="District"
                           formik={formik}
-                          setaddress={this.setAddress}
+                          onChange={this.setAddress}
                         />
                         <FormikControl
                           control="dropdown"
@@ -325,7 +326,7 @@ class ViewProfile extends Component {
                           options={activeConstituency}
                           placeholder="Constituency"
                           formik={formik}
-                          setaddress={this.setAddress}
+                          onChange={this.setAddress}
                         />
                         <FormikControl
                           control="dropdown"
@@ -333,7 +334,7 @@ class ViewProfile extends Component {
                           options={activeMandal}
                           placeholder="Mandal"
                           formik={formik}
-                          setaddress={this.setAddress}
+                          onChange={this.setAddress}
                         />
                         <FormikControl
                           control="dropdown"
@@ -341,7 +342,7 @@ class ViewProfile extends Component {
                           options={activeVillage}
                           placeholder="Village"
                           formik={formik}
-                          setaddress={this.setAddress}
+                          onChange={this.setAddress}
                         />
                       </div>
                     </div>
@@ -354,12 +355,18 @@ class ViewProfile extends Component {
                       className="voter-edit-button"
                       type="button"
                       onClick={() => {
-                        this.setState({ isFormEditable: true });
+                        this.setState((prevState) => ({
+                          isFormEditable: !prevState.isFormEditable,
+                        }));
                       }}
                     >
                       Edit
                     </button>
-                    <button className="voter-save-button" type="submit">
+                    <button
+                      className="voter-save-button"
+                      type="submit"
+                      disabled={!isFormEditable}
+                    >
                       Update
                     </button>
                     <button

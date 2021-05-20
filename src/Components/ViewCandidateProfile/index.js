@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FormikControl from "../FormikControl";
 import Loader from "react-loader-spinner";
+import AuthenticateEc from "../AuthenticateEc";
 import "./index.css";
 
 class ViewCandidateProfile extends Component {
@@ -39,13 +40,21 @@ class ViewCandidateProfile extends Component {
       partyName,
       type,
     };
-    console.log(updatedValues);
+    if (this.initialValues === values) {
+      this.setState({
+        errorMessage: "Please Change Values First",
+        isSubmitting: false,
+      });
+      return;
+    }
     const url = "https://ovs-backend.herokuapp.com/EC/candidates";
+    const token = AuthenticateEc.getToken();
     const options = {
       method: "PATCH",
 
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
 
       body: JSON.stringify(updatedValues),

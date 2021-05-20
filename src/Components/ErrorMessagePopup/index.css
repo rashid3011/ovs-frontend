@@ -1,0 +1,24 @@
+.error-popup-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  width: fit-content;
+  height: 150px;
+  border-radius: 8px;
+}
+
+.error-popup-content p {
+  margin-bottom: 0px;
+  font-size: 18px;
+}
+
+.error-popup-content button {
+  background: blue;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  height: 30px;
+  width: 90px;
+}

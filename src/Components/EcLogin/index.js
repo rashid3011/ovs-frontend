@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import FormikControl from "../FormikControl";
 import "./index.css";
 import Loader from "react-loader-spinner";
-import Cookies from "js-cookie";
+import AuthencticateEc from "../AuthenticateEc";
 
 class ECLoginPage extends Component {
   state = {
@@ -18,17 +18,15 @@ class ECLoginPage extends Component {
   };
 
   validationSchema = Yup.object({
-    ecId: Yup.string().required("*required"),
+    ecId: Yup.string()
+      .matches(/^EC[0-9]{5}$/, "EC ID should be like EC#####")
+      .required("*required"),
     ecPassword: Yup.string().required("*required"),
   });
 
   loginSuccess = (data) => {
-    const { token } = data;
     const { history } = this.props;
-    Cookies.set("token", token, {
-      path: "/",
-    });
-    history.replace("/ec-dashboard");
+    AuthencticateEc.login(data, history);
   };
 
   loginFailed = () => {

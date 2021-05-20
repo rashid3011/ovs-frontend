@@ -106,6 +106,7 @@ body {
 }
 
 .voter-login-button {
+  margin-top: 15px;
   position: relative;
   align-self: center;
   width: 135px;

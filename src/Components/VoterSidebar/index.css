@@ -73,7 +73,8 @@
   position: relative;
   overflow: hidden;
   text-decoration: none;
-  border-bottom: 2px solid rgb(6, 113, 155);
+  border-bottom: 2px solid #fff;
+  padding-left: 10px;
 }
 
 .navlink::after {
@@ -85,7 +86,7 @@
   top: 0;
   left: 0;
   transform: translateX(-100%);
-  transition: 0.5s all;
+  transition: 0.3s all;
   z-index: -1;
 }
 
@@ -94,4 +95,14 @@
 }
 .navlink:hover {
   color: #fff;
+}
+
+.delete-user-popup-content {
+  width: 350px !important;
+}
+
+@media (max-width: 576px) {
+  .delete-user-popup-content {
+    width: 300px !important;
+  }
 }

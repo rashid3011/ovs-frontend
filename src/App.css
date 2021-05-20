@@ -3,10 +3,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Coda+Caption:wght@800&family=Righteous&display=swap");
 .App {
   text-align: center;
+  outline: none;
 }
 
 :root {
   --main-color: #132dbe;
   --voter-color: #4287f5;
-  --ec-color: #2aeb51;
+  --ec-color: #1abe3b;
 }

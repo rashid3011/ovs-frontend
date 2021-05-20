@@ -7,8 +7,14 @@ import NotFound from "./Components/NotFound";
 import ECLoginPage from "./Components/EcLogin";
 import VoterDashboard from "./Components/VoterDashboard";
 import EcDashboard from "./Components/EcDashboard";
-import ViewVoterProfile from "./Components/ViewVoterDetails";
+import ViewVoterProfile from "./Components/ViewVoterProfile";
 import RequestNominationForm from "./Components/RequestNominationForm";
+import EcCreateCandidate from "./Components/EcCreateCandidate";
+import EcCreateVoter from "./Components/EcCreateVoter";
+import EcViewVoters from "./Components/EcViewVoters";
+import EcViewCandidates from "./Components/EcViewCandidates";
+import ViewPendingRequests from "./Components/ViewPendingRequests";
+import VoterViewResults from "./Components/VoterViewResults";
 
 function App() {
   return (
@@ -26,6 +32,16 @@ function App() {
           path="/request-nomination"
           component={RequestNominationForm}
         />
+        <Route exact path="/create-candidate" component={EcCreateCandidate} />
+        <Route exact path="/create-voter" component={EcCreateVoter} />
+        <Route exact path="/view-voters" component={EcViewVoters} />
+        <Route exatc path="/view-candidates" component={EcViewCandidates} />
+        <Route
+          exact
+          path="/accept-nominations"
+          component={ViewPendingRequests}
+        />
+        <Route exact path="/view-results" component={VoterViewResults} />
         <Route component={NotFound} />
       </Switch>
     </div>

@@ -143,3 +143,25 @@
   font-size: 18px;
   color: limegreen;
 }
+
+@media (max-width: 400px) {
+  .voter-nomination-content {
+    width: 90%;
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  .nomination-image-div {
+    display: none;
+  }
+}
+
+@media (min-width: 401px) and (max-width: 800px) {
+  .nomination-image-div {
+    display: none;
+  }
+  .voter-nomination-content {
+    width: 350px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}

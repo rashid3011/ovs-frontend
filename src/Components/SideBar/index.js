@@ -13,7 +13,7 @@ const SideBar = (props) => {
       <nav className="sidebar">
         <ul className="nav-list">
           {navLinks.map((link) => {
-            const { key, value } = link;
+            const { key, value, icon } = link;
             return (
               <Link
                 to={`/${key}`}
@@ -21,6 +21,7 @@ const SideBar = (props) => {
                 key={key}
                 style={{ textDecoration: "none" }}
               >
+                <i className={`fas fa-${icon}`}></i>
                 <li>{value}</li>
               </Link>
             );

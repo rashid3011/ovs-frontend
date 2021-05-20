@@ -23,7 +23,7 @@ const VoterSidebar = (props) => {
       <nav className="sidebar">
         <ul className="nav-list">
           {navLinks.map((link) => {
-            const { key, value } = link;
+            const { key, value, icon } = link;
             return key !== "delete-account" ? (
               <Link
                 to={`/${key}`}
@@ -31,12 +31,18 @@ const VoterSidebar = (props) => {
                 key={key}
                 style={{ textDecoration: "none" }}
               >
+                <i className={`fas fa-${icon}`}></i>
                 <li>{value}</li>
               </Link>
             ) : (
               <Popup
-                trigger={<li className="navlink">{value}</li>}
-                className="delete-user-popup"
+                trigger={
+                  <li className="navlink">
+                    <i className={`fas fa-${icon}`}></i>
+                    {value}
+                  </li>
+                }
+                className="delete-user-popup voter-delete-user-popup"
                 position="right center"
                 modal
                 key={key}

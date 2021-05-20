@@ -2,9 +2,9 @@ import { Component } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FormikControl from "../FormikControl";
-import { Link } from "react-router-dom";
-import "./index.css";
 import Loader from "react-loader-spinner";
+import AuthencticateEc from "../AuthenticateEc";
+import ErrorMessagePopup from "../ErrorMessagePopup";
 
 const genderOptions = [
   {
@@ -25,14 +25,12 @@ const stateOptions = ["Telangana", "Andhra Pradesh"];
 const districts = {
   Telangana: ["Khammam", "Adilabad"],
   "Andhra Pradesh": ["Kurnool", "Nellore"],
-  State: [""],
 };
 const constituency = {
   Khammam: ["Khammam", "Pallair"],
   Adilabad: ["Sirpur", "Asifabad"],
   Kurnool: ["Yemmiganur", "Pattikonda"],
   Nellore: ["Atmakur Division", "Naidupeta Division"],
-  District: [],
 };
 
 const mandal = {
@@ -44,7 +42,6 @@ const mandal = {
   Pattikonda: ["Veldurthy", "Maddikera"],
   "Atmakur Division": ["Kaluvoya"],
   "Naidupeta Division": ["Pellakur"],
-  Constituency: [],
 };
 
 const village = {
@@ -61,10 +58,9 @@ const village = {
   Khammam: ["Khammam"],
   Tirumalayapalem: ["Bachodu", "Bachodu Thanda", "Erragadd", "Gol Thanda"],
   Kusumanchi: ["Kusumanchi"],
-  Mandal: [],
 };
 
-class Register extends Component {
+class EcCreateVoter extends Component {
   state = {
     activeState: stateOptions,
     activeDistrict: [],
@@ -72,7 +68,8 @@ class Register extends Component {
     activeMandal: [],
     activeVillage: [],
     isSubmittingForm: false,
-    isRegisterFailed: false,
+    isPopupOpen: false,
+    errorMessage: "",
   };
 
   initialValues = {
@@ -101,13 +98,7 @@ class Register extends Component {
     lastName: Yup.string().required("*Required"),
     password: Yup.string()
       .required("*Required")
-      .min(8, "password is too short")
-      .matches(/^(?=.*[a-z])/, "password must contain one lowercase letter")
-      .matches(
-        /^(?=.*[A-Z])/,
-        "password must contain atleast one UpperCase letter"
-      )
-      .matches(/^(?=.*[0-9])/, "password must contain atleast one digit"),
+      .min(8, "password is too short"),
     confirmPassword: Yup.string()
       .required("*Requried")
       .oneOf([Yup.ref("password"), null], "password must match"),
@@ -124,23 +115,28 @@ class Register extends Component {
 
   registerSuccess = () => {
     const { history } = this.props;
-    history.replace("/voter-login");
+    history.replace("/ec-dashboard");
   };
 
-  registerFailed = () => {
-    this.setState({ isRegisterFailed: true });
+  registerFailed = (message) => {
+    this.setState({
+      errorMessage: message,
+      isPopupOpen: true,
+    });
   };
 
   onSubmit = async (data, onSubmitProps) => {
     this.setState((prevState) => ({
-      isSubmittingForm: !prevState.isSubmittingForm,
-      isRegisterFailed: false,
+      isSubmittingForm: true,
     }));
-    const url = "https://ovs-backend.herokuapp.com/register";
+
+    const url = "https://ovs-backend.herokuapp.com/ec/voters";
+    const token = AuthencticateEc.getToken();
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `bearer ${token}`,
       },
       body: JSON.stringify(data),
     };
@@ -148,7 +144,9 @@ class Register extends Component {
     if (response.status === 201) {
       this.registerSuccess();
     } else {
-      this.registerFailed();
+      const data = await response.json();
+      const { message } = data;
+      this.registerFailed(message);
     }
   };
 
@@ -197,14 +195,23 @@ class Register extends Component {
       <button
         type="submit"
         className="voter-register-button"
-        disabled={!formik.isValid || formik.isSubmitting}
+        disabled={formik.isSubmitting}
       >
-        Register
+        Create Voter
       </button>
     );
   };
 
+  setOpen = () => {
+    this.setState((prevState) => ({
+      isPopupOpen: !prevState.isPopupOpen,
+      isSubmittingForm: false,
+    }));
+  };
+
   render() {
+    const isLoggedIn = AuthencticateEc.authencticate(this.props.history);
+
     const {
       activeState,
       activeDistrict,
@@ -212,15 +219,19 @@ class Register extends Component {
       activeMandal,
       activeVillage,
       isSubmittingForm,
-      isRegisterFailed,
+      isPopupOpen,
+      errorMessage,
     } = this.state;
 
     const bgClass = isSubmittingForm ? "submit-bg" : "";
-    return (
+
+    return isLoggedIn !== true ? (
+      isLoggedIn
+    ) : (
       <div className="voter-register-outer-bg">
         <div className={`voter-register-bg ${bgClass}`}>
           <div className="voter-register-content">
-            <h1 className="voter-register-main-heading">Register Here</h1>
+            <h1 className="voter-register-main-heading">Create Voter</h1>
             <hr />
             <span className="voter-register-line"></span>
           </div>
@@ -363,17 +374,11 @@ class Register extends Component {
                     id="voter-register-footer"
                   >
                     {this.renderButton(formik)}
-                    {isRegisterFailed && (
-                      <p className="register-failed-message">
-                        *Enter your details correctly
-                      </p>
-                    )}
-                    <p className="voter-register-already-account">
-                      Already have an account?
-                    </p>
-                    <Link to="/voter-login">
-                      <p className="voter-register-nav-link">Login Here</p>
-                    </Link>
+                    <ErrorMessagePopup
+                      errorMessage={errorMessage}
+                      isPopupOpen={isPopupOpen}
+                      setOpen={this.setOpen}
+                    />
                   </div>
                 </Form>
               );
@@ -385,4 +390,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default EcCreateVoter;

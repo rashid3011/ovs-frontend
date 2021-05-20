@@ -1,0 +1,29 @@
+.refresh-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: blue;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 15px;
+  height: 30px;
+}
+
+.refresh-button i {
+  padding: 0px;
+  margin: 0px;
+  transition: all 0.5s;
+}
+
+button:hover i {
+  transform: rotate(180deg);
+}
+
+.tooltip-content {
+  width: fit-content !important;
+}
+
+.tooltip-message {
+  font-size: 14px;
+}

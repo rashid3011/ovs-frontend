@@ -3,12 +3,9 @@ import { ErrorMessage, Field } from "formik";
 import "../index.css";
 
 function Dropdown(props) {
-  const { options, name, placeholder, setaddress } = props;
-  const changeHandler = (event) => {
-    setaddress(event);
-  };
+  const { options, name, placeholder, onChange } = props;
   return (
-    <div className="dropdown-container" id={name} onChange={changeHandler}>
+    <div className="dropdown-container" id={name} onChange={onChange}>
       <div className="selectdiv">
         <label>
           <Field as="select" name={name}>
