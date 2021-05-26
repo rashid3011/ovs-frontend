@@ -90,26 +90,26 @@ i {
 
 .home-section h1 {
   color: #fff;
-  font-size: 35px;
+  font-size: 45px;
   font-family: "Righteous", cursive;
 }
 
 .home-section p {
   color: #fff;
   font-family: "Noto Sans KR", sans-serif;
-  font-size: 30px;
+  font-size: 27px;
 }
 
 .home-section button {
   font-family: "Mukta", sans-serif;
   width: 200px;
   align-self: center;
-  height: 50px;
+  height: 60px;
   background: none;
   position: relative;
   z-index: 1;
   font-weight: 600;
-  font-size: 23px;
+  font-size: 25px;
   color: #fff;
   border: 1px solid #fff;
   overflow: hidden;
@@ -177,6 +177,15 @@ i {
     height: 35px;
     width: 125px;
     font-size: 15px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 756px) {
+  .home-section h1 {
+    font-size: 40px;
+  }
+  .home-section p {
+    font-size: 20px;
   }
 }
 

@@ -1,35 +1,35 @@
 import Cookies from "js-cookie";
-import { Redirect } from "react-router-dom";
 
 class AuthencticateEc {
   token_name = "ovsec";
-  intervalId = "";
-  authencticate() {
-    const cookie = Cookies.get(this.token_name);
-    if (cookie === undefined) {
-      return <Redirect to="/ec-login" />;
+  intervalId = null;
+
+  authenticate = () => {
+    if (this.getToken() === null || this.getRole() !== "admin") {
+      return false;
     } else {
-      const { token, role } = JSON.parse(cookie);
-      if (token === undefined || role !== "admin") {
-        return <Redirect to="/ec-login" />;
-      } else {
-        return true;
-      }
+      this.refreshToken();
+      this.createRefreshTokenInterval();
+      return true;
     }
-  }
+  };
 
   login = (data, history) => {
     const { ec, token } = data;
-    this.setToken(ec, token);
+    this.setToken(token);
     localStorage.setItem("ecDetails", JSON.stringify(ec));
-    this.intervalId = setInterval(() => {
-      this.refreshToken(ec);
-    }, 29 * 60 * 1000);
+    this.createRefreshTokenInterval();
     history.replace("/ec-dashboard");
   };
 
-  setToken = (ec, token) => {
-    const { role } = ec;
+  createRefreshTokenInterval = () => {
+    this.intervalId = setInterval(() => {
+      this.refreshToken();
+    }, 29 * 60 * 1000);
+  };
+
+  setToken = (token) => {
+    const role = "admin";
     Cookies.set(
       this.token_name,
       { token, role },
@@ -55,9 +55,9 @@ class AuthencticateEc {
     return token;
   };
 
-  refreshToken = async (ec) => {
+  refreshToken = async () => {
     const token = await this.getNewToken();
-    this.setToken(ec, token);
+    this.setToken(token);
   };
 
   logout = (history) => {
@@ -69,8 +69,14 @@ class AuthencticateEc {
 
   getToken = () => {
     const cookie = Cookies.get(this.token_name);
-    const token = cookie !== undefined ? JSON.parse(cookie).token : "";
+    const token = cookie !== undefined ? JSON.parse(cookie).token : null;
     return token;
+  };
+
+  getRole = () => {
+    const cookie = Cookies.get(this.token_name);
+    const role = cookie !== undefined ? JSON.parse(cookie).role : null;
+    return role;
   };
 }
 

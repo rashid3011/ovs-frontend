@@ -130,6 +130,12 @@ class EcCreateVoter extends Component {
       isSubmittingForm: true,
     }));
 
+    const modifiedData = {
+      ...data,
+      mobile:
+        data.mobile.slice(0, 3) === "+91" ? data.mobile : "+91" + data.mobile,
+    };
+
     const url = "https://ovs-backend.herokuapp.com/ec/voters";
     const token = AuthencticateEc.getToken();
     const options = {
@@ -138,10 +144,10 @@ class EcCreateVoter extends Component {
         "Content-Type": "application/json",
         Authorization: `bearer ${token}`,
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(modifiedData),
     };
     const response = await fetch(url, options);
-    if (response.status === 201) {
+    if (response.ok === true) {
       this.registerSuccess();
     } else {
       const data = await response.json();
@@ -210,8 +216,6 @@ class EcCreateVoter extends Component {
   };
 
   render() {
-    const isLoggedIn = AuthencticateEc.authencticate(this.props.history);
-
     const {
       activeState,
       activeDistrict,
@@ -225,9 +229,7 @@ class EcCreateVoter extends Component {
 
     const bgClass = isSubmittingForm ? "submit-bg" : "";
 
-    return isLoggedIn !== true ? (
-      isLoggedIn
-    ) : (
+    return (
       <div className="voter-register-outer-bg">
         <div className={`voter-register-bg ${bgClass}`}>
           <div className="voter-register-content">

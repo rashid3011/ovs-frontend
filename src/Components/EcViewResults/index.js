@@ -177,7 +177,7 @@ class EcViewResults extends Component {
           return (
             <Form className="view-results-form">
               <div className="view-results-type-input-container">
-                <p>Pick the type of election</p>
+                <p>Type of election</p>
                 <FormikControl
                   control="dropdown"
                   name="typeOfElection"

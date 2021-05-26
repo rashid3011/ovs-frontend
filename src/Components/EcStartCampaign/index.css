@@ -1,0 +1,80 @@
+.start-campaign-bg {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.start-campaign-form {
+  box-shadow: 0 0 8px #888;
+  padding: 20px;
+  border-radius: 8px;
+  width: 350px;
+  height: 400px;
+}
+
+.start-campaign-form h1 {
+  color: var(--main-color);
+  font-size: 25px;
+  margin-bottom: 20px;
+  font-family: var(--main-font);
+  font-weight: 600;
+}
+
+.start-campaign-container {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.start-campaign-container .select-container {
+  display: flex;
+  width: 80%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-family: var(--main-font);
+}
+
+.start-campaign-container .react-datepicker__input-container {
+  margin-left: 0px !important;
+}
+
+.start-campaign-button {
+  border: none;
+  border-radius: 3px;
+  width: 80px;
+  height: 30px;
+  background: var(--main-color);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+@media (max-width: 440px) {
+  .start-campaign-bg {
+    justify-content: flex-start;
+  }
+  .start-campaign-form {
+    width: 90%;
+  }
+  .start-campaign-container .select-container {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .start-campaign-container .select-container {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+  }
+}

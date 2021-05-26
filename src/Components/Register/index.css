@@ -52,8 +52,10 @@ hr {
   width: 80%;
 }
 
-#voterId,
-#email {
+.voter-register-form #voterId {
+  width: 50%;
+}
+.voter-register-form #email {
   width: 50%;
 }
 
@@ -68,19 +70,27 @@ hr {
   left: -6%;
 }
 
-#firstName,
-#lastName {
+.voter-register-form #firstName {
+  width: 50%;
+}
+.voter-register-form #lastName {
   width: 50%;
 }
 
-#password,
-#confirmPassword {
+.voter-register-form #password {
+  width: 50%;
+}
+.voter-register-form #confirmPassword {
   width: 50%;
 }
 
-#dob,
-#gender,
-#mobile {
+.voter-register-form #dob {
+  width: 50%;
+}
+.voter-register-form #gender {
+  width: 50%;
+}
+.voter-register-form #mobile {
   width: 50%;
 }
 
@@ -192,65 +202,65 @@ hr {
   .voter-register-form {
     flex-direction: column;
   }
-  .input-container {
+  .voter-register-form .input-container {
     width: 100% !important;
   }
-  .radio-container {
+  .voter-register-form .radio-container {
     width: 100% !important;
     justify-content: flex-start;
   }
-  .radio-container p {
+  .voter-register-form .radio-container p {
     font-size: 14px;
   }
-  .radio-buttons-container {
+  .voter-register-form .radio-buttons-container {
     margin-left: auto;
     margin-top: 10px;
     align-items: center;
   }
-  .radio-buttons-container label {
+  .voter-register-form .radio-buttons-container label {
     width: 40px;
     font-size: 12px;
   }
-  .address-input-container p {
+  .voter-register-form .address-input-container p {
     font-size: 14px;
     text-align: left;
   }
-  .dropdown-container {
+  .voter-register-form .dropdown-container {
     margin-bottom: 10px;
   }
 
-  select {
+  .voter-register-form select {
     font-size: 14px;
   }
 
-  .date {
+  .voter-register-form .date {
     font-size: 14px;
   }
 }
 
 @media (max-width: 768px) {
-  .input-container {
+  .voter-register-form .input-container {
     font-size: 13px;
   }
-  .radio-container p {
+  .voter-register-form .radio-container p {
     font-size: 14px;
   }
-  .radio-container label {
+  .voter-register-form .radio-container label {
     width: 50px;
   }
-  .address-input-container p {
+  .voter-register-form .address-input-container p {
     font-size: 15px;
   }
 }
 
 @media (min-width: 768px) {
-  .input-container {
+  .voter-register-form .input-container {
     font-size: 15px;
   }
-  .radio-container p {
+  .voter-register-form .radio-container p {
     font-size: 15px;
   }
-  .radio-container label {
+  .voter-register-form .radio-container label {
     width: 70px;
     font-size: 14px;
   }

@@ -8,6 +8,8 @@ class CastVotePopup extends Component {
   state = {
     isCastingVote: false,
     isCastVoteSuccessfull: false,
+    isCastVoteFailed: false,
+    errorMessage: "",
   };
 
   renderConfirmed = () => {
@@ -29,7 +31,7 @@ class CastVotePopup extends Component {
     const { partyName, voterInfo, type, candidateId } = item;
     const { firstName, lastName } = voterInfo;
     return (
-      <div className="delete-confirmation-container">
+      <div className="delete-confirmation-container cast-vote-popup">
         <h1 className="vote-confirmation-heading">Voter Details</h1>
         <ul className="popup-details">
           <div className="popup-details-left">
@@ -70,8 +72,6 @@ class CastVotePopup extends Component {
 
   castVote = async (candidateId, close) => {
     this.setState({ isCastingVote: true, isCastVoteSuccessfull: false });
-    const { setErrorMessage } = this.props;
-    setErrorMessage("");
     const url = "https://ovs-backend.herokuapp.com/cast-vote";
     const voterDetails = JSON.parse(localStorage.getItem("voterDetails"));
     const { voterId } = voterDetails;
@@ -92,7 +92,7 @@ class CastVotePopup extends Component {
     };
 
     const response = await fetch(url, options);
-    if (response.status === 200) {
+    if (response.ok === true) {
       this.setState({ isCastingVote: false, isCastVoteSuccessfull: true });
       setTimeout(() => {
         this.setState({ isCastVoteSuccessfull: false });
@@ -101,10 +101,35 @@ class CastVotePopup extends Component {
     } else {
       const data = await response.json();
       const { message } = data;
-      this.setState({ isCastingVote: false });
-      setErrorMessage(message);
-      close();
+      this.setState({
+        isCastingVote: false,
+        isCastVoteFailed: true,
+        errorMessage: message,
+      });
     }
+  };
+
+  renderCastVoteFailed = (close) => {
+    const { errorMessage } = this.state;
+    return (
+      <div className="vote-error-message-container">
+        <p className="cast-vote-error-message">{errorMessage}</p>
+        <button
+          type="button"
+          className="close-button"
+          onClick={() => {
+            close();
+            this.setState({
+              isCastVoteFailed: false,
+              isCastVoteSuccessfull: false,
+              isCastingVote: false,
+            });
+          }}
+        >
+          Close
+        </button>
+      </div>
+    );
   };
 
   renderLoader = () => {
@@ -120,7 +145,8 @@ class CastVotePopup extends Component {
   };
 
   render() {
-    const { isCastingVote, isCastVoteSuccessfull } = this.state;
+    const { isCastingVote, isCastVoteSuccessfull, isCastVoteFailed } =
+      this.state;
     const { details } = this.props;
     return (
       <div>
@@ -134,6 +160,8 @@ class CastVotePopup extends Component {
               ? this.renderConfirmed()
               : isCastingVote
               ? this.renderLoader()
+              : isCastVoteFailed
+              ? this.renderCastVoteFailed(close)
               : this.renderVoteConfirmation(details, close)
           }
         </Popup>

@@ -7,8 +7,68 @@ import "./index.css";
 import Loader from "react-loader-spinner";
 import AuthencticateVoter from "../AuthencticateVoter";
 
+const districts = ["District", "Khammam", "Adilabad", "Kurnool", "Nellore"];
+const constituency = [
+  "Constituency",
+  "Khammam",
+  "Pallair",
+  "Sirpur",
+  "Asifabad",
+  "Yemmiganur",
+  "Pattikonda",
+  "Atmakur Division",
+  "Naidupeta Division",
+];
+
+const mandal = [
+  "Mandal",
+  "Tirumalayapalem",
+  "Kusumanchi",
+  "Khammam",
+  "Dahegaon",
+  "Khanapur",
+  "Kerameri",
+  "Wankdi",
+  "Yemmiganur",
+  "Gonegandla",
+  "Veldurthy",
+  "Maddikera",
+  "Kaluvoya",
+  "Pellakur",
+];
+
+const village = [
+  "Village",
+  "Kaluvoya",
+  "Pellakur",
+  "Yemmiganur",
+  "Gonegandla",
+  "Veldurthy",
+  "Maddikera",
+  "Ananthapur",
+  "Devapur",
+  "Goyagaon",
+  "Karanjiwada",
+  "Kerameri",
+  "Wankdi",
+  "Advisarangapur",
+  "Badankurthy",
+  "Bavapur",
+  "Beernandi",
+  "Gorregutta",
+  "Borlakunta",
+  "Kothmir",
+  "Khammam",
+  "Bachodu",
+  "Bachodu Thanda",
+  "Erragadd",
+  "Gol Thanda",
+  "Kusumanchi",
+];
+
 class VoterViewResults extends Component {
   state = {
+    areaOptions: ["Election Type"],
     winner: [],
     isFetching: false,
     isOpen: false,
@@ -18,10 +78,12 @@ class VoterViewResults extends Component {
 
   initialValues = {
     typeOfElection: "",
+    area: "",
   };
 
   validationSchema = Yup.object({
     typeOfElection: Yup.string().required("*Required"),
+    area: Yup.string().required("*Required"),
   });
 
   toSmallCase = (x) => {
@@ -34,8 +96,7 @@ class VoterViewResults extends Component {
 
   getResults = async (values) => {
     this.setState({ isFetching: true, isOpen: true });
-    const { typeOfElection } = values;
-    const area = this.getArea(typeOfElection);
+    const { area, typeOfElection } = values;
     const url = `https://ovs-backend.herokuapp.com/results/${this.toSmallCase(
       typeOfElection
     )}/${this.toSmallCase(area)}`;
@@ -60,20 +121,23 @@ class VoterViewResults extends Component {
     this.getResults(values);
   };
 
-  getArea = (value) => {
-    const voterDetails = JSON.parse(localStorage.getItem("voterDetails"));
-    const { constituency, district, mandal, village } = voterDetails;
+  changeArea = (event) => {
+    const value = event.target.value;
     switch (value) {
       case "MLA":
-        return constituency;
+        this.setState({ areaOptions: constituency });
+        break;
       case "MP":
-        return district;
+        this.setState({ areaOptions: districts });
+        break;
       case "Sarpanch":
-        return village;
+        this.setState({ areaOptions: village });
+        break;
       case "ZPTC":
-        return mandal;
+        this.setState({ areaOptions: mandal });
+        break;
       default:
-        return "";
+        this.setState({ areaOptions: [] });
     }
   };
 
@@ -82,8 +146,7 @@ class VoterViewResults extends Component {
   };
 
   renderResults = (formik, close) => {
-    const { typeOfElection } = formik.values;
-    const area = this.getArea(typeOfElection);
+    const { typeOfElection, area } = formik.values;
     const { isFetching, winner } = this.state;
     return isFetching ? (
       this.renderLoader()
@@ -103,7 +166,7 @@ class VoterViewResults extends Component {
   };
 
   renderForm = () => {
-    const { isOpen } = this.state;
+    const { areaOptions, isOpen } = this.state;
     return (
       <Formik
         initialValues={this.initialValues}
@@ -112,7 +175,8 @@ class VoterViewResults extends Component {
       >
         {(formik) => {
           return (
-            <Form className="view-results-form">
+            <Form className="voter-view-results-form">
+              <h1 className="main-heading">View Results</h1>
               <div className="view-results-type-input-container">
                 <p>Pick the type of election</p>
                 <FormikControl
@@ -121,6 +185,14 @@ class VoterViewResults extends Component {
                   options={this.options}
                   onChange={this.changeArea}
                   placeholder="Type of Election"
+                />
+              </div>
+              <div className="view-results-type-input-container">
+                <p>Pick your area</p>
+                <FormikControl
+                  control="simpleDropdown"
+                  name="area"
+                  options={areaOptions}
                 />
               </div>
               <button
@@ -151,15 +223,7 @@ class VoterViewResults extends Component {
   render() {
     return (
       <div className="voter-view-results-bg">
-        <div className="voter-view-results-container">
-          <div className="view-results-bg">
-            <h1 className="main-heading">View Results</h1>
-            {this.renderForm()}
-          </div>
-          <div className="results-image-container">
-            <img src="results.svg" alt="results" className="results-image" />
-          </div>
-        </div>
+        <div className="voter-view-results">{this.renderForm()}</div>
       </div>
     );
   }

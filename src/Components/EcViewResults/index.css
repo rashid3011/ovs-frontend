@@ -102,3 +102,10 @@
   height: 30px;
   width: 90px;
 }
+
+@media (max-width: 768px) {
+  .view-results-bg {
+    width: 80%;
+    font-size: 14px;
+  }
+}

@@ -2,15 +2,17 @@ import { Component } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FormikControl from "../FormikControl";
-import "./index.css";
 import Loader from "react-loader-spinner";
 import AuthencticateVoter from "../AuthencticateVoter";
+import ErrorMessagePopup from "../ErrorMessagePopup";
+import "./index.css";
 
 class RequestNominationForm extends Component {
   state = {
     errorMessage: "",
     isSubmitting: false,
     isSubmitSuccess: false,
+    isPopupOpen: false,
   };
 
   typeOptions = ["mla", "mp", "sarpanch", "zptc"];
@@ -48,7 +50,7 @@ class RequestNominationForm extends Component {
     };
 
     const response = await fetch(url, options);
-    if (response.status === 200) {
+    if (response.ok === true) {
       this.setState({ isSubmitSuccess: true });
       setTimeout(() => {
         history.push("/voter-dashboard");
@@ -58,6 +60,7 @@ class RequestNominationForm extends Component {
       const { message } = data;
       this.setState({
         errorMessage: message,
+        isPopupOpen: true,
         isSubmitting: false,
       });
     }
@@ -76,8 +79,12 @@ class RequestNominationForm extends Component {
     );
   };
 
+  setOpen = () => {
+    this.setState({ isPopupOpen: false });
+  };
+
   renderForm = () => {
-    const { isSubmitting, errorMessage } = this.state;
+    const { isSubmitting, errorMessage, isPopupOpen } = this.state;
     const bgClass = isSubmitting ? "loading-bg" : "";
     return (
       <div className={`voter-nomination-bg ${bgClass}`}>
@@ -116,7 +123,11 @@ class RequestNominationForm extends Component {
                     />
                   </div>
                   {this.renderButton()}
-                  <p className="nomination-error-message">{errorMessage}</p>
+                  <ErrorMessagePopup
+                    isPopupOpen={isPopupOpen}
+                    errorMessage={errorMessage}
+                    setOpen={this.setOpen}
+                  />
                 </Form>
               </div>
             );

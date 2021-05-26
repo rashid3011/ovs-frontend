@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import FormikControl from "../FormikControl";
 import Loader from "react-loader-spinner";
 import ErrorMessagePopup from "../ErrorMessagePopup";
+import AuthenticateVoter from "../AuthencticateVoter";
 import "./index.css";
 
 const validationSchema = Yup.object({
@@ -104,6 +105,8 @@ class ViewVoterProfile extends Component {
     const details = JSON.parse(localStorage.getItem("voterDetails"));
     const modifiedInitialValues = {
       ...details,
+      firstName: this.capitalize(details.firstName),
+      lastName: this.capitalize(details.lastName),
       confirmPassword: details.password,
       state: this.capitalize(details.state),
       district: this.capitalize(details.district),
@@ -162,32 +165,42 @@ class ViewVoterProfile extends Component {
 
   updateDetails = async (values) => {
     const { history } = this.props;
-    console.log(values);
+    const modifiedValues = {
+      ...values,
+      mobile:
+        values.mobile.slice(0, 3) === "+91"
+          ? values.mobile
+          : "+91" + values.mobile,
+    };
     this.setState({ isUpdatingDetails: true });
     const url = "https://ovs-backend.herokuapp.com/voters";
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "PATCH",
 
       headers: {
         "Content-Type": "application/json",
+        Authorization: `bearer ${token}`,
       },
 
-      body: JSON.stringify(values),
+      body: JSON.stringify(modifiedValues),
     };
 
     const response = await fetch(url, options);
-
-    if (response.status === 200) {
+    if (response.ok === true) {
+      const data = await response.json();
+      const { updatedVoter } = data;
+      localStorage.setItem("voterDetails", JSON.stringify(updatedVoter));
       history.push("/voter-dashboard");
     } else {
-      this.setState({ errorMessage: "*Please Enter Valid Details" });
+      this.setState({ errorMessage: "Please Enter Valid Details" });
     }
   };
 
   onSubmit = (values) => {
     if (values === this.initialValues) {
       this.setState({
-        errorMessage: "*Please Make Changes in Details to Update",
+        errorMessage: "Please Make Changes in Details to Update",
         isPopupOpen: true,
       });
       return;
@@ -344,7 +357,9 @@ class ViewVoterProfile extends Component {
                         className="voter-edit-button"
                         type="button"
                         onClick={() => {
-                          this.setState({ isFormEditable: true });
+                          this.setState((prevState) => ({
+                            isFormEditable: !prevState.isFormEditable,
+                          }));
                         }}
                       >
                         Edit

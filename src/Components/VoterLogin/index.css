@@ -154,13 +154,19 @@ body {
   transition: all 0.5s;
 }
 
-.voter-login-nav-link:hover {
-  color: #2c7a2a;
-}
-
 .wrong-details-error-message {
   color: red;
   font-size: 14px;
+}
+
+.redirect-link {
+  color: blue;
+  text-align: right;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: var(--main-font);
+  margin: 0px;
 }
 
 @media (min-width: 881px) {

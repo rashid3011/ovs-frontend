@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Dashboardheader from "../Dashboardheader";
 import SideBar from "../SideBar";
-import ViewVotesCasted from "../ViewVotesCasted";
+import EcVotesCasted from "../EcVotesCasted";
 import EcViewResults from "../EcViewResults";
 import "reactjs-popup/dist/index.css";
 import AuthencticateEc from "../AuthenticateEc";
@@ -26,12 +26,17 @@ const navLinks = [
   {
     key: "view-candidates",
     value: "View Candidates",
-    icon: "user-friends",
+    icon: "user-tie",
   },
   {
     key: "accept-nominations",
     value: "Accept Nominations",
     icon: "user-clock",
+  },
+  {
+    key: "start-campaign",
+    value: "Start Campaign",
+    icon: "broadcast-tower",
   },
 ];
 
@@ -75,11 +80,8 @@ class EcDashboard extends Component {
 
   render() {
     const { isNavbarVisible, isEcProfileVisible } = this.state;
-    const isLoggedIn = AuthencticateEc.authencticate();
     const { ecId } = JSON.parse(localStorage.getItem("ecDetails"));
-    return isLoggedIn !== true ? (
-      isLoggedIn
-    ) : (
+    return (
       <div className="ec-dash-bg">
         <Dashboardheader
           isNavbarVisible={isNavbarVisible}
@@ -96,7 +98,7 @@ class EcDashboard extends Component {
           toggleNavbar={this.toggleNavbar}
         />
 
-        <ViewVotesCasted />
+        <EcVotesCasted />
         <EcViewResults />
       </div>
     );

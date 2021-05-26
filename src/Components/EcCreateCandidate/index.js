@@ -52,7 +52,7 @@ class EcCreateCandidate extends Component {
     };
 
     const response = await fetch(url, options);
-    if (response.status === 200) {
+    if (response.ok === true) {
       this.setState({ isSubmitSuccess: true });
       setTimeout(() => {
         history.push("/ec-dashboard");
@@ -405,13 +405,8 @@ class EcCreateCandidate extends Component {
   };
 
   render() {
-    const isLoggedIn = AuthencticateEc.authencticate(this.props.history);
     const { isSubmitSuccess } = this.state;
-    return isLoggedIn !== true
-      ? isLoggedIn
-      : isSubmitSuccess
-      ? this.renderSubmitSuccess()
-      : this.renderForm();
+    return isSubmitSuccess ? this.renderSubmitSuccess() : this.renderForm();
   }
 }
 

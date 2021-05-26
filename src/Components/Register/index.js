@@ -136,16 +136,21 @@ class Register extends Component {
       isSubmittingForm: !prevState.isSubmittingForm,
       isRegisterFailed: false,
     }));
+    const modifiedData = {
+      ...data,
+      mobile:
+        data.mobile.slice(0, 3) === "+91" ? data.mobile : "+91" + data.mobile,
+    };
     const url = "https://ovs-backend.herokuapp.com/register";
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(modifiedData),
     };
     const response = await fetch(url, options);
-    if (response.status === 201) {
+    if (response.ok === true) {
       this.registerSuccess();
     } else {
       this.registerFailed();
@@ -230,6 +235,7 @@ class Register extends Component {
             onSubmit={this.onSubmit}
           >
             {(formik) => {
+              console.log(formik.values.dob);
               return (
                 <Form className="voter-register-form">
                   <FormikControl

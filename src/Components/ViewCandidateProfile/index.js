@@ -22,6 +22,42 @@ class ViewCandidateProfile extends Component {
     return { partyName, type };
   };
 
+  deleteCandidate = async () => {
+    const { fetchCandidateDetails, close } = this.props;
+    this.setState({ isSubmitting: true, errorMessage: "" });
+    const { details } = this.props;
+    const { candidateId } = details;
+    const url = " https://ovs-backend.herokuapp.com/ec/candidates";
+    const token = AuthenticateEc.getToken();
+    const options = {
+      method: "DELETE",
+
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${token}`,
+      },
+
+      body: JSON.stringify({ candidateId: candidateId }),
+    };
+
+    const response = await fetch(url, options);
+    if (response.ok === true) {
+      this.setState({ isSubmitting: false, isSubmitSuccess: true });
+      setTimeout(() => {
+        this.setState({ isSubmitSuccess: false });
+        close();
+        fetchCandidateDetails();
+      }, 2000);
+    } else {
+      const data = await response.json();
+      const { message } = data;
+      this.setState({
+        errorMessage: message,
+        isSubmitting: false,
+      });
+    }
+  };
+
   initialValues = this.fetchInitialValues();
 
   validationSchema = Yup.object({
@@ -30,7 +66,7 @@ class ViewCandidateProfile extends Component {
   });
 
   onSubmit = async (values, onSubmitProps) => {
-    const { rerenderCandidates, close } = this.props;
+    const { fetchCandidateDetails, close } = this.props;
     this.setState({ isSubmitting: true, errorMessage: "" });
     const { details } = this.props;
     const { candidateId } = details;
@@ -61,12 +97,13 @@ class ViewCandidateProfile extends Component {
     };
 
     const response = await fetch(url, options);
-    if (response.status === 200) {
-      this.setState({ isSubmitSuccess: true });
+    if (response.ok === true) {
+      this.setState({ isSubmitting: false, isSubmitSuccess: true });
       setTimeout(() => {
+        this.setState({ isSubmitSuccess: false });
         close();
-        rerenderCandidates();
-      }, 1000);
+        fetchCandidateDetails();
+      }, 2000);
     } else {
       const data = await response.json();
       const { message } = data;
@@ -77,90 +114,82 @@ class ViewCandidateProfile extends Component {
     }
   };
 
-  renderButton = () => {
-    const { isSubmitting } = this.state;
-    return isSubmitting ? (
-      <button className="voter-view-nomination-button">
-        <Loader type="TailSpin" width={35} height={30} color="blue" />
-      </button>
-    ) : (
-      <button
-        className="voter-view-nomination-button update-button"
-        type="submit"
-      >
-        Update Form
-      </button>
+  renderLoader = () => {
+    return (
+      <Loader
+        className="loader"
+        type="TailSpin"
+        height={30}
+        width={30}
+        color="blue"
+      />
     );
   };
 
   renderForm = () => {
-    const { isSubmitting, errorMessage, isEditable } = this.state;
-    const bgClass = isSubmitting ? "loading-bg" : "";
-    const editFormClass = isEditable ? "" : "edit-form";
+    const { errorMessage, isEditable } = this.state;
+    const editFormClass = isEditable ? "editable" : "";
     const { details } = this.props;
     const { candidateId } = details;
-    const { close } = this.props;
     return (
-      <div
-        className={`voter-nomination-bg ${bgClass}`}
-        id="voter-view-nomination"
+      <Formik
+        initialValues={this.initialValues}
+        validationSchema={this.validationSchema}
+        onSubmit={this.onSubmit}
       >
-        <Formik
-          initialValues={this.initialValues}
-          validationSchema={this.validationSchema}
-          onSubmit={this.onSubmit}
-        >
-          {(formik) => {
-            return (
-              <div className="voter-nomination-content">
-                <div className="voter-view-nomination-header">
-                  <h1 className="voter-nomination-main-heading">
-                    {`${candidateId}'s Details`}
-                  </h1>
-                  <i className="fas fa-times" onClick={close}></i>
-                </div>
-                <span className="voter-nomination-line"></span>
-                <Form className="voter-nomination-form">
-                  <div
-                    className={`voter-view-nomination-input-container ${editFormClass}`}
-                  >
+        {(formik) => {
+          return (
+            <>
+              <Form className="view-candidate">
+                <h1>{`${candidateId}'s Details`}</h1>
+                <div className={`edit-form ${editFormClass}`}>
+                  <FormikControl
+                    control="input"
+                    type="text"
+                    name="partyName"
+                    placeholder="Party Name"
+                    icon="envelope"
+                    formik={formik}
+                  />
+
+                  <div className="nomination-address-input-container  ">
+                    <p>
+                      <span>
+                        <i className={`fas fa-map-marker-alt icon`}></i>
+                      </span>
+                      Pick you Type :
+                    </p>
+
                     <FormikControl
-                      control="input"
-                      type="text"
-                      name="partyName"
-                      placeholder="Party Name"
-                      icon="envelope"
-                      formik={formik}
+                      control="simpleDropdown"
+                      name="type"
+                      options={this.typeOptions}
                     />
-
-                    <div className="nomination-address-input-container  ">
-                      <p>
-                        <span>
-                          <i className={`fas fa-map-marker-alt icon`}></i>
-                        </span>
-                        Pick you Type :
-                      </p>
-
-                      <FormikControl
-                        control="simpleDropdown"
-                        name="type"
-                        options={this.typeOptions}
-                      />
-                    </div>
                   </div>
-                  <div className="voter-view-nomination-buttons-container">
+                </div>
+                <div className="candidate-buttons-container">
+                  <div className="inner-button-container">
                     <button
-                      className="voter-view-nomination-button edit-button"
+                      className="edit-button"
                       type="button"
                       onClick={() => {
-                        this.setState({ isEditable: true });
+                        this.setState((prevState) => ({
+                          isEditable: !prevState.isEditable,
+                        }));
                       }}
                     >
                       Edit
                     </button>
-                    {this.renderButton()}
                     <button
-                      className="voter-view-nomination-button reset-button"
+                      className="voter-view-nomination-button update-button"
+                      type="submit"
+                    >
+                      Update
+                    </button>
+                  </div>
+                  <div className="inner-button-container">
+                    <button
+                      className="reset-button"
                       type="button"
                       onClick={() => {
                         formik.resetForm();
@@ -168,33 +197,44 @@ class ViewCandidateProfile extends Component {
                     >
                       Reset
                     </button>
+                    <button
+                      type="button"
+                      className="delete-button"
+                      onClick={this.deleteCandidate}
+                    >
+                      Delete
+                    </button>
                   </div>
-                  <p className="nomination-error-message">{errorMessage}</p>
-                </Form>
-              </div>
-            );
-          }}
-        </Formik>
-      </div>
+                </div>
+                <p className="nomination-error-message">{errorMessage}</p>
+              </Form>
+            </>
+          );
+        }}
+      </Formik>
     );
   };
 
   renderSubmitSuccess = () => {
     return (
-      <div className="nomination-image-container">
+      <div className="edit-candidate-success-container">
         <img
           src="confirmed.gif"
           alt="nomination-success"
           className="nomination-success"
         ></img>
-        <p>Details are updated</p>
+        <p>Succesfully done!</p>
       </div>
     );
   };
 
   render() {
-    const { isSubmitSuccess } = this.state;
-    return isSubmitSuccess ? this.renderSubmitSuccess() : this.renderForm();
+    const { isSubmitSuccess, isSubmitting } = this.state;
+    return isSubmitting
+      ? this.renderLoader()
+      : isSubmitSuccess
+      ? this.renderSubmitSuccess()
+      : this.renderForm();
   }
 }
 

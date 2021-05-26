@@ -1,68 +1,88 @@
-.voter-view-nomination-buttons-container {
-  margin-top: 25px;
+.view-candidate {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--main-font);
+  height: 300px;
+}
+
+.view-candidate h1 {
+  font-size: 20px;
+  color: blue;
+  font-weight: 600;
+}
+
+.edit-form {
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-weight: 600;
+  font-size: 20px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.editable {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.candidate-buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+}
+
+.candidate-buttons-container .inner-button-container {
+  display: flex;
+  flex-direction: row;
   justify-content: space-around;
   width: 100%;
 }
 
-.voter-view-nomination-button {
+.candidate-buttons-container button {
   border: none;
-  border-radius: 8px;
+  border-radius: 3px;
+  width: 80px;
+  height: 30px;
   color: #fff;
-  height: 35px;
-  width: 100px;
-  font-size: 14px;
+  font-size: 15px;
+  font-family: "Roboto";
+  margin-bottom: 10px;
 }
 
-.edit-button {
-  background: rgb(38, 0, 255);
+.candidate-buttons-container .edit-button {
+  background: var(--main-color);
 }
 
-.update-button {
-  background: rgb(5, 199, 31);
+.candidate-buttons-container .reset-button {
+  background: rgb(0, 132, 255);
 }
 
-.reset-button {
-  background: rgb(207, 193, 0);
+.candidate-buttons-container .update-button {
+  background: rgb(2, 228, 59);
 }
 
-#voter-view-nomination {
-  height: 350px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.candidate-buttons-container .close-button {
+  background: rgb(175, 175, 175);
 }
 
-#voter-view-nomination .voter-nomination-content {
-  box-shadow: none;
-  width: 100%;
-  height: 100%;
-}
-
-.edit-form {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-.voter-view-nomination-input-container {
-  height: 50%;
+.edit-candidate-success-container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
 
-.voter-view-nomination-header {
-  display: flex;
-  width: 100%;
+.edit-candidate-success-container p {
+  color: rgb(2, 167, 2);
+  font-weight: 600;
+  font-size: 20px;
 }
 
-.voter-view-nomination-header i {
-  margin-left: auto;
-  cursor: pointer;
-}
-
-.candidate-nomination-popup-content .nomination-image-container {
-  height: auto;
+.delete-button {
+  background: red;
 }

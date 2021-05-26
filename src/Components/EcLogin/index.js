@@ -5,11 +5,17 @@ import FormikControl from "../FormikControl";
 import "./index.css";
 import Loader from "react-loader-spinner";
 import AuthencticateEc from "../AuthenticateEc";
+import ErrorMessagePopup from "../ErrorMessagePopup";
 
 class ECLoginPage extends Component {
   state = {
     isSubmittingForm: false,
-    isLoginFailed: false,
+    isPopupOpen: false,
+    errorMessage: "",
+  };
+
+  setPopup = () => {
+    this.setState({ isPopupOpen: false });
   };
 
   initialValues = {
@@ -29,8 +35,13 @@ class ECLoginPage extends Component {
     AuthencticateEc.login(data, history);
   };
 
-  loginFailed = () => {
-    this.setState({ isSubmittingForm: false, isLoginFailed: true });
+  loginFailed = (data) => {
+    const { message } = data;
+    this.setState({
+      isSubmittingForm: false,
+      isPopupOpen: true,
+      errorMessage: message,
+    });
   };
 
   onSubmit = async (values, onSubmitProps) => {
@@ -49,15 +60,16 @@ class ECLoginPage extends Component {
       headers: {
         "Content-Type": "application/json",
       },
+
       body: JSON.stringify(modifiedData),
     };
 
     const response = await fetch(url, options);
     const data = await response.json();
-    if (response.status === 200) {
+    if (response.ok === true) {
       this.loginSuccess(data);
     } else {
-      this.loginFailed();
+      this.loginFailed(data);
     }
   };
 
@@ -80,7 +92,7 @@ class ECLoginPage extends Component {
 
   render() {
     const loginColor = "#2aeb51";
-    const { isLoginFailed, isSubmittingForm } = this.state;
+    const { isPopupOpen, errorMessage, isSubmittingForm } = this.state;
     const bgClass = isSubmittingForm ? "loading-bg" : "";
     return (
       <div className={`ec-login-bg ${bgClass}`}>
@@ -111,11 +123,11 @@ class ECLoginPage extends Component {
                   formik={formik}
                 />
                 {this.renderButton(formik)}
-                {isLoginFailed && (
-                  <p className="ec-login-failed-message">
-                    *Enter your details correctly
-                  </p>
-                )}
+                <ErrorMessagePopup
+                  errorMessage={errorMessage}
+                  isPopupOpen={isPopupOpen}
+                  setOpen={this.setPopup}
+                />
               </Form>
             );
           }}

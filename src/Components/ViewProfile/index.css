@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
 .voter-view-bg {
   border-radius: 8px;
   margin-bottom: 10px;
@@ -45,8 +47,10 @@ hr {
   width: 80%;
 }
 
-#voterId,
-#email {
+.voter-register-form #voterId {
+  width: 50%;
+}
+.voter-register-form #email {
   width: 50%;
 }
 
@@ -61,19 +65,27 @@ hr {
   left: -6%;
 }
 
-#firstName,
-#lastName {
+.voter-register-form #firstName {
+  width: 50%;
+}
+.voter-register-form #lastName {
   width: 50%;
 }
 
-#password,
-#confirmPassword {
+.voter-register-form #password {
+  width: 50%;
+}
+.voter-register-form #confirmPassword {
   width: 50%;
 }
 
-#dob,
-#gender,
-#mobile {
+.voter-register-form #dob {
+  width: 50%;
+}
+.voter-register-form #gender {
+  width: 50%;
+}
+.voter-register-form #mobile {
   width: 50%;
 }
 
@@ -197,10 +209,10 @@ hr {
 }
 
 .voter-view-form-footer button {
-  width: 125px;
+  width: 100px;
   height: 35px;
   border: none;
-  border-radius: 8px;
+  border-radius: 3px;
 }
 
 .voter-edit-button {
@@ -213,8 +225,13 @@ hr {
   color: #fff;
 }
 
+.voter-delete-button {
+  background: #ff0000;
+  color: #fff;
+}
+
 .voter-close-button {
-  background: #ff0040;
+  background: #da6c06;
   color: #fff;
 }
 
@@ -256,42 +273,104 @@ hr {
   pointer-events: none;
 }
 
+.delete-confirmation-container {
+  padding: 15px;
+}
+
+.delete-confirmation-container h1 {
+  font-size: 35px;
+  font-weight: 600;
+  color: blue;
+  text-align: center;
+}
+
+.delete-confirmation-container p {
+  font-family: var(--main-font);
+  font-weight: 600;
+}
+
+.delete-confirmation-container .message {
+  color: red;
+  text-align: center;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.confirm-buttons-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.confirm-buttons-container button {
+  border: none;
+  border-radius: 3px;
+  height: 35px;
+  width: 100px;
+  color: #fff;
+}
+
+.confirm-buttons-container .delete {
+  background: red;
+}
+
+.confirm-buttons-container .cancel {
+  background: #8f8f8f;
+}
+
+.confirmed-image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+}
+
+.confirmed-image-container p {
+  color: green;
+  font-weight: 600;
+  font-family: var(--main-font);
+}
+
+.view-loader-container {
+  width: 300px;
+}
+
 @media (max-width: 576px) {
   .voter-register-form {
     flex-direction: column;
   }
-  .input-container {
+  .voter-register-form .input-container {
     width: 100% !important;
   }
-  .radio-container {
+  .voter-register-form .radio-container {
     width: 100% !important;
     justify-content: flex-start;
   }
-  .radio-container p {
+  .voter-register-form .radio-container p {
     font-size: 14px;
   }
-  .radio-buttons-container {
+  .voter-register-form .radio-buttons-container {
     margin-left: auto;
     margin-top: 10px;
     align-items: center;
   }
-  .radio-buttons-container label {
+  .voter-register-form .radio-buttons-container label {
     width: 40px;
     font-size: 12px;
   }
-  .address-input-container p {
+  .voter-register-form .address-input-container p {
     font-size: 14px;
     text-align: left;
   }
-  .dropdown-container {
+  .voter-register-form .dropdown-container {
     margin-bottom: 10px;
   }
 
-  select {
+  .voter-register-form select {
     font-size: 14px;
   }
 
-  .date {
+  .voter-register-form .date {
     font-size: 14px;
   }
   .voter-view-form-footer {

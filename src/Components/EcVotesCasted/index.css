@@ -1,0 +1,27 @@
+.view-votes-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.view-votes {
+  width: 80%;
+  box-shadow: 0 0 8px #888;
+  padding: 25px;
+  border-radius: 8px;
+}
+
+.votes-heading {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
+  font-family: var(--main-font);
+  color: var(--main-color);
+  margin-bottom: 20px;
+}
+
+@media (max-width: 576px) {
+  .votes-heading {
+    font-size: 20px;
+  }
+}

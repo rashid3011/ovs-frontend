@@ -2,8 +2,9 @@ import { Component } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FormikControl from "../FormikControl";
-import "./index.css";
 import Loader from "react-loader-spinner";
+import AuthenticateEc from "../AuthenticateEc";
+import "./index.css";
 
 const validationSchema = Yup.object({
   voterId: Yup.string().required("*Required"),
@@ -100,8 +101,28 @@ class ViewProfile extends Component {
     activeVillage: [],
     isFormEditable: false,
     errorMessage: "",
-    isUpdatingDetails: false,
+    isSubmitting: false,
+    isDeleteActive: false,
+    isDeleted: false,
   };
+
+  validationSchema = Yup.object({
+    voterId: Yup.string()
+      .matches(/^V[0-9]{5}$/, "enter valid voter Id")
+      .required("*Required"),
+    email: Yup.string().email("*Invalid email Id").required("*Required"),
+    firstName: Yup.string().required("*Required"),
+    lastName: Yup.string().required("*Required"),
+    dob: Yup.date().required("*Required").nullable(),
+    mobile: Yup.string()
+      .required("*Required")
+      .matches(/^(\+\d{2})?(\d){10}$/, "enter valid number"),
+    state: Yup.string().required("*Required"),
+    district: Yup.string().required("*Required"),
+    constituency: Yup.string().required("*Required"),
+    mandal: Yup.string().required("*Required"),
+    village: Yup.string().required("*Required"),
+  });
 
   capitalize = (z) => {
     return z
@@ -114,7 +135,7 @@ class ViewProfile extends Component {
     const { details } = this.props;
     const modifiedInitialValues = {
       ...details,
-      confirmPassword: details.password,
+      lastName: details.lastName,
       state: this.capitalize(details.state),
       district: this.capitalize(details.district),
       constituency: this.capitalize(details.constituency),
@@ -170,24 +191,59 @@ class ViewProfile extends Component {
     });
   };
 
+  deleteVoter = async (item) => {
+    this.setState({ isSubmitting: true });
+    const { fetchVoterDetails, details, close } = this.props;
+    const { voterId } = details;
+    const url = " https://ovs-backend.herokuapp.com/ec/voters";
+    const token = AuthenticateEc.getToken();
+    const options = {
+      method: "DELETE",
+
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `bearer ${token}`,
+      },
+
+      body: JSON.stringify({ voterId: voterId }),
+    };
+
+    await fetch(url, options);
+    this.setState({ isDeleted: true, isSubmitting: false });
+    setTimeout(() => {
+      this.setState({ isDeleted: false, isDeleteActive: false });
+      fetchVoterDetails();
+      close();
+    }, 2000);
+  };
+
   updateDetails = async (values) => {
-    this.setState({ isUpdatingDetails: true });
-    const { close, rerenderVoters } = this.props;
-    const url = "https://ovs-backend.herokuapp.com/voters";
+    this.setState({ isSubmitting: true });
+    const modifiedValues = {
+      ...values,
+      mobile:
+        values.mobile.slice(0, 3) === "+91"
+          ? values.mobile
+          : "+91" + values.mobile,
+    };
+    const { close, fetchVoterDetails } = this.props;
+    const url = "https://ovs-backend.herokuapp.com/ec/voters";
+    const token = AuthenticateEc.getToken();
     const options = {
       method: "PATCH",
 
       headers: {
         "Content-Type": "application/json",
+        Authorization: `bearer ${token}`,
       },
 
-      body: JSON.stringify(values),
+      body: JSON.stringify(modifiedValues),
     };
 
     const response = await fetch(url, options);
-    if (response.status === 200) {
+    if (response.ok === true) {
       close();
-      rerenderVoters();
+      fetchVoterDetails();
     } else {
       this.setState({ errorMessage: "*Please Enter Valid Details" });
     }
@@ -202,6 +258,65 @@ class ViewProfile extends Component {
       return;
     }
     this.updateDetails(values);
+  };
+
+  renderVoterDeleteConfirmation = (item, close) => {
+    const { details } = this.props;
+    const { voterId, firstName, lastName } = details;
+    return (
+      <div className="delete-confirmation-container">
+        <h1>Voter Details</h1>
+        <ul className="popup-details">
+          <div className="popup-details-left">
+            <p>Voter ID</p>
+            <p>First Name</p>
+            <p>Last Name</p>
+          </div>
+          <div className="popup-details-center">
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+          </div>
+          <div className="popup-details-right">
+            <p>{this.capitalize(voterId)}</p>
+            <p>{this.capitalize(firstName)}</p>
+            <p>{this.capitalize(lastName)}</p>
+          </div>
+        </ul>
+        <p className="message">*Are you sure you want to delete voter</p>
+        <div className="confirm-buttons-container">
+          <button
+            className="delete"
+            onClick={() => {
+              this.deleteVoter(item);
+            }}
+          >
+            Delete
+          </button>
+          <button
+            className="cancel"
+            onClick={() => {
+              this.setState({ isDeleteActive: false });
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  renderDeleteConfirmed = () => {
+    return (
+      <div className="confirmed-image-container">
+        <img
+          src="confirmed.gif"
+          alt="confirmed"
+          className="confirmed-image"
+        ></img>
+        <p>Voter is Successfully Deleted</p>
+      </div>
+    );
   };
 
   renderForm = () => {
@@ -238,7 +353,7 @@ class ViewProfile extends Component {
                 </div>
                 <hr />
                 <span className="voter-register-line"></span>
-                <Form autoComplete="off">
+                <Form>
                   <div
                     className={`voter-register-form ${formEditClass}`}
                     id="updateForm"
@@ -249,6 +364,7 @@ class ViewProfile extends Component {
                       type="text"
                       name="voterId"
                       icon="address-card"
+                      placeholder="voterId"
                       formik={formik}
                     />
 
@@ -257,6 +373,7 @@ class ViewProfile extends Component {
                       type="text"
                       name="email"
                       icon="envelope"
+                      placeholder="email"
                       formik={formik}
                     />
 
@@ -264,6 +381,7 @@ class ViewProfile extends Component {
                       control="input"
                       type="text"
                       name="firstName"
+                      placeholder="First Name"
                       icon="user"
                       formik={formik}
                     />
@@ -272,6 +390,7 @@ class ViewProfile extends Component {
                       control="input"
                       type="text"
                       name="lastName"
+                      placeholder="Last Name"
                       icon="user"
                       formik={formik}
                     />
@@ -292,6 +411,7 @@ class ViewProfile extends Component {
                     <FormikControl
                       control="input"
                       name="mobile"
+                      placeholder="Phone Number"
                       type="text"
                       icon="mobile-alt"
                       formik={formik}
@@ -380,11 +500,12 @@ class ViewProfile extends Component {
                       Reset
                     </button>
                     <button
-                      className="voter-close-button"
-                      type="button"
-                      onClick={close}
+                      className="voter-delete-button"
+                      onClick={() => {
+                        this.setState({ isDeleteActive: true });
+                      }}
                     >
-                      Close
+                      Delete
                     </button>
                   </div>
                   <p className="voter-view-error-message">{errorMessage}</p>
@@ -399,19 +520,27 @@ class ViewProfile extends Component {
 
   renderLoader = () => {
     return (
-      <Loader
-        className="loader"
-        type="TailSpin"
-        width={35}
-        height={35}
-        color="red"
-      />
+      <div className="view-loader-container">
+        <Loader
+          className="loader"
+          type="TailSpin"
+          width={35}
+          height={35}
+          color="red"
+        />
+      </div>
     );
   };
 
   render() {
-    const { isUpdatingDetails } = this.state;
-    return isUpdatingDetails ? this.renderLoader() : this.renderForm();
+    const { isSubmitting, isDeleteActive, isDeleted } = this.state;
+    return isSubmitting
+      ? this.renderLoader()
+      : isDeleteActive
+      ? isDeleted
+        ? this.renderDeleteConfirmed()
+        : this.renderVoterDeleteConfirmation()
+      : this.renderForm();
   }
 }
 

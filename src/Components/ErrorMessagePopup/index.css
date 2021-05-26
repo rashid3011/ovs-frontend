@@ -3,22 +3,27 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding: 20px;
-  width: fit-content;
+  padding: 10px 20px !important;
+  max-width: 300px;
   height: 150px;
   border-radius: 8px;
 }
 
 .error-popup-content p {
+  text-align: center;
   margin-bottom: 0px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .error-popup-content button {
-  background: blue;
+  background: rgb(0, 153, 255);
   border: none;
   border-radius: 3px;
   color: #fff;
   height: 30px;
-  width: 90px;
+  width: 80px;
+  font-weight: 600;
+  font-size: 15px;
+  font-family: var(--main-font);
+  outline: none;
 }

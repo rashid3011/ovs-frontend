@@ -27,6 +27,11 @@ const navLinks = [
     value: "Delete Account",
     icon: "trash",
   },
+  {
+    key: "voter-votes",
+    value: "View Votes",
+    icon: "vote-yea",
+  },
 ];
 
 const voteDivision = [
@@ -61,28 +66,28 @@ class VoterDashboard extends Component {
     voterDetails: [],
     isFetching: true,
     isDeletingVoter: false,
-    castVoteErrorMessage: "",
   };
 
   fetchVoterDetails = async () => {
     const voterDetails = localStorage.getItem("voterDetails");
     const voterId =
-      voterDetails !== "undefined" ? JSON.parse(voterDetails).voterId : "";
+      voterDetails === null ? "" : JSON.parse(voterDetails).voterId;
     const url = `https://ovs-backend.herokuapp.com/voters/${voterId}`;
     const token = AuthencticateVoter.getToken();
     const options = {
       method: "GET",
+
       headers: {
+        "Content-Type": "application/json",
         Authorization: `bearer ${token}`,
       },
     };
     const response = await fetch(url, options);
-    if (response.status === 200) {
-      const { voter } = await response.json();
+    if (response.ok === true) {
+      const data = await response.json();
+      const { voter } = data;
       localStorage.setItem("voterDetails", JSON.stringify(voter));
       this._mount && this.setState({ voterDetails: voter });
-    } else {
-      this._mount && this.setState({ voterDetails: [] });
     }
     this._mount && this.getDetails();
   };
@@ -168,10 +173,7 @@ class VoterDashboard extends Component {
             </p>
           </div>
         </ul>
-        <p className="message">
-          *Are you sure you want to delete voter-{voterId} <br /> Once deleted
-          cannot be restored
-        </p>
+        <p className="message">Are you sure you want to delete your account?</p>
         <div className="confirm-buttons-container">
           <button
             className="delete"
@@ -179,7 +181,7 @@ class VoterDashboard extends Component {
               this.deleteVoter(item);
             }}
           >
-            Delete Voter
+            Delete
           </button>
           <button className="cancel" onClick={close}>
             Cancel
@@ -202,16 +204,16 @@ class VoterDashboard extends Component {
   };
 
   getDetails = async () => {
-    await this.getMlaDetails();
-    await this.getMpDetails();
-    await this.getSarpanchDetails();
-    await this.getZptcDetails();
+    const voterDetails = JSON.parse(localStorage.getItem("voterDetails"));
+    await this.getMlaDetails(voterDetails);
+    await this.getMpDetails(voterDetails);
+    await this.getSarpanchDetails(voterDetails);
+    await this.getZptcDetails(voterDetails);
     const { mlaDetails } = this.state;
     this.setState({ partyDetails: mlaDetails, isFetching: false });
   };
 
-  getMpDetails = async () => {
-    const voterDetails = localStorage.getItem("voterDetails");
+  getMpDetails = async (voterDetails) => {
     const { district } = voterDetails;
     const url = `https://ovs-backend.herokuapp.com/candidates/mp/${district}`;
     const token = AuthencticateVoter.getToken();
@@ -223,15 +225,14 @@ class VoterDashboard extends Component {
       },
     };
     const response = await fetch(url, options);
-    if (response.status !== 404) {
+    if (response.ok === true) {
       const data = await response.json();
       const { candidates } = data;
       this.setState({ mpDetails: candidates });
     }
   };
 
-  getMlaDetails = async () => {
-    const voterDetails = localStorage.getItem("voterDetails");
+  getMlaDetails = async (voterDetails) => {
     const { constituency } = voterDetails;
     const url = `https://ovs-backend.herokuapp.com/candidates/mla/${constituency}`;
     const token = AuthencticateVoter.getToken();
@@ -243,17 +244,16 @@ class VoterDashboard extends Component {
       },
     };
     const response = await fetch(url, options);
-    if (response.status !== 404) {
+    if (response.ok === true) {
       const data = await response.json();
       const { candidates } = data;
       this.setState({ mlaDetails: candidates });
     }
   };
 
-  getZptcDetails = async () => {
-    const voterDetails = localStorage.getItem("voterDetails");
+  getZptcDetails = async (voterDetails) => {
     const { mandal } = voterDetails;
-    const url = `https://ovs-backend.herokuapp.com/candidates/mp/${mandal}`;
+    const url = `https://ovs-backend.herokuapp.com/candidates/zptc/${mandal}`;
     const token = AuthencticateVoter.getToken();
     const options = {
       method: "GET",
@@ -263,17 +263,16 @@ class VoterDashboard extends Component {
       },
     };
     const response = await fetch(url, options);
-    if (response.status !== 404) {
+    if (response.ok === true) {
       const data = await response.json();
       const { candidates } = data;
       this.setState({ zptcDetails: candidates });
     }
   };
 
-  getSarpanchDetails = async () => {
-    const voterDetails = localStorage.getItem("voterDetails");
+  getSarpanchDetails = async (voterDetails) => {
     const { village } = voterDetails;
-    const url = `https://ovs-backend.herokuapp.com/candidates/mp/${village}`;
+    const url = `https://ovs-backend.herokuapp.com/candidates/sarpanch/${village}`;
     const token = AuthencticateVoter.getToken();
     const options = {
       method: "GET",
@@ -283,7 +282,7 @@ class VoterDashboard extends Component {
       },
     };
     const response = await fetch(url, options);
-    if (response.status !== 404) {
+    if (response.ok === true) {
       const data = await response.json();
       const { candidates } = data;
       this.setState({ sarpanchDetails: candidates });
@@ -299,9 +298,9 @@ class VoterDashboard extends Component {
     } else if (electionType === "mp") {
       details = mpDetails;
     } else if (electionType === "sarpanch") {
-      details = zptcDetails;
-    } else {
       details = sarpanchDetails;
+    } else {
+      details = zptcDetails;
     }
 
     this.setState({ activeElectionType: electionType, partyDetails: details });
@@ -339,7 +338,7 @@ class VoterDashboard extends Component {
 
   renderNoResults = (election) => {
     return (
-      <div className="voter-no-results no-results">
+      <div className="voter-no-results">
         <i className="fas fa-exclamation-triangle"></i>
         <h1>
           No{" "}
@@ -363,10 +362,6 @@ class VoterDashboard extends Component {
       default:
         return "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.pngall.com%2Fprofile-png%2Fdownload%2F51607&psig=AOvVaw3iN0t-L4oAu8PP9pRBuoQe&ust=1621169776988000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPj4kZzey_ACFQAAAAAdAAAAABAD";
     }
-  };
-
-  setCastVoteError = (message) => {
-    this.setState({ castVoteErrorMessage: message });
   };
 
   renderCandidateList = () => {
@@ -396,10 +391,7 @@ class VoterDashboard extends Component {
                       firstName
                     )} ${this.capitalize(lastName)}`}</p>
                     <p className="party-name">{this.capitalize(partyName)}</p>
-                    <CastVotePopup
-                      details={item}
-                      setErrorMessage={this.setCastVoteError}
-                    />
+                    <CastVotePopup details={item} />
                   </li>
                 );
               })}
@@ -408,25 +400,22 @@ class VoterDashboard extends Component {
     );
   };
 
-  render() {
+  renderComponent = () => {
     const {
       isNavbarVisible,
       isUserProfileVisible,
       voterDetails,
       isDeletingVoter,
-      castVoteErrorMessage,
     } = this.state;
-    const { firstName } = JSON.parse(localStorage.getItem("voterDetails"));
-    console.log(firstName);
-    const isLoggedIn = AuthencticateVoter.authencticate();
-    return isLoggedIn !== true ? (
-      isLoggedIn
-    ) : (
+    const details = localStorage.getItem("voterDetails");
+    const firstName = details === null ? "" : JSON.parse(details).firstName;
+    const lastName = details === null ? "" : JSON.parse(details).lastName;
+    return (
       <div className="dash-bg">
         <Dashboardheader
           isNavbarVisible={isNavbarVisible}
           isProfileVisible={isUserProfileVisible}
-          name={firstName === undefined ? "" : firstName}
+          name={this.capitalize(firstName) + " " + this.capitalize(lastName)}
           logout={this.logout}
           toggleProfile={this.toggleUserProfile}
           toggleNavbar={this.toggleNavbar}
@@ -445,7 +434,6 @@ class VoterDashboard extends Component {
           <br /> is stronger than
           <br /> The Bullet.
         </h1>
-        <p className="cast-vote-error">{castVoteErrorMessage}</p>
         <div className="cast-vote-outer-container">
           <div className="cast-vote-container">
             {this.renderCastVoteHeader()}
@@ -454,6 +442,10 @@ class VoterDashboard extends Component {
         </div>
       </div>
     );
+  };
+
+  render() {
+    return this.renderComponent();
   }
 }
 

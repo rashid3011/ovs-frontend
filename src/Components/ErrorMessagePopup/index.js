@@ -16,7 +16,7 @@ function ErrorMessagePopup(props) {
         {(close) => {
           return (
             <>
-              <p className="register-failed-message">{`Error : ${errorMessage}`}</p>
+              <p className="register-failed-message">{`${errorMessage}`}</p>
               <button onClick={close}>Close</button>
             </>
           );

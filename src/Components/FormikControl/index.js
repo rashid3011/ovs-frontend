@@ -4,6 +4,7 @@ import TextArea from "../InputFields/TextArea";
 import RadioInput from "../InputFields/RadioInput";
 import Dropdown from "../InputFields/DropDown";
 import SimpleDropdown from "../InputFields/SimpleDropdown";
+import DateTimeInput from "../InputFields/DateTimeInput";
 
 function FromikControl(props) {
   const { control, ...rest } = props;
@@ -12,6 +13,8 @@ function FromikControl(props) {
       return <TextField {...rest} />;
     case "date":
       return <DateInput {...rest} />;
+    case "dateTime":
+      return <DateTimeInput {...rest} />;
     case "textarea":
       return <TextArea {...rest} />;
     case "radio":

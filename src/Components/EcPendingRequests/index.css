@@ -1,0 +1,104 @@
+.pending-requests-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.pending-requests {
+  width: 90%;
+  box-shadow: 0 0 8px #888;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.pending-requests h1 {
+  color: var(--main-color);
+  font-family: var(--main-font);
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.no-results {
+  color: red;
+}
+
+.no-results i {
+  font-size: 30px;
+  margin-right: 0px;
+}
+
+.no-results h1 {
+  color: red;
+  font-size: 20px;
+}
+
+.voter-pending-nomination-content {
+  width: 400px;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.nomination-popup-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nomination-popup-details h1 {
+  font-size: 25px;
+  color: var(--main-color);
+  font-weight: 600;
+  font-family: "Roboto";
+}
+
+.nomination-popup-details p {
+  font-family: var(--main-font);
+  font-weight: 600;
+}
+
+.nomination-popup-details .popup-details-left {
+  width: 130px;
+}
+
+.nomination-popup-details .popup-details-right {
+  width: 150px;
+}
+
+.nomination-popup-details .buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nomination-popup-details .buttons-container button {
+  border: none;
+  border-radius: 3px;
+  width: 120px;
+  height: 35px;
+  color: #fff;
+}
+
+.buttons-container .approve {
+  background: rgb(0, 150, 0);
+}
+
+.buttons-container .reject {
+  background-color: red;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 576px) {
+  .pending-requests h1 {
+    font-size: 20px;
+  }
+}
