@@ -62,13 +62,7 @@ class LoginForm extends Component {
     const { isSubmittingForm } = this.state;
     return isSubmittingForm ? (
       <button className="voter-login-button">
-        <Loader
-          className="login-loader"
-          type="TailSpin"
-          color="#4287f5"
-          height={30}
-          width={120}
-        />
+        <Loader type="TailSpin" color="#4287f5" height={30} width={120} />
       </button>
     ) : (
       <button

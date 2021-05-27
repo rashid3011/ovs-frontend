@@ -78,3 +78,46 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJFQzEyMzQ1I
 ###
 POST https://ovs-backend.herokuapp.com/ec/refresh-token HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJFQzEyMzQ1Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjIxMzQ4NTIyLCJleHAiOjE2MjEzNTAzMjJ9.1rC8C-C79D34spEBag8uw74NAzKAOKeosWeqwUu6us4
+
+
+###
+POST https://ovs-backend.herokuapp.com/ec/start-campaign HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJFQzEyMzQ1Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjIyMDI4MzYzLCJleHAiOjE2MjIwMzAxNjN9.oODQqgKFv8gqWSSxScVGi4ARHJvI17g2v__Lr8v3Ib8
+
+{
+  "type":"mla",
+  "district":"Khammam",
+  "startDate":"2021-05-26T01:00:00.000Z",
+  "endDate":"2021-05-27T01:00:00.000Z"
+}
+
+###
+POST https://ovs-backend.herokuapp.com/ec/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "ecId" : "EC11111",
+  "password" : "Rgukt123"
+}
+
+###
+POST https://ovs-backend.herokuapp.com/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "voterId" : "V09090",
+  "email" : "sami@sami.com",
+  "firstName" : "sami",
+  "lastName" : "Abdul",
+  "password" : "Rgukt@123",
+  "confirmPassword" : "Rgukt@123",
+  "dob" : "2021-05-26T01:00:00.000Z",
+  "gender" : "F",
+  "mobile" : "1234567890",
+  "state" : "Andhra Pradesh",
+  "district" : "Kurnool",
+  "constituency" : "yemmiganur",
+  "mandal" : "yemmiganur",
+  "village" :"yemmiganur",
+}

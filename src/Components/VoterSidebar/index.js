@@ -10,7 +10,6 @@ const VoterSidebar = (props) => {
     isDeletingVoter,
     renderDeleteConfirmed,
     renderDeleteConfirmation,
-    details,
   } = props;
   const classNavbar = isNavbarVisible ? "" : "hide-navbar";
 
@@ -50,7 +49,7 @@ const VoterSidebar = (props) => {
                 {(close) => {
                   return isDeletingVoter
                     ? renderDeleteConfirmed()
-                    : renderDeleteConfirmation(details, close);
+                    : renderDeleteConfirmation(close);
                 }}
               </Popup>
             );

@@ -5,6 +5,7 @@ import FormikControl from "../FormikControl";
 import Loader from "react-loader-spinner";
 import AuthencticateEc from "../AuthenticateEc";
 import ErrorMessagePopup from "../ErrorMessagePopup";
+import EcCommon from "../EcCommon";
 
 const genderOptions = [
   {
@@ -230,162 +231,165 @@ class EcCreateVoter extends Component {
     const bgClass = isSubmittingForm ? "submit-bg" : "";
 
     return (
-      <div className="voter-register-outer-bg">
-        <div className={`voter-register-bg ${bgClass}`}>
-          <div className="voter-register-content">
-            <h1 className="voter-register-main-heading">Create Voter</h1>
-            <hr />
-            <span className="voter-register-line"></span>
-          </div>
-          <Formik
-            initialValues={this.initialValues}
-            validationSchema={this.validationSchema}
-            onSubmit={this.onSubmit}
-          >
-            {(formik) => {
-              return (
-                <Form className="voter-register-form">
-                  <FormikControl
-                    control="input"
-                    type="text"
-                    name="voterId"
-                    placeholder="VoterID"
-                    icon="address-card"
-                    formik={formik}
-                  />
+      <div>
+        <EcCommon />
+        <div className="voter-register-outer-bg">
+          <div className={`voter-register-bg ${bgClass}`}>
+            <div className="voter-register-content">
+              <h1 className="voter-register-main-heading">Create Voter</h1>
+              <hr />
+              <span className="voter-register-line"></span>
+            </div>
+            <Formik
+              initialValues={this.initialValues}
+              validationSchema={this.validationSchema}
+              onSubmit={this.onSubmit}
+            >
+              {(formik) => {
+                return (
+                  <Form className="voter-register-form">
+                    <FormikControl
+                      control="input"
+                      type="text"
+                      name="voterId"
+                      placeholder="VoterID"
+                      icon="address-card"
+                      formik={formik}
+                    />
 
-                  <FormikControl
-                    control="input"
-                    type="text"
-                    name="email"
-                    placeholder="Email ID"
-                    icon="envelope"
-                    formik={formik}
-                  />
+                    <FormikControl
+                      control="input"
+                      type="text"
+                      name="email"
+                      placeholder="Email ID"
+                      icon="envelope"
+                      formik={formik}
+                    />
 
-                  <FormikControl
-                    control="input"
-                    type="text"
-                    name="firstName"
-                    placeholder="First Name"
-                    icon="user"
-                    formik={formik}
-                  />
+                    <FormikControl
+                      control="input"
+                      type="text"
+                      name="firstName"
+                      placeholder="First Name"
+                      icon="user"
+                      formik={formik}
+                    />
 
-                  <FormikControl
-                    control="input"
-                    type="text"
-                    name="lastName"
-                    placeholder="Last Name"
-                    icon="user"
-                    formik={formik}
-                  />
+                    <FormikControl
+                      control="input"
+                      type="text"
+                      name="lastName"
+                      placeholder="Last Name"
+                      icon="user"
+                      formik={formik}
+                    />
 
-                  <FormikControl
-                    control="input"
-                    type="password"
-                    name="password"
-                    placeholder="new Password"
-                    icon="lock"
-                    formik={formik}
-                  />
+                    <FormikControl
+                      control="input"
+                      type="password"
+                      name="password"
+                      placeholder="new Password"
+                      icon="lock"
+                      formik={formik}
+                    />
 
-                  <FormikControl
-                    control="input"
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="Password again"
-                    icon="lock"
-                    formik={formik}
-                  />
+                    <FormikControl
+                      control="input"
+                      type="password"
+                      name="confirmPassword"
+                      placeholder="Password again"
+                      icon="lock"
+                      formik={formik}
+                    />
 
-                  <FormikControl
-                    control="date"
-                    name="dob"
-                    icon="calendar-alt"
-                    formik={formik}
-                  />
-                  <FormikControl
-                    control="radio"
-                    name="gender"
-                    options={genderOptions}
-                    icon="venus-mars"
-                    formik={formik}
-                  />
-                  <FormikControl
-                    control="input"
-                    name="mobile"
-                    type="text"
-                    placeholder="Phone Number"
-                    icon="mobile-alt"
-                    formik={formik}
-                  />
-                  <div className="address-input-container">
-                    <p className="address-input-container-placeholder">
-                      <span>
-                        <i className={`fas fa-map-marker-alt icon`}></i>
-                      </span>
-                      Pick you address :
-                    </p>
-                    <div className="nested-dropdown-container">
-                      <FormikControl
-                        control="dropdown"
-                        name="state"
-                        options={activeState}
-                        placeholder="State"
-                        formik={formik}
-                        onChange={this.setAddress}
-                      />
-                      <FormikControl
-                        control="dropdown"
-                        name="district"
-                        options={activeDistrict}
-                        placeholder="District"
-                        formik={formik}
-                        onChange={this.setAddress}
-                      />
-                      <FormikControl
-                        control="dropdown"
-                        name="constituency"
-                        options={activeConstituency}
-                        placeholder="Constituency"
-                        formik={formik}
-                        onChange={this.setAddress}
-                      />
-                      <FormikControl
-                        control="dropdown"
-                        name="mandal"
-                        options={activeMandal}
-                        placeholder="Mandal"
-                        formik={formik}
-                        onChange={this.setAddress}
-                      />
-                      <FormikControl
-                        control="dropdown"
-                        name="village"
-                        options={activeVillage}
-                        placeholder="Village"
-                        formik={formik}
-                        onChange={this.setAddress}
+                    <FormikControl
+                      control="date"
+                      name="dob"
+                      icon="calendar-alt"
+                      formik={formik}
+                    />
+                    <FormikControl
+                      control="radio"
+                      name="gender"
+                      options={genderOptions}
+                      icon="venus-mars"
+                      formik={formik}
+                    />
+                    <FormikControl
+                      control="input"
+                      name="mobile"
+                      type="text"
+                      placeholder="Phone Number"
+                      icon="mobile-alt"
+                      formik={formik}
+                    />
+                    <div className="address-input-container">
+                      <p className="address-input-container-placeholder">
+                        <span>
+                          <i className={`fas fa-map-marker-alt icon`}></i>
+                        </span>
+                        Pick you address :
+                      </p>
+                      <div className="nested-dropdown-container">
+                        <FormikControl
+                          control="dropdown"
+                          name="state"
+                          options={activeState}
+                          placeholder="State"
+                          formik={formik}
+                          onChange={this.setAddress}
+                        />
+                        <FormikControl
+                          control="dropdown"
+                          name="district"
+                          options={activeDistrict}
+                          placeholder="District"
+                          formik={formik}
+                          onChange={this.setAddress}
+                        />
+                        <FormikControl
+                          control="dropdown"
+                          name="constituency"
+                          options={activeConstituency}
+                          placeholder="Constituency"
+                          formik={formik}
+                          onChange={this.setAddress}
+                        />
+                        <FormikControl
+                          control="dropdown"
+                          name="mandal"
+                          options={activeMandal}
+                          placeholder="Mandal"
+                          formik={formik}
+                          onChange={this.setAddress}
+                        />
+                        <FormikControl
+                          control="dropdown"
+                          name="village"
+                          options={activeVillage}
+                          placeholder="Village"
+                          formik={formik}
+                          onChange={this.setAddress}
+                        />
+                      </div>
+                    </div>
+
+                    <div
+                      className="voter-register-form-footer"
+                      id="voter-register-footer"
+                    >
+                      {this.renderButton(formik)}
+                      <ErrorMessagePopup
+                        errorMessage={errorMessage}
+                        isPopupOpen={isPopupOpen}
+                        setOpen={this.setOpen}
                       />
                     </div>
-                  </div>
-
-                  <div
-                    className="voter-register-form-footer"
-                    id="voter-register-footer"
-                  >
-                    {this.renderButton(formik)}
-                    <ErrorMessagePopup
-                      errorMessage={errorMessage}
-                      isPopupOpen={isPopupOpen}
-                      setOpen={this.setOpen}
-                    />
-                  </div>
-                </Form>
-              );
-            }}
-          </Formik>
+                  </Form>
+                );
+              }}
+            </Formik>
+          </div>
         </div>
       </div>
     );

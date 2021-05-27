@@ -3,6 +3,7 @@ import Loader from "react-loader-spinner";
 import AuthenticateEc from "../AuthenticateEc";
 import Table from "./Table";
 import "./index.css";
+import EcCommon from "../EcCommon";
 
 class EcPendingRequests extends Component {
   state = {
@@ -176,8 +177,11 @@ class EcPendingRequests extends Component {
 
   render() {
     return (
-      <div className="pending-requests-container">
-        {this.renderPendingRequests()}
+      <div>
+        <EcCommon />
+        <div className="pending-requests-container">
+          {this.renderPendingRequests()}
+        </div>
       </div>
     );
   }

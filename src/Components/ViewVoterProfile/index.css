@@ -1,12 +1,11 @@
 .voter-view-outer-bg {
-  padding: 30px;
   height: 100vh;
 }
 
 .voter-view-outer-bg > .voter-view-bg {
   box-shadow: 0 0 8px #888;
   padding: 20px;
-  height: 100%;
+  margin: 0px 20px 20px 20px;
 }
 
 .address-placeholder {

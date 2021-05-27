@@ -6,6 +6,7 @@ import Popup from "reactjs-popup";
 import "./index.css";
 import Loader from "react-loader-spinner";
 import AuthencticateVoter from "../AuthencticateVoter";
+import VoterCommon from "../VoterCommon";
 
 const districts = ["District", "Khammam", "Adilabad", "Kurnool", "Nellore"];
 const constituency = [
@@ -69,8 +70,8 @@ const village = [
 class VoterViewResults extends Component {
   state = {
     areaOptions: ["Election Type"],
-    winner: [],
-    isFetching: false,
+    winner: null,
+    isFetching: true,
     isOpen: false,
   };
 
@@ -90,12 +91,19 @@ class VoterViewResults extends Component {
     return x.toLowerCase();
   };
 
+  capitalize = (x) => {
+    return x
+      .split(" ")
+      .map((y) => y.slice(0, 1).toUpperCase() + y.slice(1))
+      .join(" ");
+  };
+
   setOpen = () => {
     this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
   };
 
   getResults = async (values) => {
-    this.setState({ isFetching: true, isOpen: true });
+    this.setState({ isFetching: true, isOpen: true, winner: null });
     const { area, typeOfElection } = values;
     const url = `https://ovs-backend.herokuapp.com/results/${this.toSmallCase(
       typeOfElection
@@ -104,15 +112,33 @@ class VoterViewResults extends Component {
     const options = {
       method: "GET",
       headers: {
-        Authorization: `bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
 
     const response = await fetch(url, options);
     const data = await response.json();
     const { winner } = data;
+    if (winner[0] !== null) {
+      this.getCandidate(winner[0]);
+    } else {
+      this.setState({ isFetching: false });
+    }
+  };
+
+  getCandidate = async (winner) => {
+    const candidateId = winner._id;
+    const url = `https://ovs-backend.herokuapp.com/candidates/${candidateId}`;
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${AuthencticateVoter.getToken()}`,
+      },
+    };
+    const response = await fetch(url, options);
+    const { candidate } = await response.json();
     this.setState({
-      winner: winner[0],
+      winner: candidate,
       isFetching: false,
     });
   };
@@ -145,22 +171,62 @@ class VoterViewResults extends Component {
     return <Loader width={35} height={35} color="blue" type="ThreeDots" />;
   };
 
+  renderResultDetails = (formik, close) => {
+    const { area } = formik.values;
+    const { winner } = this.state;
+    const { voterInfo, type, partyName } = winner;
+    const { firstName, lastName } = voterInfo;
+    return (
+      <>
+        <ul className="popup-details">
+          <div className="popup-details-left">
+            <p>Candidate Name</p>
+            <p>Party Name</p>
+            <p>Type of Election</p>
+            <p>Area</p>
+          </div>
+          <div className="popup-details-center">
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+          </div>
+          <div className="popup-details-right">
+            <p>{`${this.capitalize(firstName)} ${this.capitalize(
+              lastName
+            )}`}</p>
+            <p>{this.capitalize(partyName)}</p>
+            <p>{this.capitalize(type)}</p>
+            <p>{this.capitalize(area)}</p>
+          </div>
+        </ul>
+
+        <button onClick={close} className="">
+          Close
+        </button>
+      </>
+    );
+  };
+
+  renderNoWinner = (close) => {
+    return (
+      <>
+        <p className="no-winner-message">There is no winner yet</p>
+        <button onClick={close}>Close</button>
+      </>
+    );
+  };
+
   renderResults = (formik, close) => {
-    const { typeOfElection, area } = formik.values;
     const { isFetching, winner } = this.state;
     return isFetching ? (
       this.renderLoader()
     ) : (
       <>
         <h1>Winner</h1>
-        {winner === null ? (
-          <p>There is no winner yet</p>
-        ) : (
-          <p>{`The winner of ${area} ${typeOfElection} is ${winner._id} with ${
-            winner.count
-          } ${winner.count > 1 ? "votes" : "vote"}`}</p>
-        )}
-        <button onClick={close}>Close</button>
+        {winner === null
+          ? this.renderNoWinner(close)
+          : this.renderResultDetails(formik, close)}
       </>
     );
   };
@@ -223,7 +289,10 @@ class VoterViewResults extends Component {
   render() {
     return (
       <div className="voter-view-results-bg">
-        <div className="voter-view-results">{this.renderForm()}</div>
+        <VoterCommon />
+        <div className="voter-view-results-content">
+          <div className="voter-view-results">{this.renderForm()}</div>
+        </div>
       </div>
     );
   }

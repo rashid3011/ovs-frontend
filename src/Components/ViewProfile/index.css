@@ -182,11 +182,6 @@ hr {
   color: #2c7a2a;
 }
 
-.submit-bg {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
 .register-failed-message {
   color: red;
   font-size: 15px;
@@ -312,6 +307,12 @@ hr {
 
 .confirm-buttons-container .delete {
   background: red;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.confirm-buttons-container .delete:hover {
+  box-shadow: 0px 0px 5px #888;
 }
 
 .confirm-buttons-container .cancel {

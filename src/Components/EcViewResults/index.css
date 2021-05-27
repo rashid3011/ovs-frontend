@@ -79,7 +79,20 @@
   padding: 20px;
   border-radius: 8px;
   width: 450px;
-  height: 200px;
+  height: fit-content;
+}
+
+.winner-popup-content .popup-details-right {
+  width: 150px;
+  font-weight: 600;
+  font-size: 15px;
+  font-family: var(--main-font);
+}
+
+.winner-popup-content .popup-details-left {
+  font-size: 15px;
+  margin-left: 20px;
+  font-family: var(--main-font);
 }
 
 .winner-popup-content h1 {
@@ -88,10 +101,9 @@
   font-family: "Bree Serif";
 }
 
-.winner-popup-content p {
+.no-winner-message {
   font-size: 16px;
   font-weight: 600;
-  color: rgb(145, 0, 202);
 }
 
 .winner-popup-content button {

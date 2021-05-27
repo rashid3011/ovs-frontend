@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import FormikControl from "../FormikControl";
 import AuthenticateEc from "../AuthenticateEc";
 import "./index.css";
+import EcCommon from "../EcCommon";
 
 const typeOfElections = ["mla", "mp", "sarpanch", "zptc"];
 const districts = ["Khammam", "Adilabad", "Kurnool", "Nellore"];
@@ -121,7 +122,12 @@ export class EcStartCampaign extends Component {
   };
 
   render() {
-    return <div className="start-campaign-bg">{this.renderForm()}</div>;
+    return (
+      <div>
+        <EcCommon />
+        <div className="start-campaign-bg">{this.renderForm()}</div>
+      </div>
+    );
   }
 }
 

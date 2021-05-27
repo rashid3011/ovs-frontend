@@ -4,6 +4,7 @@ import "reactjs-popup/dist/index.css";
 import AuthencticateEc from "../AuthenticateEc";
 import Table from "./Table";
 import "./index.css";
+import EcCommon from "../EcCommon";
 
 class EcViewVoters extends Component {
   state = {
@@ -164,7 +165,10 @@ class EcViewVoters extends Component {
 
   render() {
     return (
-      <div className="ec-view-details-bg">{this.renderDetailsTable()}</div>
+      <div>
+        <EcCommon />
+        <div className="ec-view-details-bg">{this.renderDetailsTable()}</div>
+      </div>
     );
   }
 }

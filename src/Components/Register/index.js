@@ -190,13 +190,7 @@ class Register extends Component {
     const { isSubmittingForm } = this.state;
     return isSubmittingForm ? (
       <button className="voter-register-button">
-        <Loader
-          className="loader"
-          type="TailSpin"
-          color="#4287f5"
-          height={30}
-          width={120}
-        />
+        <Loader type="TailSpin" color="blue" height={30} width={120} />
       </button>
     ) : (
       <button

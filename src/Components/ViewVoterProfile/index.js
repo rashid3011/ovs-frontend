@@ -5,6 +5,7 @@ import FormikControl from "../FormikControl";
 import Loader from "react-loader-spinner";
 import ErrorMessagePopup from "../ErrorMessagePopup";
 import AuthenticateVoter from "../AuthencticateVoter";
+import VoterCommon from "../VoterCommon";
 import "./index.css";
 
 const validationSchema = Yup.object({
@@ -40,7 +41,7 @@ const genderOptions = [
 
 const stateOptions = ["Telangana", "Andhra Pradesh"];
 const districtOptions = {
-  Telangana: ["Khammam", "Adilabad"],
+  Telangana: ["Khammam", "Adilabad", "Suryapet"],
   "Andhra Pradesh": ["Kurnool", "Nellore"],
 };
 const constituencyOptions = {
@@ -224,6 +225,7 @@ class ViewVoterProfile extends Component {
 
     return (
       <div className="voter-view-outer-bg">
+        <VoterCommon />
         <div className="voter-view-bg">
           <Formik
             initialValues={this.initialValues}
@@ -394,15 +396,7 @@ class ViewVoterProfile extends Component {
   };
 
   renderLoader = () => {
-    return (
-      <Loader
-        className="loader"
-        type="TailSpin"
-        width={35}
-        height={35}
-        color="red"
-      />
-    );
+    return <Loader type="TailSpin" width={35} height={35} color="red" />;
   };
 
   render() {

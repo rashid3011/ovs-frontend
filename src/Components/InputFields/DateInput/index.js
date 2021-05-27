@@ -30,6 +30,9 @@ function DateInput(props) {
                 onChange={(val) => setFieldValue(name, val)}
                 placeholderText={`Pick your ${name}`}
                 maxDate={maxDate}
+                showYearDropdown
+                showMonthDropdown
+                dropdownMode="select"
               />
             );
           }}

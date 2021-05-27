@@ -1,8 +1,10 @@
 .voter-view-results-bg {
   height: 100vh;
-  padding: 20px;
+}
+
+.voter-view-results-content {
+  height: 80%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -41,4 +43,18 @@
 .voter-view-results-form select {
   font-weight: 600;
   font-family: var(--main-font);
+}
+
+@media (max-width: 576px) {
+  .voter-view-results {
+    width: 80%;
+  }
+  .view-results-type-input-container {
+    font-size: 14px;
+    text-align: left;
+  }
+  .view-results-type-input-container .selectdiv {
+    width: 120px;
+    font-size: 10px;
+  }
 }

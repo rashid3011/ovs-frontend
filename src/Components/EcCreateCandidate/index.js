@@ -5,6 +5,7 @@ import FormikControl from "../FormikControl";
 import Loader from "react-loader-spinner";
 import AuthencticateEc from "../AuthenticateEc";
 import ErrorMessagePopup from "../ErrorMessagePopup";
+import EcCommon from "../EcCommon";
 
 class EcCreateCandidate extends Component {
   state = {
@@ -406,7 +407,12 @@ class EcCreateCandidate extends Component {
 
   render() {
     const { isSubmitSuccess } = this.state;
-    return isSubmitSuccess ? this.renderSubmitSuccess() : this.renderForm();
+    return (
+      <div>
+        <EcCommon />
+        {isSubmitSuccess ? this.renderSubmitSuccess() : this.renderForm()}
+      </div>
+    );
   }
 }
 

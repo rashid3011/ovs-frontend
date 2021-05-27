@@ -21,11 +21,7 @@ body {
 .loading-bg {
   opacity: 0.5;
   pointer-events: none;
-}
-
-.loader {
-  background: none;
-  border: 0;
+  cursor: not-allowed;
 }
 
 .voter-login-login-image-container {

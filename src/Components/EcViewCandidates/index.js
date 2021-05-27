@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Loader from "react-loader-spinner";
 import "reactjs-popup/dist/index.css";
 import AuthencticateEc from "../AuthenticateEc";
+import EcCommon from "../EcCommon";
 import Table from "./Table";
 
 class EcViewCandidates extends Component {
@@ -155,7 +156,10 @@ class EcViewCandidates extends Component {
 
   render() {
     return (
-      <div className="ec-view-details-bg">{this.renderDetailsTable()}</div>
+      <div>
+        <EcCommon />
+        <div className="ec-view-details-bg">{this.renderDetailsTable()}</div>
+      </div>
     );
   }
 }
