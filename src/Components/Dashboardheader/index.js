@@ -1,3 +1,4 @@
+import { withRouter } from "react-router";
 import "./index.css";
 const Dashboardheader = (props) => {
   const {
@@ -34,4 +35,4 @@ const Dashboardheader = (props) => {
   );
 };
 
-export default Dashboardheader;
+export default withRouter(Dashboardheader);

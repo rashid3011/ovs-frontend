@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Dashboardheader from "../Dashboardheader";
 import SideBar from "../SideBar";
 import AuthencticateEc from "../AuthenticateEc";
+import { withRouter } from "react-router";
 
 class EcCommon extends Component {
   state = {
@@ -83,4 +84,4 @@ class EcCommon extends Component {
   }
 }
 
-export default EcCommon;
+export default withRouter(EcCommon);
