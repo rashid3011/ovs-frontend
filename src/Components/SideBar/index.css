@@ -3,6 +3,7 @@
   font-size: 25px;
   cursor: pointer;
   transition: 0.2s all;
+  margin-top: auto;
   margin-bottom: auto;
 }
 
@@ -16,7 +17,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 10px 20px;
 }
 
 .sidebar {
