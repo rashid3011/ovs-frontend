@@ -70,7 +70,7 @@ class EcViewResults extends Component {
   state = {
     areaOptions: ["pick election type"],
     winner: [],
-    isFetching: false,
+    isFetching: true,
     isOpen: false,
   };
 
@@ -79,11 +79,13 @@ class EcViewResults extends Component {
   initialValues = {
     typeOfElection: "",
     area: "",
+    district: "",
   };
 
   validationSchema = Yup.object({
     typeOfElection: Yup.string().required("*Required"),
     area: Yup.string().required("*Required"),
+    district: Yup.string().required("*Required"),
   });
 
   toSmallCase = (x) => {
@@ -96,10 +98,10 @@ class EcViewResults extends Component {
 
   getResults = async (values) => {
     this.setState({ isFetching: true, isOpen: true });
-    const { area, typeOfElection } = values;
+    const { area, typeOfElection, district } = values;
     const url = `https://ovs-backend.herokuapp.com/ec/results/${this.toSmallCase(
-      typeOfElection
-    )}/${this.toSmallCase(area)}`;
+      district
+    )}/${this.toSmallCase(typeOfElection)}/${this.toSmallCase(area)}`;
     const token = AuthenticateEc.getToken();
     const options = {
       method: "GET",
@@ -145,22 +147,62 @@ class EcViewResults extends Component {
     return <Loader width={35} height={35} color="blue" type="ThreeDots" />;
   };
 
+  renderResultDetails = (formik, close) => {
+    const { area } = formik.values;
+    const { winner } = this.state;
+    const { voterInfo, type, partyName } = winner;
+    const { firstName, lastName } = voterInfo;
+    return (
+      <>
+        <ul className="popup-details">
+          <div className="popup-details-left">
+            <p>Candidate Name</p>
+            <p>Party Name</p>
+            <p>Type of Election</p>
+            <p>Area</p>
+          </div>
+          <div className="popup-details-center">
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+            <p>:</p>
+          </div>
+          <div className="popup-details-right">
+            <p>{`${this.capitalize(firstName)} ${this.capitalize(
+              lastName
+            )}`}</p>
+            <p>{this.capitalize(partyName)}</p>
+            <p>{this.capitalize(type)}</p>
+            <p>{this.capitalize(area)}</p>
+          </div>
+        </ul>
+
+        <button onClick={close} className="">
+          Close
+        </button>
+      </>
+    );
+  };
+
+  renderNoWinner = (close) => {
+    return (
+      <>
+        <p className="no-winner-message">There is no winner yet</p>
+        <button onClick={close}>Close</button>
+      </>
+    );
+  };
+
   renderResults = (formik, close) => {
-    const { typeOfElection, area } = formik.values;
     const { isFetching, winner } = this.state;
     return isFetching ? (
       this.renderLoader()
     ) : (
       <>
         <h1>Winner</h1>
-        {winner === null ? (
-          <p>There is no winner yet</p>
-        ) : (
-          <p>{`The winner of ${area} ${typeOfElection} is ${winner._id} with ${
-            winner.count
-          } ${winner.count > 1 ? "votes" : "vote"}`}</p>
-        )}
-        <button onClick={close}>Close</button>
+        {winner === null
+          ? this.renderNoWinner(close)
+          : this.renderResultDetails(formik, close)}
       </>
     );
   };
@@ -192,6 +234,14 @@ class EcViewResults extends Component {
                   control="simpleDropdown"
                   name="area"
                   options={areaOptions}
+                />
+              </div>
+              <div className="view-results-type-input-container">
+                <p>Pick your district</p>
+                <FormikControl
+                  control="simpleDropdown"
+                  name="district"
+                  options={districts}
                 />
               </div>
               <button

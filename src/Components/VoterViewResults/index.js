@@ -80,11 +80,13 @@ class VoterViewResults extends Component {
   initialValues = {
     typeOfElection: "",
     area: "",
+    district: "",
   };
 
   validationSchema = Yup.object({
     typeOfElection: Yup.string().required("*Required"),
     area: Yup.string().required("*Required"),
+    district: Yup.string().required("*Required"),
   });
 
   toSmallCase = (x) => {
@@ -104,10 +106,10 @@ class VoterViewResults extends Component {
 
   getResults = async (values) => {
     this.setState({ isFetching: true, isOpen: true, winner: null });
-    const { area, typeOfElection } = values;
+    const { area, typeOfElection, district } = values;
     const url = `https://ovs-backend.herokuapp.com/results/${this.toSmallCase(
-      typeOfElection
-    )}/${this.toSmallCase(area)}`;
+      district
+    )}/${this.toSmallCase(typeOfElection)}/${this.toSmallCase(area)}`;
     const token = AuthencticateVoter.getToken();
     const options = {
       method: "GET",
@@ -259,6 +261,14 @@ class VoterViewResults extends Component {
                   control="simpleDropdown"
                   name="area"
                   options={areaOptions}
+                />
+              </div>
+              <div className="view-results-type-input-container">
+                <p>Pick your district</p>
+                <FormikControl
+                  control="simpleDropdown"
+                  name="district"
+                  options={districts}
                 />
               </div>
               <button
