@@ -13,7 +13,7 @@ class Donation extends Component {
     errMsg: "",
     isPopupOpen: false,
     isSubmitting: false,
-    isDonationSucess: true,
+    isDonationSucess: false,
   };
 
   setPopupClose = () => {
