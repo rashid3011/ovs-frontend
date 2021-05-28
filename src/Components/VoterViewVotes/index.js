@@ -72,7 +72,7 @@ class VoterViewVotes extends Component {
       const { candidateId, type } = vote;
       await this.getCandidateDetails(candidateId, type);
     }
-    this.setState({ isFetching: true });
+    this.setState({ isFetching: false });
   };
 
   renderLoader = () => {

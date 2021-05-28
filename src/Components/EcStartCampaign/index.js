@@ -28,10 +28,6 @@ export class EcStartCampaign extends Component {
     const { district, type, startDate, endDate } = values;
     const modifiedStartDate = startDate;
     const modifiedEndDate = endDate;
-    modifiedStartDate.setHours(modifiedStartDate.getHours() + 5);
-    modifiedStartDate.setMinutes(modifiedStartDate.getMinutes() + 30);
-    modifiedEndDate.setHours(modifiedEndDate.getHours() + 5);
-    modifiedEndDate.setMinutes(modifiedEndDate.getMinutes() + 30);
 
     const ecDetails = JSON.parse(localStorage.getItem("ecDetails"));
     const { edId } = ecDetails;
