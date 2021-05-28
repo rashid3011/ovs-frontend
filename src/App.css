@@ -28,11 +28,7 @@
 }
 
 .popup-details-center {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 5px;
+  width: fit-content;
   margin-left: 10px;
   margin-right: 10px;
 }
@@ -40,4 +36,9 @@
 .popup-details-right {
   text-align: left;
   width: 120px;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
 }

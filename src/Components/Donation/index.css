@@ -1,0 +1,97 @@
+.donation-outer-bg {
+  height: 100vh;
+}
+
+.donation-bg {
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.donation-content {
+  width: 400px;
+  height: 300px;
+  box-shadow: 0 0 8px #888;
+  border-radius: 8px;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.donation-form {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.donation-form h1 {
+  font-size: 30px;
+  font-family: var(--main-font);
+  color: var(--main-color);
+  font-weight: 600;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.create-order-btn {
+  border: none;
+  border-radius: 3px;
+  height: 35px;
+  width: 100px;
+  color: #fff;
+  background-color: var(--main-color);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.submitting-btn {
+  pointer-events: none;
+}
+
+.donation-success {
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px #888;
+  max-width: 400px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.donation-success h1 {
+  font-size: 30px;
+  font-family: var(--main-font);
+  color: var(--main-color);
+  font-weight: 600;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.donation-success p {
+  font-size: 18px;
+  font-family: "Bree Serif";
+  color: rgb(0, 0, 0);
+}
+
+.donation-success button {
+  border: none;
+  border-radius: 3px;
+  background: var(--main-color);
+  color: rgb(255, 255, 255);
+  height: 40px;
+  width: 130px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.donation-success button:hover {
+  background: limegreen;
+}

@@ -42,6 +42,11 @@ export class VoterCommon extends Component {
       value: "View Votes",
       icon: "vote-yea",
     },
+    {
+      key: "donation",
+      value: "Donation",
+      icon: "money-bill-alt",
+    },
   ];
 
   logout = () => {

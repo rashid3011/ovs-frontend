@@ -39,8 +39,7 @@ export class EcStartCampaign extends Component {
       endDate: modifiedEndDate,
       ecId: edId,
     };
-    console.log({ modifiedValues });
-    console.log(JSON.stringify(modifiedValues));
+
     const url = "https://ovs-backend.herokuapp.com/ec/start-campaign";
     const token = AuthenticateEc.getToken();
     const options = {

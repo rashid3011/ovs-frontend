@@ -19,6 +19,7 @@ import EcPendingRequests from "./Components/EcPendingRequests";
 import VoterViewResults from "./Components/VoterViewResults";
 import EcStartCampaign from "./Components/EcStartCampaign";
 import VoterViewVotes from "./Components/VoterViewVotes";
+import Donation from "./Components/Donation";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           path="/voter-dashboard"
           component={VoterDashboard}
         />
+        <ProtectedRouteVoter exact path="/donation" component={Donation} />
         <ProtectedRouteVoter
           exact
           path="/view-results"

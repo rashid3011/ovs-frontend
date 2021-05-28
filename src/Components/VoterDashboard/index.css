@@ -112,6 +112,7 @@
   transition: all 0.3s;
   color: #fff;
   font-weight: 600;
+  font-size: 16px;
 }
 
 .cast-vote-button:hover {

@@ -81,7 +81,6 @@ class LoginForm extends Component {
 
   loginFailed = (data) => {
     const { message } = data;
-    console.log(message);
     this.setState({
       isSubmittingForm: false,
       isPopupOpen: true,
