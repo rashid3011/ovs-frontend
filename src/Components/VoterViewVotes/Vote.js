@@ -8,13 +8,20 @@ function Vote(props) {
       .join(" ");
   };
 
-  const { candidate } = props;
-  console.log("in vote", candidate);
+  const { candidate, getPartyImage } = props;
   const { partyName, type, voterInfo } = candidate;
   const { firstName, lastName } = voterInfo;
+  const partyLogo = getPartyImage(partyName);
   return (
     <div className="vote-container">
-      <h1>{type}</h1>
+      <div className="vote-container-header">
+        <h1>{type}</h1>
+        <img
+          src={partyLogo}
+          className="view-vote-party-logo"
+          alt="party-logo"
+        />
+      </div>
       <ul className="popup-details">
         <div className="popup-details-left">
           <p>First Name</p>

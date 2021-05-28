@@ -20,6 +20,21 @@ class VoterViewVotes extends Component {
     this.getVotes();
   }
 
+  getPartyImage = (partyName) => {
+    switch (partyName.toLowerCase()) {
+      case "bjp":
+        return "bjp-logo.png";
+      case "congress":
+        return "congress-logo.png";
+      case "aap":
+        return "aap-logo.jpg";
+      case "trs":
+        return "trs-logo.jpeg";
+      default:
+        return "others-logo.png";
+    }
+  };
+
   getVotes = async () => {
     const { voterId } = JSON.parse(localStorage.getItem("voterDetails"));
     const url = `https://ovs-backend.herokuapp.com/votes/${voterId}`;
@@ -57,13 +72,13 @@ class VoterViewVotes extends Component {
       const { candidateId, type } = vote;
       await this.getCandidateDetails(candidateId, type);
     }
-    this.setState({ isFetching: false });
+    this.setState({ isFetching: true });
   };
 
   renderLoader = () => {
     return (
-      <div>
-        <Loader type="TailSpin" color="blue" height={35} width={100} />
+      <div className="view-votes-loader">
+        <Loader type="Oval" color="blue" height={30} width={130} />
       </div>
     );
   };
@@ -77,7 +92,7 @@ class VoterViewVotes extends Component {
           return candidate.candidateId === undefined ? (
             <NoVote candidate={candidate} />
           ) : (
-            <Vote candidate={candidate} />
+            <Vote candidate={candidate} getPartyImage={this.getPartyImage} />
           );
         })}
       </div>
@@ -87,7 +102,7 @@ class VoterViewVotes extends Component {
   render() {
     const { isFetching } = this.state;
     return (
-      <div>
+      <div className="view-votes-bg">
         <VoterCommon />
         <h1 className="vote-main-heading">Your Votes</h1>
         {isFetching ? this.renderLoader() : this.renderVotes()}
