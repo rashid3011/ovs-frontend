@@ -9,7 +9,7 @@
 
 .welcome {
   text-align: right;
-  padding: 15px 30px 0px 0px;
+  padding: 0px 30px 0px 0px;
   font-size: 18px;
   font-family: var(--main-font);
   font-weight: 600;
@@ -19,14 +19,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
-}
-
-.cast-vote-error {
-  color: red;
-  font-size: 15px;
-  margin-top: 100px;
-  margin-bottom: 0px;
+  margin-top: 30px;
 }
 
 .cast-vote-container {

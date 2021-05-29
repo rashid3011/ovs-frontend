@@ -305,7 +305,7 @@ class ViewVoterProfile extends Component {
                           <span>
                             <i className={`fas fa-map-marker-alt icon`}></i>
                           </span>
-                          Pick you address :
+                          Your Address :
                         </p>
                         <div className="nested-dropdown-container">
                           <FormikControl

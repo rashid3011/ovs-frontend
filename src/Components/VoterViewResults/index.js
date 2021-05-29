@@ -69,7 +69,7 @@ const village = [
 
 class VoterViewResults extends Component {
   state = {
-    areaOptions: ["Election Type"],
+    areaOptions: ["Area"],
     winner: null,
     isFetching: true,
     isOpen: false,
@@ -252,7 +252,7 @@ class VoterViewResults extends Component {
                   name="typeOfElection"
                   options={this.options}
                   onChange={this.changeArea}
-                  placeholder="Type of Election"
+                  placeholder="Election Type"
                 />
               </div>
               <div className="view-results-type-input-container">

@@ -46,9 +46,13 @@ class VoterViewVotes extends Component {
       },
     };
     const response = await fetch(url, options);
-    const { votes } = await response.json();
-    this.setState({ votes: votes });
-    this.getAllCandidates();
+    if (response.ok === true) {
+      const { votes } = await response.json();
+      this.setState({ votes: votes });
+      this.getAllCandidates();
+    } else {
+      this.setState({ isFetching: false });
+    }
   };
 
   getCandidateDetails = async (candidateId, type) => {

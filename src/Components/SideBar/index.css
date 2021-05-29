@@ -97,3 +97,14 @@
 .navlink:hover {
   color: #fff;
 }
+
+@media (max-width: 576px) {
+  .nav-menu {
+    margin-bottom: auto;
+    margin-top: 0px;
+  }
+  .welcome {
+    padding-right: 0px;
+    margin-top: 0px;
+  }
+}

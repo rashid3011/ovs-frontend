@@ -104,6 +104,14 @@ hr {
   width: 100%;
 }
 
+.address-placeholder {
+  transition: all 0.5s;
+}
+
+.address-input-container:hover .address-placeholder {
+  color: var(--main-color);
+}
+
 .address-input-container-placeholder {
   text-align: left;
   font-size: 15px;
