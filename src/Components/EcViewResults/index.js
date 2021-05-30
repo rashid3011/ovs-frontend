@@ -69,10 +69,11 @@ const village = [
 class EcViewResults extends Component {
   state = {
     areaOptions: ["Area"],
-    winner: null,
+    winners: null,
     isFetching: true,
     isOpen: false,
     errorMessage: null,
+    count: null,
   };
 
   options = ["MLA", "MP", "Sarpanch", "ZPTC"];
@@ -105,7 +106,7 @@ class EcViewResults extends Component {
   };
 
   getResults = async (values) => {
-    this.setState({ isFetching: true, isOpen: true, winner: null });
+    this.setState({ isFetching: true, isOpen: true, winners: null });
     const { area, typeOfElection, district } = values;
     const url = `https://ovs-backend.herokuapp.com/ec/results/${this.toSmallCase(
       district
@@ -121,9 +122,9 @@ class EcViewResults extends Component {
     const response = await fetch(url, options);
     if (response.ok === true) {
       const data = await response.json();
-      const { winner } = data;
-      if (winner[0] !== null) {
-        this.getCandidate(winner[0]);
+      const { winners } = data;
+      if (winners.length !== 0) {
+        this.getCandidate(winners[0]);
       } else {
         this.setState({ isFetching: false });
       }
@@ -133,8 +134,9 @@ class EcViewResults extends Component {
     }
   };
 
-  getCandidate = async (winner) => {
-    const candidateId = winner._id;
+  getCandidate = async (winners) => {
+    const candidateId = winners.candidateId;
+    const count = winners.count;
     const url = `https://ovs-backend.herokuapp.com/ec/candidates/${candidateId}`;
     const options = {
       method: "GET",
@@ -146,7 +148,8 @@ class EcViewResults extends Component {
     if (response.ok === true) {
       const { candidate } = await response.json();
       this.setState({
-        winner: candidate,
+        winners: candidate,
+        count: count,
         isFetching: false,
       });
     } else {
@@ -183,10 +186,25 @@ class EcViewResults extends Component {
     return <Loader width={35} height={35} color="blue" type="ThreeDots" />;
   };
 
+  getArea = (type) => {
+    switch (type) {
+      case "mla":
+        return "Constituency";
+      case "mp":
+        return "District";
+      case "sarpanch":
+        return "Village";
+      case "zptc":
+        return "Mandal";
+      default:
+        break;
+    }
+  };
+
   renderResultDetails = (formik, close) => {
     const { area } = formik.values;
-    const { winner } = this.state;
-    const { voterInfo, type, partyName } = winner;
+    const { winners, count } = this.state;
+    const { voterInfo, type, partyName } = winners;
     const { firstName, lastName } = voterInfo;
     return (
       <>
@@ -195,9 +213,11 @@ class EcViewResults extends Component {
             <p>Candidate Name</p>
             <p>Party Name</p>
             <p>Type of Election</p>
-            <p>Area</p>
+            <p>{this.getArea(type)}</p>
+            <p>Count</p>
           </div>
           <div className="popup-details-center">
+            <p>:</p>
             <p>:</p>
             <p>:</p>
             <p>:</p>
@@ -210,6 +230,7 @@ class EcViewResults extends Component {
             <p>{this.capitalize(partyName)}</p>
             <p>{this.capitalize(type)}</p>
             <p>{this.capitalize(area)}</p>
+            <p>{count}</p>
           </div>
         </ul>
 
@@ -233,13 +254,13 @@ class EcViewResults extends Component {
   };
 
   renderResults = (formik, close) => {
-    const { isFetching, winner } = this.state;
+    const { isFetching, winners } = this.state;
     return isFetching ? (
       this.renderLoader()
     ) : (
       <>
         <h1>Winner</h1>
-        {winner === null
+        {winners === null
           ? this.renderNoWinner(close)
           : this.renderResultDetails(formik, close)}
       </>

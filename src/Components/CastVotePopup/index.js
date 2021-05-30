@@ -10,17 +10,27 @@ class CastVotePopup extends Component {
     isCastVoteSuccessfull: false,
     isCastVoteFailed: false,
     errorMessage: "",
+    transactionHash: null,
   };
 
   renderConfirmed = () => {
+    const { transactionHash } = this.state;
     return (
-      <div className="confirmed-image-container">
+      <div className="confirmed-vote-image-container">
         <img
           src="confirmed.gif"
           alt="confirmed"
           className="confirmed-image"
         ></img>
         <p style={{ color: "green" }}>Vote is successfully casted</p>
+        <a
+          className="view-block-vote-btn"
+          href={`https://rinkeby.etherscan.io/tx/${transactionHash}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          View Your Blockchain Vote
+        </a>
       </div>
     );
   };
@@ -93,11 +103,13 @@ class CastVotePopup extends Component {
 
     const response = await fetch(url, options);
     if (response.ok === true) {
-      this.setState({ isCastingVote: false, isCastVoteSuccessfull: true });
-      setTimeout(() => {
-        this.setState({ isCastVoteSuccessfull: false });
-        close();
-      }, 2000);
+      const { castedVote } = await response.json();
+      const { transactionHash } = castedVote;
+      this.setState({
+        isCastingVote: false,
+        isCastVoteSuccessfull: true,
+        transactionHash: transactionHash,
+      });
     } else {
       const data = await response.json();
       const { message } = data;

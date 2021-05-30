@@ -94,9 +94,13 @@ class VoterViewVotes extends Component {
       <div className="all-votes-container">
         {candidateArray.map((candidate) => {
           return candidate.candidateId === undefined ? (
-            <NoVote candidate={candidate} />
+            <NoVote candidate={candidate} key={candidate.type} />
           ) : (
-            <Vote candidate={candidate} getPartyImage={this.getPartyImage} />
+            <Vote
+              candidate={candidate}
+              getPartyImage={this.getPartyImage}
+              key={candidate.candidateId}
+            />
           );
         })}
       </div>

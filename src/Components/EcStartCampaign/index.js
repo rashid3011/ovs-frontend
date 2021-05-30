@@ -6,6 +6,8 @@ import AuthenticateEc from "../AuthenticateEc";
 import "./index.css";
 import EcCommon from "../EcCommon";
 import Loader from "react-loader-spinner";
+import ErrorMessagePopup from "../ErrorMessagePopup";
+import Popup from "reactjs-popup";
 
 const typeOfElections = ["mla", "mp", "sarpanch", "zptc"];
 const districts = ["Khammam", "Adilabad", "Kurnool", "Nellore"];
@@ -13,6 +15,13 @@ const districts = ["Khammam", "Adilabad", "Kurnool", "Nellore"];
 class EcStartCampaign extends Component {
   state = {
     isSubmitting: false,
+    isSubmitSuccess: false,
+    errorMessage: null,
+    isPopupOpen: false,
+  };
+
+  setClose = () => {
+    this.setState({ isPopupOpen: false });
   };
 
   initialValues = {
@@ -30,7 +39,7 @@ class EcStartCampaign extends Component {
   });
 
   onSubmit = async (values) => {
-    this.setState({ isSubmitting: true });
+    this.setState({ isSubmitting: true, errorMessage: "" });
     const { district, type, startDate, endDate } = values;
     const modifiedStartDate = startDate;
     const modifiedEndDate = endDate;
@@ -59,7 +68,16 @@ class EcStartCampaign extends Component {
       body: JSON.stringify(modifiedValues),
     };
 
-    await fetch(url, options);
+    const response = await fetch(url, options);
+    if (response.ok === true) {
+      this.setState({ isSubmitSuccess: true });
+      setTimeout(() => {
+        this.setState({ isSubmitSuccess: false });
+      }, 2000);
+    } else {
+      const { message } = await response.json();
+      this.setState({ errorMessage: message, isPopupOpen: true });
+    }
     this.setState({ isSubmitting: false });
   };
 
@@ -76,7 +94,21 @@ class EcStartCampaign extends Component {
     );
   };
 
+  renderStartConfirmed = () => {
+    return (
+      <div className="confirmed-image-container">
+        <img
+          src="confirmed.gif"
+          alt="confirmed"
+          className="confirmed-image"
+        ></img>
+        <p>Campaign is Successfully Started</p>
+      </div>
+    );
+  };
+
   renderForm = () => {
+    const { isPopupOpen, errorMessage, isSubmitSuccess } = this.state;
     return (
       <Formik
         initialValues={this.initialValues}
@@ -126,6 +158,14 @@ class EcStartCampaign extends Component {
                 />
 
                 {this.renderButton()}
+                <ErrorMessagePopup
+                  isPopupOpen={isPopupOpen}
+                  setOpen={this.setClose}
+                  errorMessage={errorMessage}
+                />
+                <Popup open={isSubmitSuccess}>
+                  {this.renderStartConfirmed()}
+                </Popup>
               </div>
             </Form>
           );

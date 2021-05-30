@@ -122,9 +122,9 @@ class VoterViewResults extends Component {
     const response = await fetch(url, options);
     if (response.ok === true) {
       const data = await response.json();
-      const { winner } = data;
-      if (winner[0] !== null) {
-        this.getCandidate(winner[0]);
+      const { winners } = data;
+      if (winners.length !== 0) {
+        this.getCandidate(winners[0]);
       } else {
         this.setState({ isFetching: false });
       }
@@ -135,7 +135,8 @@ class VoterViewResults extends Component {
   };
 
   getCandidate = async (winner) => {
-    const candidateId = winner._id;
+    const candidateId = winner.candidateId;
+    const count = winner.count;
     const url = `https://ovs-backend.herokuapp.com/candidates/${candidateId}`;
     const options = {
       method: "GET",
@@ -147,6 +148,7 @@ class VoterViewResults extends Component {
     const { candidate } = await response.json();
     this.setState({
       winner: candidate,
+      count: count,
       isFetching: false,
     });
   };
@@ -181,7 +183,7 @@ class VoterViewResults extends Component {
 
   renderResultDetails = (formik, close) => {
     const { area } = formik.values;
-    const { winner } = this.state;
+    const { winner, count } = this.state;
     const { voterInfo, type, partyName } = winner;
     const { firstName, lastName } = voterInfo;
     return (
@@ -192,8 +194,10 @@ class VoterViewResults extends Component {
             <p>Party Name</p>
             <p>Type of Election</p>
             <p>Area</p>
+            <p>Count</p>
           </div>
           <div className="popup-details-center">
+            <p>:</p>
             <p>:</p>
             <p>:</p>
             <p>:</p>
@@ -206,6 +210,7 @@ class VoterViewResults extends Component {
             <p>{this.capitalize(partyName)}</p>
             <p>{this.capitalize(type)}</p>
             <p>{this.capitalize(area)}</p>
+            <p>{count}</p>
           </div>
         </ul>
 
