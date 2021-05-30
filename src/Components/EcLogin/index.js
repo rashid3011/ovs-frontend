@@ -90,12 +90,25 @@ class ECLoginPage extends Component {
     );
   };
 
-  render() {
-    const loginColor = "#2aeb51";
-    const { isPopupOpen, errorMessage, isSubmittingForm } = this.state;
-    const bgClass = isSubmittingForm ? "loading-bg" : "";
+  renderBackToHome = () => {
     return (
-      <div className={`ec-login-bg ${bgClass}`}>
+      <div
+        className="back-to-home"
+        onClick={() => {
+          this.props.history.push("/");
+        }}
+      >
+        <i className="fas fa-long-arrow-alt-left back-arrow"></i>
+        <i className="fas fa-home home-icon"></i>
+      </div>
+    );
+  };
+
+  renderForm = () => {
+    const loginColor = "#2aeb51";
+    const { isPopupOpen, errorMessage } = this.state;
+    return (
+      <>
         <Formik
           initialValues={this.initialValues}
           validationSchema={this.validationSchema}
@@ -285,6 +298,17 @@ class ECLoginPage extends Component {
             />
           </svg>
         </div>
+      </>
+    );
+  };
+
+  render() {
+    const { isSubmittingForm } = this.state;
+    const bgClass = isSubmittingForm ? "loading-bg" : "";
+    return (
+      <div className={`ec-login-bg ${bgClass}`}>
+        {this.renderBackToHome()}
+        {this.renderForm()}
       </div>
     );
   }

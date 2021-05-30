@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Loader from "react-loader-spinner";
-import AuthencticateVoter from "../AuthencticateVoter";
+import AuthenticateVoter from "../AuthenticateVoter";
 import VoterCommon from "../VoterCommon";
 import Vote from "./Vote";
 import NoVote from "./NoVote";
@@ -38,7 +38,7 @@ class VoterViewVotes extends Component {
   getVotes = async () => {
     const { voterId } = JSON.parse(localStorage.getItem("voterDetails"));
     const url = `https://ovs-backend.herokuapp.com/votes/${voterId}`;
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "GET",
       headers: {
@@ -57,7 +57,7 @@ class VoterViewVotes extends Component {
 
   getCandidateDetails = async (candidateId, type) => {
     const url = `https://ovs-backend.herokuapp.com/candidates/${candidateId}`;
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "GET",
       headers: {

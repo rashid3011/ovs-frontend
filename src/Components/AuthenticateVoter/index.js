@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-class AuthencticateVoter {
+class AuthenticateVoter {
   token_name = "ovsvoter";
   intervalId = null;
 
@@ -102,4 +102,4 @@ class AuthencticateVoter {
   };
 }
 
-export default new AuthencticateVoter();
+export default new AuthenticateVoter();

@@ -62,7 +62,7 @@
 .navlink {
   color: #fff;
   font-size: 18px;
-  font-family: "Fira Sans", sans-serif;
+  font-family: var(--main-font);
   cursor: pointer;
   display: flex;
   justify-content: flex-start;

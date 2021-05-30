@@ -5,11 +5,16 @@ import FormikControl from "../FormikControl";
 import AuthenticateEc from "../AuthenticateEc";
 import "./index.css";
 import EcCommon from "../EcCommon";
+import Loader from "react-loader-spinner";
 
 const typeOfElections = ["mla", "mp", "sarpanch", "zptc"];
 const districts = ["Khammam", "Adilabad", "Kurnool", "Nellore"];
 
-export class EcStartCampaign extends Component {
+class EcStartCampaign extends Component {
+  state = {
+    isSubmitting: false,
+  };
+
   initialValues = {
     district: "Khammam",
     type: "mla",
@@ -25,6 +30,7 @@ export class EcStartCampaign extends Component {
   });
 
   onSubmit = async (values) => {
+    this.setState({ isSubmitting: true });
     const { district, type, startDate, endDate } = values;
     const modifiedStartDate = startDate;
     const modifiedEndDate = endDate;
@@ -54,6 +60,20 @@ export class EcStartCampaign extends Component {
     };
 
     await fetch(url, options);
+    this.setState({ isSubmitting: false });
+  };
+
+  renderButton = () => {
+    const { isSubmitting } = this.state;
+    return isSubmitting ? (
+      <button type="submit" className="start-campaign-button">
+        <Loader type="TailSpin" height={25} width={35} color="white" />
+      </button>
+    ) : (
+      <button type="submit" className="start-campaign-button">
+        Submit
+      </button>
+    );
   };
 
   renderForm = () => {
@@ -105,9 +125,7 @@ export class EcStartCampaign extends Component {
                   icon="calendar-alt"
                 />
 
-                <button type="submit" className="start-campaign-button">
-                  Submit
-                </button>
+                {this.renderButton()}
               </div>
             </Form>
           );

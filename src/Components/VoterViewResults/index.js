@@ -5,7 +5,7 @@ import FormikControl from "../FormikControl";
 import Popup from "reactjs-popup";
 import "./index.css";
 import Loader from "react-loader-spinner";
-import AuthencticateVoter from "../AuthencticateVoter";
+import AuthenticateVoter from "../AuthenticateVoter";
 import VoterCommon from "../VoterCommon";
 
 const districts = ["District", "Khammam", "Adilabad", "Kurnool", "Nellore"];
@@ -73,6 +73,7 @@ class VoterViewResults extends Component {
     winner: null,
     isFetching: true,
     isOpen: false,
+    errorMessage: null,
   };
 
   options = ["MLA", "MP", "Sarpanch", "ZPTC"];
@@ -110,7 +111,7 @@ class VoterViewResults extends Component {
     const url = `https://ovs-backend.herokuapp.com/results/${this.toSmallCase(
       district
     )}/${this.toSmallCase(typeOfElection)}/${this.toSmallCase(area)}`;
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "GET",
       headers: {
@@ -119,12 +120,17 @@ class VoterViewResults extends Component {
     };
 
     const response = await fetch(url, options);
-    const data = await response.json();
-    const { winner } = data;
-    if (winner[0] !== null) {
-      this.getCandidate(winner[0]);
+    if (response.ok === true) {
+      const data = await response.json();
+      const { winner } = data;
+      if (winner[0] !== null) {
+        this.getCandidate(winner[0]);
+      } else {
+        this.setState({ isFetching: false });
+      }
     } else {
-      this.setState({ isFetching: false });
+      const { message } = await response.json();
+      this.setState({ errorMessage: message, isFetching: false });
     }
   };
 
@@ -134,7 +140,7 @@ class VoterViewResults extends Component {
     const options = {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${AuthencticateVoter.getToken()}`,
+        Authorization: `Bearer ${AuthenticateVoter.getToken()}`,
       },
     };
     const response = await fetch(url, options);
@@ -211,9 +217,12 @@ class VoterViewResults extends Component {
   };
 
   renderNoWinner = (close) => {
+    const { errorMessage } = this.state;
     return (
       <>
-        <p className="no-winner-message">There is no winner yet</p>
+        <p className="no-winner-message">
+          {errorMessage !== null ? errorMessage : `There is no winner yet`}
+        </p>
         <button onClick={close}>Close</button>
       </>
     );

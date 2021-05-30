@@ -2,7 +2,7 @@ import { Form, Formik } from "formik";
 import FormikControl from "../FormikControl";
 import * as Yup from "yup";
 import React, { Component } from "react";
-import AuthencticateVoter from "../AuthencticateVoter";
+import AuthenticateVoter from "../AuthenticateVoter";
 import ErrorMessagePopup from "../ErrorMessagePopup";
 import Loader from "react-loader-spinner";
 import VoterCommon from "../VoterCommon";
@@ -35,7 +35,7 @@ class Donation extends Component {
   verifyPayment = async (data) => {
     this.setState({ isSubmitting: true });
     const url = "https://ovs-backend.herokuapp.com/payment-verify";
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "POST",
       headers: {
@@ -80,7 +80,7 @@ class Donation extends Component {
     this.setState({ isSubmitting: true });
     const { amount } = values;
     const url = "https://ovs-backend.herokuapp.com/payment-order";
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const data = {
       amount: amount * 100,
       currency: "INR",

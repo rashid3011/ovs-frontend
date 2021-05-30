@@ -1,9 +1,9 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import AuthencticateVoter from "../AuthencticateVoter";
+import AuthenticateVoter from "../AuthenticateVoter";
 
 function ProtectedRouteVoter(props) {
-  const isLogged = AuthencticateVoter.authenticate();
+  const isLogged = AuthenticateVoter.authenticate();
   return isLogged ? <Route {...props} /> : <Redirect to="/voter-login" />;
 }
 

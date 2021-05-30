@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormikControl from "../FormikControl";
-import AuthencticateVoter from "../AuthencticateVoter";
+import AuthenticateVoter from "../AuthenticateVoter";
 import Loader from "react-loader-spinner";
 import { Link, withRouter } from "react-router-dom";
 import ErrorMessagePopup from "../ErrorMessagePopup";
@@ -76,7 +76,7 @@ class LoginForm extends Component {
   };
 
   loginSuccess = (data) => {
-    AuthencticateVoter.login(data, this.props.history);
+    AuthenticateVoter.login(data, this.props.history);
   };
 
   loginFailed = (data) => {

@@ -82,6 +82,10 @@
   height: fit-content;
 }
 
+.winner-popup-content .popup-details {
+  margin-top: 0px;
+}
+
 .winner-popup-content .popup-details-right {
   width: 150px;
   font-weight: 600;
@@ -89,16 +93,23 @@
   font-family: var(--main-font);
 }
 
+.winner-popup-content .popup-details-center p {
+  margin: 18px 0px 18px 0px;
+}
+
 .winner-popup-content .popup-details-left {
   font-size: 15px;
   margin-left: 20px;
   font-family: var(--main-font);
+  width: 150px;
 }
 
 .winner-popup-content h1 {
   font-size: 25px;
   font-weight: 600;
   font-family: "Bree Serif";
+  margin-bottom: 0px;
+  color: var(--main-color);
 }
 
 .no-winner-message {

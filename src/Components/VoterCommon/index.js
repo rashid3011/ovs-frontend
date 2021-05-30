@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import VoterSidebar from "../VoterSidebar";
 import Dashboardheader from "../Dashboardheader";
-import AuthencticateVoter from "../AuthencticateVoter";
+import AuthenticateVoter from "../AuthenticateVoter";
 import { withRouter } from "react-router";
 
 export class VoterCommon extends Component {
@@ -50,14 +50,14 @@ export class VoterCommon extends Component {
   ];
 
   logout = () => {
-    AuthencticateVoter.logout(this.props.history);
+    AuthenticateVoter.logout(this.props.history);
   };
 
   deleteVoter = async (item) => {
     const { voterDetails } = this.state;
     const { voterId } = voterDetails;
     const url = " https://ovs-backend.herokuapp.com/voters";
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "DELETE",
 
@@ -70,7 +70,7 @@ export class VoterCommon extends Component {
     };
     this.setState({ isDeletingVoter: true });
     await fetch(url, options);
-    AuthencticateVoter.logout(this.props.history);
+    AuthenticateVoter.logout(this.props.history);
   };
 
   renderDeleteConfirmation = (close) => {

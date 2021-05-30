@@ -68,10 +68,11 @@ const village = [
 
 class EcViewResults extends Component {
   state = {
-    areaOptions: ["pick election type"],
-    winner: [],
+    areaOptions: ["Area"],
+    winner: null,
     isFetching: true,
     isOpen: false,
+    errorMessage: null,
   };
 
   options = ["MLA", "MP", "Sarpanch", "ZPTC"];
@@ -92,12 +93,19 @@ class EcViewResults extends Component {
     return x.toLowerCase();
   };
 
+  capitalize = (x) => {
+    return x
+      .split(" ")
+      .map((y) => y.slice(0, 1).toUpperCase() + y.slice(1))
+      .join(" ");
+  };
+
   setOpen = () => {
     this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
   };
 
   getResults = async (values) => {
-    this.setState({ isFetching: true, isOpen: true });
+    this.setState({ isFetching: true, isOpen: true, winner: null });
     const { area, typeOfElection, district } = values;
     const url = `https://ovs-backend.herokuapp.com/ec/results/${this.toSmallCase(
       district
@@ -106,15 +114,38 @@ class EcViewResults extends Component {
     const options = {
       method: "GET",
       headers: {
-        Authorization: `bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
 
     const response = await fetch(url, options);
-    const data = await response.json();
-    const { winner } = data;
+    if (response.ok === true) {
+      const data = await response.json();
+      const { winner } = data;
+      if (winner[0] !== null) {
+        this.getCandidate(winner[0]);
+      } else {
+        this.setState({ isFetching: false });
+      }
+    } else {
+      const { message } = await response.json();
+      this.setState({ errorMessage: message, isFetching: false });
+    }
+  };
+
+  getCandidate = async (winner) => {
+    const candidateId = winner._id;
+    const url = `https://ovs-backend.herokuapp.com/ec/candidates/${candidateId}`;
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${AuthenticateEc.getToken()}`,
+      },
+    };
+    const response = await fetch(url, options);
+    const { candidate } = await response.json();
     this.setState({
-      winner: winner[0],
+      winner: candidate,
       isFetching: false,
     });
   };
@@ -185,9 +216,12 @@ class EcViewResults extends Component {
   };
 
   renderNoWinner = (close) => {
+    const { errorMessage } = this.state;
     return (
       <>
-        <p className="no-winner-message">There is no winner yet</p>
+        <p className="no-winner-message">
+          {errorMessage !== null ? errorMessage : `There is no winner yet`}
+        </p>
         <button onClick={close}>Close</button>
       </>
     );
@@ -217,15 +251,16 @@ class EcViewResults extends Component {
       >
         {(formik) => {
           return (
-            <Form className="view-results-form">
+            <Form className="voter-view-results-form">
+              <h1 className="main-heading">View Results</h1>
               <div className="view-results-type-input-container">
-                <p>Type of election</p>
+                <p>Pick the type of election</p>
                 <FormikControl
                   control="dropdown"
                   name="typeOfElection"
                   options={this.options}
                   onChange={this.changeArea}
-                  placeholder="Type of Election"
+                  placeholder="Election Type"
                 />
               </div>
               <div className="view-results-type-input-container">
@@ -270,12 +305,7 @@ class EcViewResults extends Component {
   };
 
   render() {
-    return (
-      <div className="view-results-bg">
-        <h1 className="main-heading">View Results</h1>
-        {this.renderForm()}
-      </div>
-    );
+    return <div className="view-results-bg">{this.renderForm()}</div>;
   }
 }
 

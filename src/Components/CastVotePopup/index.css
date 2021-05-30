@@ -49,15 +49,16 @@
   font-size: 17px;
   font-weight: 600;
   font-family: var(--main-font);
+  text-align: center;
 }
 
 .vote-error-message-container .close-button {
   border: none;
   border-radius: 3px;
-  height: 30px;
-  width: 70px;
+  height: 35px;
+  width: 90px;
   color: #fff;
-  background: rgb(71, 145, 255);
+  background: var(--main-color);
   font-weight: 600;
   font-size: 16px;
 }

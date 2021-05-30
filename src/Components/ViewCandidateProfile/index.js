@@ -26,18 +26,24 @@ class ViewCandidateProfile extends Component {
     const { fetchCandidateDetails, close } = this.props;
     this.setState({ isSubmitting: true, errorMessage: "" });
     const { details } = this.props;
-    const { candidateId } = details;
+    const { candidateId, type, district } = details;
+    const bodyDetails = {
+      candidateId,
+      type,
+      district,
+    };
     const url = " https://ovs-backend.herokuapp.com/ec/candidates";
     const token = AuthenticateEc.getToken();
     const options = {
       method: "DELETE",
 
       headers: {
+        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
         Authorization: `bearer ${token}`,
       },
 
-      body: JSON.stringify({ candidateId: candidateId }),
+      body: JSON.stringify(bodyDetails),
     };
 
     const response = await fetch(url, options);
@@ -104,6 +110,13 @@ class ViewCandidateProfile extends Component {
         close();
         fetchCandidateDetails();
       }, 2000);
+    } else if (response.status === 503) {
+      console.log("service not available");
+      this.setState({
+        errorMessage:
+          "Candidate Cannot be deleted, because Campaign is running",
+        isSubmitting: false,
+      });
     } else {
       const data = await response.json();
       const { message } = data;

@@ -4,11 +4,12 @@
   justify-content: space-between;
   align-items: center;
   font-family: var(--main-font);
-  height: 300px;
+  height: 350px;
 }
 
 .view-candidate h1 {
-  font-size: 20px;
+  font-size: 25px;
+  font-family: var(--main-font);
   color: blue;
   font-weight: 600;
 }
@@ -33,7 +34,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 80%;
+  margin-top: 20px;
 }
 
 .candidate-buttons-container .inner-button-container {
@@ -41,6 +43,7 @@
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
+  margin-top: 10px;
 }
 
 .candidate-buttons-container button {

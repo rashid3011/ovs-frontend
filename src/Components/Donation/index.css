@@ -95,3 +95,9 @@
 .donation-success button:hover {
   background: limegreen;
 }
+
+@media (max-width: 576px) {
+  .donation-content {
+    width: 90%;
+  }
+}

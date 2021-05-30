@@ -42,3 +42,37 @@ button {
   cursor: pointer;
   outline: none;
 }
+
+.back-to-home {
+  padding: 10px 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.back-to-home i {
+  font-size: 20px;
+  margin: 0px;
+}
+
+.back-to-home .back-arrow {
+  margin-right: 5px;
+  transition: 0.3s all;
+}
+
+.back-to-home .home-icon {
+  transition: 0.3s all;
+}
+
+.back-to-home:hover .home-icon {
+  color: var(--main-color);
+}
+
+.back-to-home:hover .back-arrow {
+  transform: translateX(-5px);
+  color: var(--main-color);
+}

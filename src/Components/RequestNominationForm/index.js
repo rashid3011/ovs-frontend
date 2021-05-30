@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import FormikControl from "../FormikControl";
 import Loader from "react-loader-spinner";
-import AuthencticateVoter from "../AuthencticateVoter";
+import AuthenticateVoter from "../AuthenticateVoter";
 import ErrorMessagePopup from "../ErrorMessagePopup";
 import VoterCommon from "../VoterCommon";
 import "./index.css";
@@ -38,7 +38,7 @@ class RequestNominationForm extends Component {
       type,
     };
     const url = "https://ovs-backend.herokuapp.com/request-nomination";
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "POST",
 

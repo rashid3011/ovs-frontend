@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
 import Loader from "react-loader-spinner";
-import AuthenticationVoter from "../AuthencticateVoter";
+import AuthenticationVoter from "../AuthenticateVoter";
 import "./index.css";
 
 class CastVotePopup extends Component {

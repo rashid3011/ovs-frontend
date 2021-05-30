@@ -205,6 +205,10 @@ hr {
   font-weight: 600;
 }
 
+.react-datepicker__input-container {
+  margin-left: 25px;
+}
+
 @media (max-width: 576px) {
   .voter-register-form {
     flex-direction: column;

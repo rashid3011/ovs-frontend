@@ -61,9 +61,8 @@ table th {
 }
 
 .candidate-view-popup-content {
-  width: 400px;
+  width: 350px;
   border-radius: 8px;
-  padding: 20px;
 }
 
 @media (max-width: 918px) {

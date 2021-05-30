@@ -208,13 +208,22 @@ class ViewProfile extends Component {
       body: JSON.stringify({ voterId: voterId }),
     };
 
-    await fetch(url, options);
-    this.setState({ isDeleted: true, isSubmitting: false });
-    setTimeout(() => {
-      this.setState({ isDeleted: false, isDeleteActive: false });
-      fetchVoterDetails();
-      close();
-    }, 2000);
+    const response = await fetch(url, options);
+    if (response.ok === true) {
+      this.setState({ isDeleted: true, isSubmitting: false });
+      setTimeout(() => {
+        this.setState({ isDeleted: false, isDeleteActive: false });
+        fetchVoterDetails();
+        close();
+      }, 2000);
+    } else {
+      const { message } = await response.json();
+      this.setState({
+        errorMessage: message,
+        isSubmitting: false,
+        isDeleteActive: false,
+      });
+    }
   };
 
   updateDetails = async (values) => {
@@ -245,7 +254,11 @@ class ViewProfile extends Component {
       close();
       fetchVoterDetails();
     } else {
-      this.setState({ errorMessage: "*Please Enter Valid Details" });
+      const { message } = await response.json();
+      this.setState({
+        errorMessage: message,
+        isSubmitting: false,
+      });
     }
   };
 

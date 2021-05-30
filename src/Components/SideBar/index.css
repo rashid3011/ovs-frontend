@@ -64,7 +64,8 @@
 .navlink {
   color: #fff;
   font-size: 18px;
-  font-family: "Fira Sans", sans-serif;
+  font-family: var(--main-font);
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   justify-content: flex-start;
@@ -75,7 +76,7 @@
   position: relative;
   overflow: hidden;
   text-decoration: none;
-  border-bottom: 2px solid rgb(6, 113, 155);
+  border-bottom: 2px solid #fff;
 }
 
 .navlink::after {
@@ -83,7 +84,7 @@
   position: absolute;
   height: 100%;
   width: 120%;
-  background-color: #0051ff;
+  background-color: #00a2ff;
   top: 0;
   left: 0;
   transform: translateX(-100%);

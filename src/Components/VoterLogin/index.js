@@ -31,9 +31,24 @@ class VoterLogin extends Component {
     }
   };
 
+  renderBackToHome = () => {
+    return (
+      <div
+        className="back-to-home"
+        onClick={() => {
+          this.props.history.push("/");
+        }}
+      >
+        <i className="fas fa-long-arrow-alt-left back-arrow"></i>
+        <i className="fas fa-home home-icon"></i>
+      </div>
+    );
+  };
+
   render() {
     return (
       <div className="voter-login-bg">
+        {this.renderBackToHome()}
         {this.renderForm()}
         <SvgImage />
       </div>

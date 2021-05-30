@@ -18,12 +18,11 @@ class VerifyOtp extends Component {
 
   initialValues = {
     code: "",
-    secret: true,
     mobile: JSON.parse(localStorage.getItem("voterDetails")).mobile,
   };
 
   validationSchema = Yup.object({
-    otp: Yup.string().required("*Required"),
+    code: Yup.string().required("*Required"),
   });
 
   onSubmit = async (data, onSubmitProps) => {
@@ -97,7 +96,6 @@ class VerifyOtp extends Component {
         onSubmit={this.onSubmit}
       >
         {(formik) => {
-          console.log(formik);
           return (
             <Form className={`voter-login-content ${submitBgClass}`}>
               <h1>Enter your OTP</h1>

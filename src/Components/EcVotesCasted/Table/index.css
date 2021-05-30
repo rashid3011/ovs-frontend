@@ -59,12 +59,6 @@ table th {
   background: rgb(3, 3, 82);
 }
 
-.candidate-view-popup-content {
-  width: 400px;
-  border-radius: 8px;
-  padding: 20px;
-}
-
 @media (max-width: 918px) {
   table {
     font-size: 12px;

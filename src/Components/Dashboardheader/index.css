@@ -56,10 +56,11 @@
   font-family: var(--main-font);
 }
 .logout {
-  background: #0051ff;
+  background: var(--main-color);
   border: 0;
   font-family: "Roboto";
   font-weight: 600;
+  font-size: 16px;
   color: #fff;
   height: 35px;
   width: 90px;

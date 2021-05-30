@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import FormikControl from "../FormikControl";
 import Loader from "react-loader-spinner";
 import ErrorMessagePopup from "../ErrorMessagePopup";
-import AuthenticateVoter from "../AuthencticateVoter";
+import AuthenticateVoter from "../AuthenticateVoter";
 import VoterCommon from "../VoterCommon";
 import "./index.css";
 

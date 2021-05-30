@@ -65,12 +65,14 @@
 }
 
 .party-list {
+  min-height: 100px;
   height: 100%;
   list-style: none;
   padding-left: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  margin: 0px;
 }
 
 .party-list-li {
@@ -82,7 +84,7 @@
 }
 
 .party-list-li p {
-  margin-bottom: 0px;
+  margin: 0px;
 }
 
 .party-list-li:not(:last-of-type) {
@@ -97,15 +99,15 @@
 }
 
 .cast-vote-button {
-  height: 35px;
-  width: 90px;
+  height: 40px;
+  width: 100px;
   border: none;
   border-radius: 3px;
   background: rgb(163, 9, 235);
   transition: all 0.3s;
   color: #fff;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .cast-vote-button:hover {
@@ -161,6 +163,7 @@
   width: 100px;
   text-align: left;
   font-weight: 600;
+  text-transform: uppercase;
 }
 .candidate-name {
   width: 150px;
@@ -194,7 +197,10 @@
   font-size: 16px;
 }
 .party-list .pending-loader {
-  margin-top: 20px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes typing {
@@ -214,13 +220,12 @@
   }
   .party-name {
     font-size: 12px;
-    color: rgb(0, 81, 255);
     width: 30px;
     margin-right: 14px;
+    text-transform: none;
   }
   .candidate-name {
     font-size: 13px;
-    color: rgb(0, 81, 255);
     width: 60px;
     margin-left: 0px;
   }
@@ -229,7 +234,8 @@
     max-width: 40px;
   }
   .cast-vote-button {
-    width: 60px;
+    width: 40px;
+    height: 30px;
     font-size: 12px;
   }
   .quote {
@@ -255,7 +261,9 @@
     width: 40px;
   }
   .cast-vote-button {
-    width: 90px;
+    width: 70px;
+    font-size: 16px;
+    height: 35px;
   }
   .quote {
     font-size: 30px;

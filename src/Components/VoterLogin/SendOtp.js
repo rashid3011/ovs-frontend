@@ -25,9 +25,6 @@ class SendOtp extends Component {
     voterId: Yup.string()
       .matches(/^V[0-9]{5}$/, "Voter ID should be like V#####")
       .required("*required"),
-    mobile: Yup.string()
-      .required("*Required")
-      .matches(/^(\+\d{2})?(\d){10}$/, "enter valid phone number"),
   });
 
   onSubmit = async (data, onSubmitProps) => {

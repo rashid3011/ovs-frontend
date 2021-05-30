@@ -4,12 +4,14 @@ import * as Yup from "yup";
 import FormikControl from "../FormikControl";
 import Loader from "react-loader-spinner";
 import ErrorMessagePopup from "../ErrorMessagePopup";
+import Popup from "reactjs-popup";
 
 class ChangePassword extends Component {
   state = {
     isSubmittingForm: false,
     isPopupOpen: false,
     errorMessage: false,
+    isChangeConfirmed: false,
   };
 
   setClose = () => {
@@ -19,6 +21,8 @@ class ChangePassword extends Component {
   initialValues = {
     password: "",
     confirmPassword: "",
+    voterId: JSON.parse(localStorage.getItem("voterDetails")).voterId,
+    secret: true,
   };
 
   validationSchema = Yup.object({
@@ -48,10 +52,10 @@ class ChangePassword extends Component {
     };
 
     const response = await fetch(url, options);
-    const responseData = await response.json();
     if (response.ok === true) {
       this.changePasswordSuccess();
     } else {
+      const responseData = await response.json();
       this.changePasswordFailed(responseData);
     }
     this.setState({ isSubmittingForm: false });
@@ -82,8 +86,12 @@ class ChangePassword extends Component {
   };
 
   changePasswordSuccess = () => {
-    const { changeForm } = this.props;
-    changeForm("login");
+    this.setState({ isChangeConfirmed: true });
+    setTimeout(() => {
+      this.setState({ isChangeConfirmed: false });
+      const { changeForm } = this.props;
+      changeForm("login");
+    }, 2000);
   };
 
   changePasswordFailed = (data) => {
@@ -95,8 +103,22 @@ class ChangePassword extends Component {
     });
   };
 
+  renderChangeConfirmed = () => {
+    return (
+      <div className="confirmed-image-container">
+        <img
+          src="confirmed.gif"
+          alt="confirmed"
+          className="confirmed-image"
+        ></img>
+        <p>Password is changed successfully!</p>
+      </div>
+    );
+  };
+
   render() {
-    const { isSubmittingForm, isPopupOpen, errorMessage } = this.state;
+    const { isSubmittingForm, isPopupOpen, errorMessage, isChangeConfirmed } =
+      this.state;
     const { changeForm } = this.props;
     const submitBgClass = isSubmittingForm ? "loading-bg" : null;
     return (
@@ -106,7 +128,6 @@ class ChangePassword extends Component {
         onSubmit={this.onSubmit}
       >
         {(formik) => {
-          console.log(formik);
           return (
             <Form className={`voter-login-content ${submitBgClass}`}>
               <h1>Reset Password</h1>
@@ -141,6 +162,9 @@ class ChangePassword extends Component {
                 setOpen={this.setClose}
                 isPopupOpen={isPopupOpen}
               />
+              <Popup open={isChangeConfirmed}>
+                {this.renderChangeConfirmed()}
+              </Popup>
             </Form>
           );
         }}

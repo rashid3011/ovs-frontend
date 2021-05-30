@@ -13,7 +13,7 @@ class EcCommon extends Component {
 
   navLinks = [
     {
-      key: "voter-dashboard",
+      key: "ec-dashboard",
       value: "Dashboard",
       icon: "home",
     },

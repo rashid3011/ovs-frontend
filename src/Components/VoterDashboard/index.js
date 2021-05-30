@@ -2,7 +2,7 @@ import { React, Component } from "react";
 import Loader from "react-loader-spinner";
 import CastVotePopup from "../CastVotePopup";
 import VoterCommon from "../VoterCommon";
-import AuthencticateVoter from "../AuthencticateVoter";
+import AuthenticateVoter from "../AuthenticateVoter";
 import "./index.css";
 
 const voteDivision = [
@@ -41,7 +41,7 @@ class VoterDashboard extends Component {
     const voterId =
       voterDetails === null ? "" : JSON.parse(voterDetails).voterId;
     const url = `https://ovs-backend.herokuapp.com/voters/${voterId}`;
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "GET",
 
@@ -85,7 +85,7 @@ class VoterDashboard extends Component {
     return (
       <Loader
         className="pending-loader"
-        type="TailSpin"
+        type="Oval"
         width={35}
         height={35}
         color="blue"
@@ -108,7 +108,7 @@ class VoterDashboard extends Component {
   getMpDetails = async (voterDetails) => {
     const { district } = voterDetails;
     const url = `https://ovs-backend.herokuapp.com/candidates/mp/${district}`;
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "GET",
 
@@ -127,7 +127,7 @@ class VoterDashboard extends Component {
   getMlaDetails = async (voterDetails) => {
     const { constituency } = voterDetails;
     const url = `https://ovs-backend.herokuapp.com/candidates/mla/${constituency}`;
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "GET",
 
@@ -146,7 +146,7 @@ class VoterDashboard extends Component {
   getZptcDetails = async (voterDetails) => {
     const { mandal } = voterDetails;
     const url = `https://ovs-backend.herokuapp.com/candidates/zptc/${mandal}`;
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "GET",
 
@@ -165,7 +165,7 @@ class VoterDashboard extends Component {
   getSarpanchDetails = async (voterDetails) => {
     const { village } = voterDetails;
     const url = `https://ovs-backend.herokuapp.com/candidates/sarpanch/${village}`;
-    const token = AuthencticateVoter.getToken();
+    const token = AuthenticateVoter.getToken();
     const options = {
       method: "GET",
 

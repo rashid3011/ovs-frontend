@@ -129,7 +129,6 @@ class EcViewCandidates extends Component {
 
   renderDetailsCandidates = () => {
     const { candidateDetails, isFetching } = this.state;
-    console.log(candidateDetails);
     return (
       <div className="details-body">
         <h1 className="table-box-heading">Candidates</h1>
