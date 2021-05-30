@@ -143,11 +143,16 @@ class EcViewResults extends Component {
       },
     };
     const response = await fetch(url, options);
-    const { candidate } = await response.json();
-    this.setState({
-      winner: candidate,
-      isFetching: false,
-    });
+    if (response.ok === true) {
+      const { candidate } = await response.json();
+      this.setState({
+        winner: candidate,
+        isFetching: false,
+      });
+    } else {
+      const { message } = await response.json();
+      this.setState({ errorMessage: message, isFetching: false });
+    }
   };
 
   onSubmit = (values) => {

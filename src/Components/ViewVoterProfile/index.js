@@ -189,13 +189,14 @@ class ViewVoterProfile extends Component {
 
     const response = await fetch(url, options);
     if (response.ok === true) {
-      const data = await response.json();
-      const { updatedVoter } = data;
+      const { updatedVoter } = await response.json();
       localStorage.setItem("voterDetails", JSON.stringify(updatedVoter));
       history.push("/voter-dashboard");
     } else {
-      this.setState({ errorMessage: "Please Enter Valid Details" });
+      const { message } = await response.json();
+      this.setState({ errorMessage: message, isPopupOpen: true });
     }
+    this.setState({ isUpdatingDetails: false });
   };
 
   onSubmit = (values) => {
@@ -219,14 +220,16 @@ class ViewVoterProfile extends Component {
       isFormEditable,
       errorMessage,
       isPopupOpen,
+      isUpdatingDetails,
     } = this.state;
 
     const formEditClass = isFormEditable ? "" : "no-edit-form";
 
     return (
-      <div className="voter-view-outer-bg">
-        <VoterCommon />
-        <div className="voter-view-bg">
+      <div className="voter-view-bg">
+        {isUpdatingDetails ? (
+          this.renderLoader()
+        ) : (
           <Formik
             initialValues={this.initialValues}
             validationSchema={validationSchema}
@@ -390,18 +393,30 @@ class ViewVoterProfile extends Component {
               );
             }}
           </Formik>
-        </div>
+        )}
       </div>
     );
   };
 
   renderLoader = () => {
-    return <Loader type="TailSpin" width={35} height={35} color="red" />;
+    return (
+      <Loader
+        className="voter-update-loader"
+        type="TailSpin"
+        width={35}
+        height={35}
+        color="blue"
+      />
+    );
   };
 
   render() {
-    const { isUpdatingDetails } = this.state;
-    return isUpdatingDetails ? this.renderLoader() : this.renderForm();
+    return (
+      <div className="voter-view-outer-bg">
+        <VoterCommon />
+        {this.renderForm()}
+      </div>
+    );
   }
 }
 
