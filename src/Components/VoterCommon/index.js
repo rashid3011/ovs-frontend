@@ -9,6 +9,8 @@ export class VoterCommon extends Component {
     isNavbarVisible: false,
     isUserProfileVisible: false,
     isDeletingVoter: false,
+    isSubmitting: false,
+    errorMessage: "",
   };
 
   navLinks = [
@@ -54,7 +56,8 @@ export class VoterCommon extends Component {
   };
 
   deleteVoter = async (item) => {
-    const { voterDetails } = this.state;
+    this.setState({ isSubmitting: true, errorMessage: "" });
+    const voterDetails = JSON.parse(localStorage.getItem("voterDetails"));
     const { voterId } = voterDetails;
     const url = " https://ovs-backend.herokuapp.com/voters";
     const token = AuthenticateVoter.getToken();
@@ -68,14 +71,20 @@ export class VoterCommon extends Component {
 
       body: JSON.stringify({ voterId: voterId }),
     };
-    this.setState({ isDeletingVoter: true });
-    await fetch(url, options);
-    AuthenticateVoter.logout(this.props.history);
+    const response = await fetch(url, options);
+    if (response.ok === true) {
+      this.setState({ isDeletingVoter: true, isSubmitting: false });
+      AuthenticateVoter.logout(this.props.history);
+    } else {
+      const { message } = await response.json();
+      this.setState({ errorMessage: message, isSubmitting: false });
+    }
   };
 
   renderDeleteConfirmation = (close) => {
     const voterDetails = JSON.parse(localStorage.getItem("voterDetails"));
     const { voterId, firstName, lastName } = voterDetails;
+    const { errorMessage } = this.state;
     return (
       <div className="delete-confirmation-container">
         <h1>Voter Details</h1>
@@ -114,6 +123,7 @@ export class VoterCommon extends Component {
             Cancel
           </button>
         </div>
+        <p className="delete-error-message">{errorMessage}</p>
       </div>
     );
   };
@@ -145,8 +155,12 @@ export class VoterCommon extends Component {
   capitalize = (x) => x.slice(0, 1).toUpperCase() + x.slice(1);
 
   render() {
-    const { isNavbarVisible, isUserProfileVisible, isDeletingVoter } =
-      this.state;
+    const {
+      isNavbarVisible,
+      isUserProfileVisible,
+      isDeletingVoter,
+      isSubmitting,
+    } = this.state;
     const voterDetails = localStorage.getItem("voterDetails");
     const firstName =
       voterDetails === null ? "" : JSON.parse(voterDetails).firstName;
@@ -167,6 +181,7 @@ export class VoterCommon extends Component {
           isNavbarVisible={isNavbarVisible}
           toggleNavbar={this.toggleNavbar}
           isDeletingVoter={isDeletingVoter}
+          isSubmitting={isSubmitting}
           renderDeleteConfirmed={this.renderDeleteConfirmed}
           renderDeleteConfirmation={this.renderDeleteConfirmation}
           details={voterDetails}

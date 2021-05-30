@@ -1,3 +1,4 @@
+import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import Popup from "reactjs-popup";
 import "./index.css";
@@ -10,8 +11,21 @@ const VoterSidebar = (props) => {
     isDeletingVoter,
     renderDeleteConfirmed,
     renderDeleteConfirmation,
+    isSubmitting,
   } = props;
   const classNavbar = isNavbarVisible ? "" : "hide-navbar";
+
+  const renderLoader = () => {
+    return (
+      <Loader
+        className="pending-loader"
+        type="TailSpin"
+        height={35}
+        width={35}
+        color="blue"
+      />
+    );
+  };
 
   return (
     <div className={`sidebar-container ${classNavbar}`}>
@@ -47,7 +61,9 @@ const VoterSidebar = (props) => {
                 key={key}
               >
                 {(close) => {
-                  return isDeletingVoter
+                  return isSubmitting
+                    ? renderLoader()
+                    : isDeletingVoter
                     ? renderDeleteConfirmed()
                     : renderDeleteConfirmation(close);
                 }}

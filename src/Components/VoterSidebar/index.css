@@ -77,6 +77,12 @@
   padding-left: 10px;
 }
 
+.pending-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .navlink::after {
   content: "";
   position: absolute;
@@ -99,6 +105,13 @@
 
 .delete-user-popup-content {
   width: 350px !important;
+}
+
+.delete-error-message {
+  color: red;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
 }
 
 @media (max-width: 576px) {
