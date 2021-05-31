@@ -268,6 +268,10 @@ hr {
   pointer-events: none;
 }
 
+#updateForm .react-datepicker__input-container {
+  margin-left: 40px;
+}
+
 .delete-confirmation-container {
   padding: 15px;
 }

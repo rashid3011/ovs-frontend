@@ -163,7 +163,7 @@ class EcStartCampaign extends Component {
                   setOpen={this.setClose}
                   errorMessage={errorMessage}
                 />
-                <Popup open={isSubmitSuccess}>
+                <Popup open={isSubmitSuccess} className="start-campaign-popup">
                   {this.renderStartConfirmed()}
                 </Popup>
               </div>

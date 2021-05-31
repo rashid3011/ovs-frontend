@@ -231,7 +231,7 @@ class Register extends Component {
             {(formik) => {
               console.log(formik.values.dob);
               return (
-                <Form className="voter-register-form">
+                <Form className="voter-register-form" id="voterRegisterForm">
                   <FormikControl
                     control="input"
                     type="text"

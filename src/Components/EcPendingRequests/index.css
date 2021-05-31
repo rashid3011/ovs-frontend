@@ -53,6 +53,7 @@
   color: var(--main-color);
   font-weight: 600;
   font-family: "Roboto";
+  margin: 0px;
 }
 
 .nomination-popup-details p {
@@ -100,5 +101,11 @@
 @media (max-width: 576px) {
   .pending-requests h1 {
     font-size: 20px;
+  }
+  .voter-pending-nomination-content {
+    width: 80%;
+  }
+  .voter-pending-nomination-content .popup-details {
+    font-size: 14px;
   }
 }

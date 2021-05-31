@@ -22,4 +22,5 @@
   font-family: var(--main-font);
   text-align: center;
   position: sticky;
+  margin-top: 0px;
 }

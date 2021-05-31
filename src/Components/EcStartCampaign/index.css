@@ -56,6 +56,11 @@
   text-transform: uppercase;
 }
 
+.start-campaign-popup-content {
+  width: fit-content;
+  border-radius: 8px;
+}
+
 @media (max-width: 440px) {
   .start-campaign-bg {
     justify-content: flex-start;
@@ -67,10 +72,12 @@
     font-size: 14px;
     display: flex;
     align-items: center;
+    width: 100%;
+    font-weight: 600;
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 360px) {
   .start-campaign-container .select-container {
     font-size: 12px;
     display: flex;

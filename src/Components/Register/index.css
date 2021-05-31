@@ -17,6 +17,7 @@
   letter-spacing: 2px;
   color: var(--main-color);
   font-family: "mukta";
+  margin-top: 0px;
 }
 
 hr {
@@ -206,7 +207,7 @@ hr {
 }
 
 .react-datepicker__input-container {
-  margin-left: 25px;
+  margin-left: 0px;
 }
 
 @media (max-width: 576px) {
