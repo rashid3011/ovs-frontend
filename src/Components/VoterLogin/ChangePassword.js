@@ -162,7 +162,10 @@ class ChangePassword extends Component {
                 setOpen={this.setClose}
                 isPopupOpen={isPopupOpen}
               />
-              <Popup open={isChangeConfirmed}>
+              <Popup
+                open={isChangeConfirmed}
+                className="forgot-password-confirm-popup"
+              >
                 {this.renderChangeConfirmed()}
               </Popup>
             </Form>

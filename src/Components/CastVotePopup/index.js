@@ -42,7 +42,7 @@ class CastVotePopup extends Component {
     const { firstName, lastName } = voterInfo;
     return (
       <div className="delete-confirmation-container cast-vote-popup">
-        <h1 className="vote-confirmation-heading">Voter Details</h1>
+        <h1 className="vote-confirmation-heading">Candidate Details</h1>
         <ul className="popup-details">
           <div className="popup-details-left">
             <p>Candidate Name</p>
