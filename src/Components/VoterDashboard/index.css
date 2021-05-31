@@ -246,6 +246,12 @@
   }
 }
 
+@media (max-width: 576px) {
+  .cast-vote-confirmation-content {
+    width: 80%;
+  }
+}
+
 @media (min-width: 400px) and (max-width: 576px) {
   .party-name {
     font-size: 14px;

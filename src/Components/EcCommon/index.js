@@ -47,6 +47,11 @@ class EcCommon extends Component {
       value: "Start Campaign",
       icon: "broadcast-tower",
     },
+    {
+      key: "stop-campaign",
+      value: "Stop Campaign",
+      icon: "power-off",
+    },
   ];
 
   toggleNavbar = () => {

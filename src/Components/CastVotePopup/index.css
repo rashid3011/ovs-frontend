@@ -9,10 +9,15 @@
   color: rgb(163, 9, 235) !important;
   font-weight: 600;
   font-family: "Roboto" !important;
+  margin: 0px;
 }
 
 .delete-confirmation-container .popup-details {
   padding-right: 0px;
+}
+
+.cast-vote-popup {
+  padding: 0px;
 }
 
 .cast-vote-popup .popup-details-left {
@@ -35,6 +40,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0px;
 }
 
 .vote-error-message-container {

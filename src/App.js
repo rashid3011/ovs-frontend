@@ -18,6 +18,7 @@ import EcViewCandidates from "./Components/EcViewCandidates";
 import EcPendingRequests from "./Components/EcPendingRequests";
 import VoterViewResults from "./Components/VoterViewResults";
 import EcStartCampaign from "./Components/EcStartCampaign";
+import EcStopCampaign from "./Components/EcStopCampaign";
 import VoterViewVotes from "./Components/VoterViewVotes";
 import Donation from "./Components/Donation";
 
@@ -81,6 +82,11 @@ function App() {
           exact
           path="/start-campaign"
           component={EcStartCampaign}
+        />
+        <ProtectedRouteEc
+          exact
+          path="/stop-campaign"
+          component={EcStopCampaign}
         />
         <ProtectedRouteEc component={NotFound} />
       </Switch>

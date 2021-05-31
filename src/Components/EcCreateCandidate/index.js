@@ -99,9 +99,7 @@ class EcCreateCandidate extends Component {
           {(formik) => {
             return (
               <div className="voter-nomination-content">
-                <h1 className="voter-nomination-main-heading">
-                  Add Candidate Here
-                </h1>
+                <h1 className="voter-nomination-main-heading">Add Candidate</h1>
                 <span className="voter-nomination-line"></span>
                 <Form className="voter-nomination-form">
                   <FormikControl
