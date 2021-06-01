@@ -8,6 +8,7 @@ const Dashboardheader = (props) => {
     logout,
     toggleProfile,
     toggleNavbar,
+    history,
   } = props;
   const classMenu = isNavbarVisible ? "hide" : "";
   const classUserProfile = isProfileVisible ? "" : "hide-profile";
@@ -26,6 +27,14 @@ const Dashboardheader = (props) => {
           <p className="welcome">
             Welcome {name.slice(0, 1).toUpperCase() + name.slice(1)}
           </p>
+          <button
+            className="logout about-us"
+            onClick={() => {
+              history.push("/about-us");
+            }}
+          >
+            About Us
+          </button>
           <button className="logout" onClick={logout}>
             Logout
           </button>

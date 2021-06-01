@@ -72,6 +72,10 @@
   background: #0346d6;
 }
 
+.about-us {
+  margin-right: 20px;
+}
+
 @media (max-width: 576px) {
   .dash-header-right {
     flex-direction: column;

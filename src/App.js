@@ -21,6 +21,7 @@ import EcStartCampaign from "./Components/EcStartCampaign";
 import EcStopCampaign from "./Components/EcStopCampaign";
 import VoterViewVotes from "./Components/VoterViewVotes";
 import Donation from "./Components/Donation";
+import AboutUs from "./Components/AboutUs";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Switch>
         <Route exact path="/voter-login" component={VoterLogin} />
         <Route exact path="/voter-register" component={Register} />
+        <Route exact path="/about-us" component={AboutUs} />
         <ProtectedRouteVoter
           exact
           path="/voter-dashboard"
@@ -88,7 +90,7 @@ function App() {
           path="/stop-campaign"
           component={EcStopCampaign}
         />
-        <ProtectedRouteEc component={NotFound} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   );

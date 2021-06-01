@@ -2,10 +2,10 @@ import { Component, React } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FormikControl from "../FormikControl";
-import "./index.css";
 import Loader from "react-loader-spinner";
 import AuthencticateEc from "../AuthenticateEc";
 import ErrorMessagePopup from "../ErrorMessagePopup";
+import "./index.css";
 
 class ECLoginPage extends Component {
   state = {
@@ -77,7 +77,7 @@ class ECLoginPage extends Component {
     const { isSubmittingForm } = this.state;
     return isSubmittingForm ? (
       <button className="ec-login-button">
-        <Loader type="TailSpin" height={30} width={100} color="#132dbe" />
+        <Loader type="TailSpin" height={30} width={100} color="blue" />
       </button>
     ) : (
       <button

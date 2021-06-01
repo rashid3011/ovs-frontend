@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Limelight&display=swap");
+
+.about-us-bg {
+  height: 100vh;
+  padding: 20px 50px;
+  background: #1c1b1b;
+  color: #fff;
+  text-align: left;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  animation: expand 0.5s linear;
+}
+
+.about-us-bg .back-arrow {
+  font-size: 30px;
+}
+
+.about-us-bg .back-arrow:hover {
+  color: #16caf2;
+}
+
+@keyframes expand {
+  from {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+hr {
+  border: 1px solid #fff;
+  margin-top: 30px;
+}
+
+.about-us-heading {
+  font-size: 50px;
+}
+
+.question {
+  margin-top: 0px;
+  font-size: 40px;
+  font-family: "Limelight", cursive;
+  font-weight: 600;
+}
+
+.question-normal {
+  font-family: "Roboto";
+  font-size: 30px;
+}
+
+.answer {
+  font-size: 25px;
+  font-family: "Roboto";
+}
+
+.highlight {
+  color: #16caf2;
+  font-weight: 600;
+  transition: all 0.8s;
+}
+
+.highlight:hover {
+  font-size: 27px;
+}
+
+@media (max-width: 576px) {
+  .about-us-bg {
+    height: fit-content;
+  }
+}
