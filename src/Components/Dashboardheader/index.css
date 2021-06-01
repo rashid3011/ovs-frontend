@@ -89,6 +89,8 @@
   }
   .logout {
     width: 90px;
+    margin-right: 0px;
+    margin-bottom: 10px;
   }
 }
 
