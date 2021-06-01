@@ -72,6 +72,17 @@
   color: var(--main-color);
 }
 
+.ec-login-button-loader {
+  align-self: center;
+  width: 135px;
+  min-height: 35px;
+  max-height: 35px;
+  border: 1px solid var(--main-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .ec-login-button {
   position: relative;
   align-self: center;

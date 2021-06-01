@@ -106,6 +106,19 @@ body {
   font-family: Roboto;
 }
 
+.voter-login-button-loader {
+  margin-top: 15px;
+  align-self: center;
+  width: 135px;
+  min-height: 35px;
+  max-height: 35px;
+  border: 1px solid var(--main-color);
+  color: var(--main-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .voter-login-button {
   margin-top: 15px;
   position: relative;

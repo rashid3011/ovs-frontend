@@ -61,8 +61,8 @@ class LoginForm extends Component {
   renderButton = (formik) => {
     const { isSubmittingForm } = this.state;
     return isSubmittingForm ? (
-      <button className="voter-login-button">
-        <Loader type="TailSpin" color="#4287f5" height={30} width={35} />
+      <button className="voter-login-button-loader">
+        <Loader type="TailSpin" color="#4287f5" height={30} width={25} />
       </button>
     ) : (
       <button

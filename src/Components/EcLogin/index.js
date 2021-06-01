@@ -76,8 +76,8 @@ class ECLoginPage extends Component {
   renderButton = (formik) => {
     const { isSubmittingForm } = this.state;
     return isSubmittingForm ? (
-      <button className="ec-login-button">
-        <Loader type="TailSpin" height={30} width={100} color="blue" />
+      <button className="ec-login-button-loader">
+        <Loader type="TailSpin" height={30} width={30} color="blue" />
       </button>
     ) : (
       <button
