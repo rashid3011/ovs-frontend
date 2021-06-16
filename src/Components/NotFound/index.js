@@ -26,7 +26,7 @@ const NotFound = (props) => {
         viewBox="0 0 315.35 305.59"
         width="406"
         height="306"
-        class="illustration styles_illustrationTablet__1DWOa"
+        className="illustration styles_illustrationTablet__1DWOa not-found-image"
       >
         <defs>
           <linearGradient
